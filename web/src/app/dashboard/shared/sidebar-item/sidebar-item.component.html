@@ -1,0 +1,23 @@
+<li
+  class="relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group"
+  [ngClass]="
+    isActive
+      ? 'bg-gradient-to-tr from-violet-200 to-violet-100 text-violet-700'
+      : 'hover:bg-violet-100 text-gray-800 hover:text-violet-700'
+  "
+>
+  <ng-content></ng-content>
+  <span
+    class="overflow-hidden transition-all"
+    [ngClass]="isExpanded ? 'w-52 ml-4' : 'w-0'"
+  >
+    {{ title }}
+  </span>
+
+  <div
+    *ngIf="!isExpanded"
+    class="absolute left-full rounded-md px-2 py-1 ml-6 bg-violet-100 text-violet-700 text-sm invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0"
+  >
+    {{ title }}
+  </div>
+</li>

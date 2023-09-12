@@ -1,0 +1,15 @@
+<div class="app-wrapper flex w-screen overflow-x-hidden">
+  <app-sidebar (closeMenuClick)="onMenuClick()" [isExpanded]="sidebarExpanded"></app-sidebar>
+
+  <div class="content-wrapper w-full h-screen flex flex-col bg-slate-50">
+    <app-header (menuClick)="onMenuClick()" [sidebarExpanded]="sidebarExpanded"></app-header>
+
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+
+    <app-footer class="mt-auto"></app-footer>
+  </div>
+
+  <div *ngIf="sidebarExpanded" class="z-10 md:hidden fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50"></div>
+</div>
