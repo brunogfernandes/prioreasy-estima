@@ -377,4 +377,14 @@
       Avançar
     </button>
   </div>
+
+  <div class="table-container mt-5 overflow-x-auto shadow-md">
+    <app-tabela
+          [data]="projetos"
+          [columns]="colunasTabela"
+          [entityAttributes]="camposEntidade"
+          [onEdit]="editarItem.bind(this)"
+          [onDelete]="excluirItem.bind(this)"
+    ></app-tabela>
+  </div>
 </div>
