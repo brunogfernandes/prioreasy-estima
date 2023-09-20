@@ -1,0 +1,33 @@
+<div class="m-5 flex">
+  <div>
+    <h1 class="text-3xl font-medium mb-5">Formulário de Cadastro de Caso de Uso</h1>
+
+    <form class="flex flex-col space-y-4">
+      <div class="flex flex-col mb-4">
+        <label for="nome">Nome do Caso de Uso</label>
+        <input type="text" class="border rounded p-2" id="nome">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="complexidade">Complexidade do Caso de Uso</label>
+        <input type="number" min="1" max="3" class="border rounded p-2" id="complexidade">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="descricao">Descrição do Caso de Uso</label>
+        <input type="text" class="border rounded p-2" id="descricao">
+      </div>
+
+      <div class="flex space-x-2 mt-5">
+        <button
+          class="bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        >
+          Concluir Cadastro
+        </button>
+        <button
+          class="bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        >
+        <a href="dashboard/caso-de-uso"> Cancelar</a>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
