@@ -1,6 +1,8 @@
 <section>
   <div class="container px-5 py-24 mx-auto">
     <form
+      (submit)="onSubmit()"
+      [formGroup]="signupFormGroup"
       class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
     >
       <div class="rounded-full bg-violet-700 p-2">
@@ -26,42 +28,68 @@
           >Nome Completo</label
         >
         <input
+          formControlName="nome"
           type="text"
           id="name"
           name="name"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
+        <div *ngIf="signupFormGroup.get('nome')?.invalid && (signupFormGroup.get('nome')?.dirty || signupFormGroup.get('nome')?.touched)" class="text-red-600 text-xs mt-1">
+          <div *ngIf="signupFormGroup.get('nome')?.errors?.['required']">Campo obrigatório.</div>
+          <div *ngIf="signupFormGroup.get('nome')?.errors?.['minlength']">Mínimo de 5 caracteres.</div>
+          <div *ngIf="signupFormGroup.get('nome')?.errors?.['maxlength']">Máximo de 100 caracteres.</div>
+        </div>
       </div>
       <div class="relative mb-4 w-full">
         <label for="email" class="leading-7 text-sm text-gray-600"
           >Endereço de email</label
         >
         <input
+          formControlName="email"
           type="email"
           id="email"
           name="email"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
+        <div *ngIf="signupFormGroup.get('email')?.invalid && (signupFormGroup.get('email')?.dirty || signupFormGroup.get('email')?.touched)" class="text-red-600 text-xs mt-1">
+          <div *ngIf="signupFormGroup.get('email')?.errors?.['required']">Campo obrigatório.</div>
+          <div *ngIf="signupFormGroup.get('email')?.errors?.['minlength']">Mínimo de 5 caracteres.</div>
+          <div *ngIf="signupFormGroup.get('email')?.errors?.['maxlength']">Máximo de 255 caracteres.</div>
+        </div>
       </div>
       <div class="relative mb-4 w-full">
         <label for="company" class="leading-7 text-sm text-gray-600"
           >Empresa</label
         >
         <input
+          formControlName="empresa"
           type="text"
           id="company"
           name="company"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
+        <div *ngIf="signupFormGroup.get('empresa')?.invalid && (signupFormGroup.get('empresa')?.dirty || signupFormGroup.get('empresa')?.touched)" class="text-red-600 text-xs mt-1">
+          <div *ngIf="signupFormGroup.get('empresa')?.errors?.['required']">Campo obrigatório.</div>
+          <div *ngIf="signupFormGroup.get('empresa')?.errors?.['minlength']">Mínimo de 5 caracteres.</div>
+          <div *ngIf="signupFormGroup.get('empresa')?.errors?.['maxlength']">Máximo de 30 caracteres.</div>
+        </div>
       </div>
       <div class="relative mb-4 w-full">
         <label for="role" class="leading-7 text-sm text-gray-600">Cargo</label>
-        <input
-          type="text"
+        <select
+          formControlName="cargo"
           id="role"
           name="role"
-          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        />
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        >
+          <option value="CARGO1">Cargo 1</option>
+          <option value="CARGO2">Cargo 2</option>
+          <option value="CARGO3">Cargo 3</option>
+          <option value="CARGO4">Cargo 4</option>
+        </select>
+        <div *ngIf="signupFormGroup.get('cargo')?.invalid && (signupFormGroup.get('cargo')?.dirty || signupFormGroup.get('cargo')?.touched)" class="text-red-600 text-xs mt-1">
+          <div *ngIf="signupFormGroup.get('cargo')?.errors?.['required']">Campo obrigatório.</div>
+        </div>
       </div>
       <div class="flex gap-2 w-full">
         <div class="relative mb-4 w-full">
@@ -69,31 +97,42 @@
             >Senha</label
           >
           <input
+            formControlName="senha"
             type="password"
             id="password"
             name="password"
             class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
+          <div *ngIf="signupFormGroup.get('senha')?.invalid && (signupFormGroup.get('senha')?.dirty || signupFormGroup.get('senha')?.touched)" class="text-red-600 text-xs mt-1">
+            <div *ngIf="signupFormGroup.get('senha')?.errors?.['required']">Campo obrigatório.</div>
+            <div *ngIf="signupFormGroup.get('senha')?.errors?.['minlength']">Mínimo de 5 caracteres.</div>
+            <div *ngIf="signupFormGroup.get('senha')?.errors?.['maxlength']">Máximo de 30 caracteres.</div>
+          </div>
         </div>
         <div class="relative mb-4 w-full">
           <label for="confirm_password" class="leading-7 text-sm text-gray-600"
             >Confirmar Senha</label
           >
           <input
+            formControlName="confirmarSenha"
             type="password"
             id="confirm_password"
             name="confirm_password"
             class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
+          <div *ngIf="signupFormGroup.get('confirmarSenha')?.invalid && (signupFormGroup.get('confirmarSenha')?.dirty || signupFormGroup.get('confirmarSenha')?.touched)" class="text-red-600 text-xs mt-1">
+            <div *ngIf="signupFormGroup.get('confirmarSenha')?.errors?.['required']">Campo obrigatório.</div>
+            <div *ngIf="signupFormGroup.get('confirmarSenha')?.errors?.['minlength']">Mínimo de 5 caracteres.</div>
+            <div *ngIf="signupFormGroup.get('confirmarSenha')?.errors?.['maxlength']">Máximo de 30 caracteres.</div>
+          </div>
         </div>
       </div>
 
-      <a
-        href="/stakeholder-signin"
+      <button
         class="inline-flex items-center font-medium bg-violet-600 border-0 rounded p-3 w-1/3 justify-center focus:outline-none hover:bg-violet-800 text-white mt-4"
       >
         Concluir Cadastro
-      </a>
+      </button>
       <p class="text-gray-700 text-center text-sm mt-6 font-light">
         Já possui cadastro?
         <a href="/collaborator-signin" class="text-violet-700 font-medium"

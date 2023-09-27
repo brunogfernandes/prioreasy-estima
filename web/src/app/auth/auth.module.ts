@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './containers/auth.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -12,6 +13,6 @@ import { SignupComponent } from './pages/signup/signup.component';
 
 @NgModule({
   declarations: [AuthComponent, HomeComponent, HeaderComponent, FooterComponent, RoleSelectionComponent, CollaboratorSigninComponent, StakeholderSigninComponent, SignupComponent],
-  imports: [CommonModule, AuthRoutingModule],
+  imports: [CommonModule, AuthRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class AuthModule {}

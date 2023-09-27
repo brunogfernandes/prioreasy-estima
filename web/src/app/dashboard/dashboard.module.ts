@@ -23,9 +23,13 @@ import { FatoresAmbientaisComponent } from './pages/fatores-ambientais/fatores-a
 import { EditarFatorAmbientalComponent } from './pages/editar-fator-ambiental/editar-fator-ambiental.component';
 import { EstimativaComponent } from './pages/estimativa/estimativa.component';
 import { InserirEstimativaComponent } from './pages/inserir-estimativa/inserir-estimativa.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
+import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
+import { DialogoConfirmacaoComponent } from './shared/dialogo-confirmacao/dialogo-confirmacao.component';
 
 @NgModule({
-  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, EditarFatorTecnicoComponent, FatoresAmbientaisComponent, EditarFatorAmbientalComponent, EstimativaComponent, InserirEstimativaComponent],
-  imports: [CommonModule, DashboardRoutingModule],
+  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, EditarFatorTecnicoComponent, FatoresAmbientaisComponent, EditarFatorAmbientalComponent, EstimativaComponent, InserirEstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent],
+  imports: [CommonModule, DashboardRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class DashboardModule {}

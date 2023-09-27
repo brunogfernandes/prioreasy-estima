@@ -1,6 +1,6 @@
 <table
   id="datatablesSimple"
-  class="w-full rounded bg-white  text-center table-auto"
+  class="w-full rounded bg-white table-fixed text-center"
 >
   <thead>
     <tr class="text-white">
@@ -9,15 +9,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of data">
-      <td class="py-2 px-3" *ngFor="let attribute of entityAttributes">
+    <tr *ngIf="data.length === 0">
+      <td class="p-4" [colSpan]="columns.length + 1">Nenhum registro encontrado para o filtro</td>
+    </tr>
+    <tr *ngFor="let item of data" class="border-b">
+      <td class="p-3" *ngFor="let attribute of entityAttributes">
         {{
           attribute.includes(":")
             ? item[attribute.split(":")[0]][attribute.split(":")[1]]
             : item[attribute]
         }}
       </td>
-      <td>
+      <td class="flex p-3 justify-center">
           <button
           (click)="onEdit(item)"
           class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
@@ -34,7 +37,6 @@
           </svg>
         </button>
         <button
-        *ngIf="item?.ativo || item?.excluido"
           (click)="onDelete(item)"
           data-bs-toggle="modal"
           data-bs-target="#modalConfirmacao"

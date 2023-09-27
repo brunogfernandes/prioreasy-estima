@@ -17,6 +17,8 @@ import { FatoresAmbientaisComponent } from './pages/fatores-ambientais/fatores-a
 import { EditarFatorAmbientalComponent } from './pages/editar-fator-ambiental/editar-fator-ambiental.component';
 import { EstimativaComponent } from './pages/estimativa/estimativa.component';
 import { InserirEstimativaComponent } from './pages/inserir-estimativa/inserir-estimativa.component';
+import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
+import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,10 @@ const routes: Routes = [
       { path: 'editar-fator-ambiental', component: EditarFatorAmbientalComponent},
       { path: 'estimativa', component: EstimativaComponent},
       { path: 'inserir-estimativa', component: InserirEstimativaComponent},
+
+      // Comum
+      { path: 'inserir-projeto/:id', component: InserirProjetoComponent },
+      { path: 'editar-projeto/:id', component: EditarProjetoComponent },
 
     ],
   },

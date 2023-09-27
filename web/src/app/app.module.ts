@@ -14,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   providers: [
-    { provide: 'servicesRootUrl', useValue: 'http://localhost:8080' },
+    { provide: 'servicesRootUrl', useValue: 'http://localhost:3333' },
   ],
   bootstrap: [AppComponent],
 })

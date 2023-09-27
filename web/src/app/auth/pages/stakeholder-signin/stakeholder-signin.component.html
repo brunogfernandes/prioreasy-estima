@@ -2,6 +2,8 @@
   <div class="container px-5 py-24 mx-auto">
     <form
       class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
+      [formGroup]="signinFormGroup"
+      (submit)="onSubmit()"
     >
       <div class="rounded-full bg-violet-700 p-2">
         <svg
@@ -26,6 +28,7 @@
           >Chave de Acesso</label
         >
         <input
+          formControlName="chave"
           type="text"
           id="chave"
           name="chave"
@@ -37,18 +40,18 @@
           >Senha</label
         >
         <input
+          formControlName="senha"
           type="password"
           id="password"
           name="password"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
       </div>
-      <a
-        href="/stakeholder-signin"
+      <button
         class="inline-flex items-center font-medium bg-violet-600 border-0 rounded p-3 w-1/3 justify-center focus:outline-none hover:bg-violet-800 text-white mt-4"
       >
         Efetuar Login
-      </a>
+      </button>
       <p class="text-gray-700 text-center text-sm mt-6 font-light">
         Ainda não possui uma chave de acesso?
         <span href="/signup" class="text-violet-700 font-medium"

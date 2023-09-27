@@ -1,0 +1,208 @@
+<section class="m-5">
+  <div class="container px-5 py-24 mx-auto">
+    <form
+      (submit)="onSubmit()"
+      [formGroup]="projetoFormGroup"
+      class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
+    >
+      <div class="rounded-full bg-violet-700 p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="ws-10 h-10 text-white font-black"
+        >
+          <path
+            fillRule="evenodd"
+            d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </div>
+      <h2 class="my-4 text-xl text-center">
+        Inserir
+        <span class="font-medium text-violet-700">Editar Projeto</span>
+      </h2>
+      <div class="relative mb-4 w-full">
+        <label for="name" class="leading-7 text-sm text-gray-600"
+          >Nome do Projeto</label
+        >
+        <input
+          formControlName="nome"
+          type="text"
+          id="name"
+          name="name"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          *ngIf="
+            projetoFormGroup.get('nome')?.invalid &&
+            (projetoFormGroup.get('nome')?.dirty ||
+              projetoFormGroup.get('nome')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="projetoFormGroup.get('nome')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+          <div *ngIf="projetoFormGroup.get('nome')?.errors?.['minlength']">
+            Mínimo de 5 caracteres.
+          </div>
+          <div *ngIf="projetoFormGroup.get('nome')?.errors?.['maxlength']">
+            Máximo de 100 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="relative mb-4 w-full">
+        <label for="descricao" class="leading-7 text-sm text-gray-600"
+          >Descrição do Projeto</label
+        >
+        <input
+          formControlName="descricao"
+          type="text"
+          id="descricao"
+          name="descricao"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          *ngIf="
+            projetoFormGroup.get('descricao')?.invalid &&
+            (projetoFormGroup.get('descricao')?.dirty ||
+              projetoFormGroup.get('descricao')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="projetoFormGroup.get('descricao')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+          <div *ngIf="projetoFormGroup.get('descricao')?.errors?.['minlength']">
+            Mínimo de 5 caracteres.
+          </div>
+          <div *ngIf="projetoFormGroup.get('descricao')?.errors?.['maxlength']">
+            Máximo de 255 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="relative mb-4 w-full">
+        <label for="empresa" class="leading-7 text-sm text-gray-600"
+          >Empresa Contratante</label
+        >
+        <input
+          formControlName="empresa"
+          type="text"
+          id="empresa"
+          name="empresa"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          *ngIf="
+            projetoFormGroup.get('empresa')?.invalid &&
+            (projetoFormGroup.get('empresa')?.dirty ||
+              projetoFormGroup.get('empresa')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="projetoFormGroup.get('empresa')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+          <div *ngIf="projetoFormGroup.get('empresa')?.errors?.['minlength']">
+            Mínimo de 5 caracteres.
+          </div>
+          <div *ngIf="projetoFormGroup.get('empresa')?.errors?.['maxlength']">
+            Máximo de 50 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="relative mb-4 w-full">
+        <label for="status" class="leading-7 text-sm text-gray-600"
+          >Status</label
+        >
+        <select
+          formControlName="status"
+          id="status"
+          name="status"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        >
+          <option value="EM ANDAMENTO">Em andamento</option>
+          <option value="FINALIZADO">Finalizado</option>
+        </select>
+        <div
+          *ngIf="
+            projetoFormGroup.get('status')?.invalid &&
+            (projetoFormGroup.get('status')?.dirty ||
+              projetoFormGroup.get('status')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="projetoFormGroup.get('status')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-2 w-full">
+        <div class="relative mb-4 w-full">
+          <label for="dataInicio" class="leading-7 text-sm text-gray-600"
+            >Data de Início</label
+          >
+          <input
+            formControlName="dataInicio"
+            id="dataInicio"
+            type="date"
+            class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          />
+          <div
+            *ngIf="
+              projetoFormGroup.get('dataInicio')?.invalid &&
+              (projetoFormGroup.get('dataInicio')?.dirty ||
+                projetoFormGroup.get('dataInicio')?.touched)
+            "
+            class="text-red-600 text-xs mt-1"
+          >
+            <div
+              *ngIf="projetoFormGroup.get('dataInicio')?.errors?.['required']"
+            >
+              Campo obrigatório.
+            </div>
+          </div>
+        </div>
+        <div class="relative mb-4 w-full">
+          <label for="previsaoFim" class="leading-7 text-sm text-gray-600"
+            >Previsão de Término</label
+          >
+          <input
+            formControlName="previsaoFim"
+            id="previsaoFim"
+            type="date"
+            class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          />
+          <div
+            *ngIf="
+              projetoFormGroup.get('previsaoFim')?.invalid &&
+              (projetoFormGroup.get('previsaoFim')?.dirty ||
+                projetoFormGroup.get('previsaoFim')?.touched)
+            "
+            class="text-red-600 text-xs mt-1"
+          >
+            <div
+              *ngIf="projetoFormGroup.get('previsaoFim')?.errors?.['required']"
+            >
+              Campo obrigatório.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="inline-flex items-center font-medium bg-violet-600 border-0 rounded p-3 w-1/3 justify-center focus:outline-none hover:bg-violet-800 text-white mt-4"
+      >
+        Concluir Cadastro
+      </button>
+      <p class="text-gray-700 text-center text-sm mt-6 font-light">
+        Já possui cadastro?
+        <a href="/collaborator-signin" class="text-violet-700 font-medium"
+          >Faça login clicando aqui.</a
+        >
+      </p>
+    </form>
+  </div>
+</section>
