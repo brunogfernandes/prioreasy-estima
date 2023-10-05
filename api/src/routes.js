@@ -4,6 +4,8 @@ import config from './config/auth.config.js';
 import { AuthController } from './controllers/AuthController.js';
 import { StakeholderController } from './controllers/StakeholderController.js';
 import { ProjetoController } from './controllers/ProjetoController.js';
+import { AtoresController } from './controllers/AtorController.js';
+import { CasoUsoController } from './controllers/CasoUsoController.js';
 
 const routes = express.Router();
 
@@ -49,4 +51,23 @@ routes.post('/projetos/new', verifyToken, ProjetoController.create);
 routes.patch('/projetos/update', verifyToken, ProjetoController.update);
 routes.delete('/projetos/delete', verifyToken, ProjetoController.delete);
 
+// Actor Routes (CLOSED)
+routes.get('/atores/findByAtor', verifyToken, AtoresController.list);
+routes.get('/atores/findByNome', verifyToken, AtoresController.listByName);
+routes.get('/atores/findById', verifyToken, AtoresController.getById);
+routes.get('/atores/metrics/total', verifyToken, AtoresController.getNumberOfAtores);
+routes.get('/atores/metrics/simples', verifyToken, AtoresController.getNumberOfAtoresSimples);
+routes.get('/atores/metrics/medios', verifyToken, AtoresController.getNumberOfAtoresMedios);
+routes.get('/atores/metrics/complexos', verifyToken, AtoresController.getNumberOfAtoresComplexos);
+routes.post('/atores/new', verifyToken, AtoresController.create);
+routes.patch('/atores/update', verifyToken, AtoresController.update);
+routes.delete('/atores/delete', verifyToken, AtoresController.delete);
+
+// USE CASE Routes (OPEN)
+routes.get('/caso-de-uso/findByAtor', verifyToken, CasoUsoController.list);
+routes.get('/caso-de-uso/findByNome', verifyToken, CasoUsoController.listByName);
+routes.get('/caso-de-uso/findById', verifyToken, CasoUsoController.getById);
+routes.post('/caso-de-uso/new', verifyToken, CasoUsoController.create);
+routes.patch('/caso-de-uso/update', verifyToken, CasoUsoController.update);
+routes.delete('/caso-de-uso/delete', verifyToken, CasoUsoController.delete);
 export const allRoutes = routes;
