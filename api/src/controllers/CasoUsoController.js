@@ -234,22 +234,16 @@ export const CasoUsoController = {
         console.log("[ERROR] [CasoUsoController] Erro no método delete: " + err);
       }
   },
-/*
-  async getNumberOfProjects(req, res) {
+  async getNumberOfCasos(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando contagem de projetos do usuário");
+      console.log("[INFO] Iniciando contagem de casos de uso");
 
-      const col_id = req.query.user;
+      const uc_id = req.query.caso;
 
-      const totalCountQuery = connection("PROJETOS")
-        .join(
-          "COLABORADORES_PROJETOS",
-          "PROJETOS.PRO_ID",
-          "=",
-          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
-        )
-        .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
+      const totalCountQuery = connection("REQUISITOS_FUNCIONAIS")
+        .join("CASOS_DE_USO", "REQUISITOS_FUNCIONAIS.REQ_ID", "=", "CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID")
+        .where("CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
         .count("* as totalCount")
         .first();
 
@@ -259,100 +253,82 @@ export const CasoUsoController = {
         totalCount: totalCount,
       });
     } catch (err) {
-      console.log("[ERROR] [ProjetoController] Erro no método getNumberOfProjects: " + err);
+      console.log("[ERROR] [CasoUsoController] Erro no método getNumberOfCasos: " + err);
     }
   },
 
-  async getNumberOfNewProjects(req, res) {
+  async getNumberOfCasosSimples(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando contagem de novos projetos do usuário");
-
-      const col_id = req.query.user;
-
-      const totalCountQuery = connection("PROJETOS")
-        .join(
-          "COLABORADORES_PROJETOS",
-          "PROJETOS.PRO_ID",
-          "=",
-          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
-        )
-        .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
-        .andWhereRaw("PROJETOS.PRO_DATA_INICIO >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)")
+      console.log("[INFO] Iniciando contagem de casos de uso simples");
+  
+      const uc_id = req.query.caso;
+  
+      const totalCountQuery = await connection("CASOS_DE_USO")
+        .where("CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
+        .andWhere("CAS_COMPLEXIDADE", "=", "SIMPLES")
         .count("* as totalCount")
         .first();
-
-      const { totalCount } = await totalCountQuery;
-
+  
+      const { totalCount } = totalCountQuery;
+  
       return res.json({
         totalCount: totalCount,
       });
-
     } catch (err) {
-      console.log("[ERROR] [ProjetoController] Erro no método getNumberOfNewProjects: " + err);
+      console.log("[ERROR] [CasoUsoController] Erro no método getNumberOfCasosSimples: " + err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   },
 
-  async getNumberOfOngoingProjects(req, res) {
+  async getNumberOfCasosMedios(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando contagem de projetos em andamento do usuário");
-
-      const col_id = req.query.user;
-
-      const totalCountQuery = connection("PROJETOS")
-        .join(
-          "COLABORADORES_PROJETOS",
-          "PROJETOS.PRO_ID",
-          "=",
-          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
-        )
-        .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
-        .andWhere("PROJETOS.PRO_STATUS", "EM ANDAMENTO")
+      console.log("[INFO] Iniciando contagem de casos de uso médios");
+  
+      const uc_id = req.query.caso;
+  
+      const totalCountQuery = await connection("CASOS_DE_USO")
+        .where("CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
+        .andWhere("CAS_COMPLEXIDADE", "=", "MEDIO")
         .count("* as totalCount")
         .first();
-
-      const { totalCount } = await totalCountQuery;
-
+  
+      const { totalCount } = totalCountQuery;
+  
       return res.json({
         totalCount: totalCount,
       });
-
     } catch (err) {
-      console.log("[ERROR] [ProjetoController] Erro no método getNumberOfOngoingProjects: " + err);
+      console.log("[ERROR] [CasoUsoController] Erro no método getNumberOfCasosMedios: " + err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   },
 
-  async getNumberOfDoneProjects(req, res) {
+  async getNumberOfCasosComplexos(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando contagem de projetos concluídos do usuário");
-
-      const col_id = req.query.user;
-
-      const totalCountQuery = connection("PROJETOS")
-        .join(
-          "COLABORADORES_PROJETOS",
-          "PROJETOS.PRO_ID",
-          "=",
-          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
-        )
-        .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
-        .andWhere("PROJETOS.PRO_STATUS", "FINALIZADO")
+      console.log("[INFO] Iniciando contagem de casos de uso complexos");
+  
+      const uc_id = req.query.caso;
+  
+      const totalCountQuery = await connection("CASOS_DE_USO")
+        .where("CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
+        .andWhere("CAS_COMPLEXIDADE", "=", "COMPLEXO")
         .count("* as totalCount")
         .first();
-
-      const { totalCount } = await totalCountQuery;
-
+  
+      const { totalCount } = totalCountQuery;
+  
       return res.json({
         totalCount: totalCount,
       });
-
     } catch (err) {
-      console.log("[ERROR] [ProjetoController] Erro no método getNumberOfDoneProjects: " + err);
+      console.log("[ERROR] [CasoUsoController] Erro no método getNumberOfCasosComplexos: " + err);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-  }
-  */
+  },
+  
 };
 
 function validateCasoUsoFields(nome, descricao, complexidade, res) {

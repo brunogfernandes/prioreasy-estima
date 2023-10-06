@@ -26,7 +26,7 @@ export class CasoUsoService {
 
   update(casoUso: casoUso): Observable<any> {
     return this.httpClient.patch<casoUso>(
-      `${this.servicesRootUrl}/atores/update?caso=${casoUso.id}`,
+      `${this.servicesRootUrl}/caso-de-uso/update?caso=${casoUso.id}`,
       casoUso,
       {
         headers: {
@@ -73,10 +73,10 @@ export class CasoUsoService {
       }
     );
   }
-/*
-  getNumberOfAtores(id: number): Observable<EntityCount> {
+
+  getNumberOfCasos(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(
-      `${this.servicesRootUrl}/atores/metrics/total?atores=${id}`,
+      `${this.servicesRootUrl}/caso-de-uso/metrics/total?caso=${id}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -85,9 +85,9 @@ export class CasoUsoService {
     );
   }
 
-  getNumberOfAtoresSimples(id: number): Observable<EntityCount> {
+  getNumberOfCasosSimples(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(
-      `${this.servicesRootUrl}/atores/metrics/simples?atores=${id}`,
+      `${this.servicesRootUrl}/caso-de-uso/metrics/simples?caso=${id}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -96,9 +96,9 @@ export class CasoUsoService {
     );
   }
 
-  getNumberOfAtoresMedios(id: number): Observable<EntityCount> {
+  getNumberOfCasosMedios(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(
-      `${this.servicesRootUrl}/atores/metrics/medios?atores=${id}`,
+      `${this.servicesRootUrl}/caso-de-uso/metrics/medios?caso=${id}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -107,9 +107,9 @@ export class CasoUsoService {
     );
   }
 
-  getNumberOfAtoresComplexos(id: number): Observable<EntityCount> {
+  getNumberOfCasosComplexos(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(
-      `${this.servicesRootUrl}/atores/metrics/complexos?atores=${id}`,
+      `${this.servicesRootUrl}/caso-de-uso/metrics/complexos?caso=${id}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -117,7 +117,7 @@ export class CasoUsoService {
       }
     );
   }
-*/
+
 }
 
 interface GetResponseCaso {

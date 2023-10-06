@@ -1,33 +1,120 @@
-<div class="m-5 flex">
-  <div>
-    <h1 class="text-3xl font-medium mb-5">Formulário de Cadastro de Cenário</h1>
-
-    <form class="flex flex-col space-y-4">
-      <div class="flex flex-col mb-4">
-        <label for="nome">Nome do Cenário</label>
-        <input type="text" class="border rounded p-2" id="nome">
-      </div>
-      <div class="flex flex-col mb-4">
-        <label for="tipo">Tipo do Cenário</label>
-        <input type="text" class="border rounded p-2" id="tipo">
-      </div>
-      <div class="flex flex-col mb-4">
-        <label for="descricao">Descrição do Cenário</label>
-        <input type="text" class="border rounded p-2" id="descricao">
-      </div>
-
-      <div class="flex space-x-2 mt-5">
-        <button
-          class="bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+<section class="m-5">
+  <div class="container px-5 py-24 mx-auto">
+    <form
+      (submit)="onSubmit()"
+      [formGroup]="cenarioFormGroup"
+      class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
+    >
+      <div class="rounded-full bg-violet-700 p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="ws-10 h-10 text-white font-black"
         >
-          Concluir Cadastro
-        </button>
-        <button
-          class="bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
-        >
-        <a href="dashboard/cenarios"> Cancelar</a>
-        </button>
+          <path
+            fillRule="evenodd"
+            d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
+            clipRule="evenodd"
+          />
+        </svg>
       </div>
+      <h2 class="my-4 text-xl text-center">
+
+        <span class="font-medium text-violet-700">Novo Cenario</span>
+      </h2>
+      <div class="relative mb-4 w-full">
+        <label for="name" class="leading-7 text-sm text-gray-600"
+          >Nome do Cenario</label
+        >
+        <input
+          formControlName="nome"
+          type="text"
+          id="name"
+          name="name"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          *ngIf="
+              cenarioFormGroup.get('nome')?.invalid &&
+            (cenarioFormGroup.get('nome')?.dirty ||
+              cenarioFormGroup.get('nome')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="cenarioFormGroup.get('nome')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+          <div *ngIf="cenarioFormGroup.get('nome')?.errors?.['minlength']">
+            Mínimo de 5 caracteres.
+          </div>
+          <div *ngIf="cenarioFormGroup.get('nome')?.errors?.['maxlength']">
+            Máximo de 100 caracteres.
+          </div>
+        </div>
+      </div>
+      <div class="relative mb-4 w-full">
+        <label for="tipo" class="leading-7 text-sm text-gray-600"
+          >Tipo</label
+        >
+        <select
+          formControlName="tipo"
+          id="tipo"
+          name="tipo"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        >
+          <option value="PRINCIPAL">Principal</option>
+          <option value="ALTERNATIVO">Alternativo</option>
+        </select>
+        <div
+          *ngIf="
+              cenarioFormGroup.get('tipo')?.invalid &&
+            (cenarioFormGroup.get('tipo')?.dirty ||
+              cenarioFormGroup.get('tipo')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="cenarioFormGroup.get('tipo')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+        </div>
+      </div>
+      <div class="relative mb-4 w-full">
+        <label for="descricao" class="leading-7 text-sm text-gray-600"
+          >Descrição do Cenario</label
+        >
+        <input
+          formControlName="descricao"
+          type="text"
+          id="descricao"
+          name="descricao"
+          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          *ngIf="
+              cenarioFormGroup.get('descricao')?.invalid &&
+            (cenarioFormGroup.get('descricao')?.dirty ||
+              cenarioFormGroup.get('descricao')?.touched)
+          "
+          class="text-red-600 text-xs mt-1"
+        >
+          <div *ngIf="cenarioFormGroup.get('descricao')?.errors?.['required']">
+            Campo obrigatório.
+          </div>
+          <div *ngIf="cenarioFormGroup.get('descricao')?.errors?.['minlength']">
+            Mínimo de 5 caracteres.
+          </div>
+          <div *ngIf="cenarioFormGroup.get('descricao')?.errors?.['maxlength']">
+            Máximo de 255 caracteres.
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="inline-flex items-center font-medium bg-violet-600 border-0 rounded p-3 w-1/3 justify-center focus:outline-none hover:bg-violet-800 text-white mt-4"
+      >
+        Concluir Cadastro
+      </button>
     </form>
   </div>
-</div>
+</section>

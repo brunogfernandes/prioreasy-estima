@@ -6,6 +6,7 @@ import { StakeholderController } from './controllers/StakeholderController.js';
 import { ProjetoController } from './controllers/ProjetoController.js';
 import { AtoresController } from './controllers/AtorController.js';
 import { CasoUsoController } from './controllers/CasoUsoController.js';
+import { CenariosController } from './controllers/CenariosController.js';
 
 const routes = express.Router();
 
@@ -63,11 +64,25 @@ routes.post('/atores/new', verifyToken, AtoresController.create);
 routes.patch('/atores/update', verifyToken, AtoresController.update);
 routes.delete('/atores/delete', verifyToken, AtoresController.delete);
 
-// USE CASE Routes (OPEN)
+// Use Case Routes (CLOSED)
 routes.get('/caso-de-uso/findByAtor', verifyToken, CasoUsoController.list);
 routes.get('/caso-de-uso/findByNome', verifyToken, CasoUsoController.listByName);
 routes.get('/caso-de-uso/findById', verifyToken, CasoUsoController.getById);
+routes.get('/caso-de-uso/metrics/total', verifyToken, CasoUsoController.getNumberOfCasos);
+routes.get('/caso-de-uso/metrics/simples', verifyToken, CasoUsoController.getNumberOfCasosSimples);
+routes.get('/caso-de-uso/metrics/medios', verifyToken, CasoUsoController.getNumberOfCasosMedios);
+routes.get('/caso-de-uso/metrics/complexos', verifyToken, CasoUsoController.getNumberOfCasosComplexos);
 routes.post('/caso-de-uso/new', verifyToken, CasoUsoController.create);
 routes.patch('/caso-de-uso/update', verifyToken, CasoUsoController.update);
 routes.delete('/caso-de-uso/delete', verifyToken, CasoUsoController.delete);
+
+//Cenario Routes (OPEN)
+routes.get('/cenarios/findByAtor', verifyToken, CenariosController.list);
+routes.get('/cenarios/findByNome', verifyToken, CenariosController.listByName);
+routes.get('/cenarios/findById', verifyToken, CenariosController.getById);
+routes.post('/cenarios/new', verifyToken, CenariosController.create);
+routes.patch('/cenarios/update', verifyToken, CenariosController.update);
+routes.delete('/cenarios/delete', verifyToken, CenariosController.delete);
+
+
 export const allRoutes = routes;

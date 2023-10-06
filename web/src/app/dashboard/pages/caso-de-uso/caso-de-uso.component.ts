@@ -45,12 +45,12 @@ export class CasoDeUsoComponent {
     totalPaginas: number = 0;
 
     // metrics
-    /*
-    totalAtores: number = 0;
-    atoresSimples: number = 0;
-    atoresMedios: number = 0;
-    atoresComplexos: number = 0;
-    */
+
+    totalCasos: number = 0;
+    casosSimples: number = 0;
+    casosMedios: number = 0;
+    casosComplexos: number = 0;
+
     // diálogo de confirmação
     showModal: boolean = false;
     itemExclusao!: number;
@@ -59,7 +59,7 @@ export class CasoDeUsoComponent {
 
     ngOnInit(){
       this.executarBusca();
-      //this.buscarMetricas();
+      this.buscarMetricas();
     }
 
     onSubmitSearch(event: Event): void {
@@ -77,45 +77,44 @@ export class CasoDeUsoComponent {
         )
         .subscribe(this.processarResultado());
 
-      //this.buscarMetricas();
+      this.buscarMetricas();
     }
-/*
+
     private buscarMetricas(): void {
 
-      this.atoresService
-      .getNumberOfAtores(
+      this.casoUsoService
+      .getNumberOfCasos(
         this.userId
       )
       .subscribe((data) => {
-        this.totalAtores = data.totalCount;
+        this.totalCasos = data.totalCount;
       });
 
-      this.atoresService
-      .getNumberOfAtoresSimples(
+      this.casoUsoService
+      .getNumberOfCasosSimples(
         this.userId
       )
       .subscribe((data) => {
-        this.atoresSimples = data.totalCount;
+        this.casosSimples = data.totalCount;
       });
 
-      this.atoresService
-      .getNumberOfAtoresMedios(
+      this.casoUsoService
+      .getNumberOfCasosMedios(
         this.userId
       )
       .subscribe((data) => {
-        this.atoresMedios = data.totalCount;
+        this.casosMedios = data.totalCount;
       });
 
-      this.atoresService
-      .getNumberOfAtoresComplexos(
+      this.casoUsoService
+      .getNumberOfCasosComplexos(
         this.userId
       )
       .subscribe((data) => {
-        this.atoresComplexos = data.totalCount;
+        this.casosComplexos = data.totalCount;
       });
 
     }
-*/
 
     private processarResultado() {
       return (data: any) => {
@@ -127,6 +126,9 @@ export class CasoDeUsoComponent {
       };
     }
 
+    VisualizarCenarios(item: any) {
+      this.router.navigate(['/dashboard/cenarios', item]);
+    }
 
     editarItem(item: any) {
       this.router.navigate(['/dashboard/editar-caso/', item.id]);
