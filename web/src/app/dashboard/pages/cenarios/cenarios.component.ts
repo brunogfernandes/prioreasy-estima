@@ -47,8 +47,8 @@ export class CenariosComponent {
   // diálogo de confirmação
   showModal: boolean = false;
   itemExclusao!: number;
-  tituloDialogo: string = "Deseja realmente excluir este ator?";
-  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do ator em questão serão excluídos do sistema.";
+  tituloDialogo: string = "Deseja realmente excluir este cenario?";
+  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do cenario em questão serão excluídos do sistema.";
 
   ngOnInit(){
     this.executarBusca();

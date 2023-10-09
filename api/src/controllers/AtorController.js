@@ -165,7 +165,7 @@ export const AtoresController = {
 
       const {nome, complexidade, descricao} = req.body;
       
-      const atores_id = 6; // Arrumar isso aqui /////*****///////////****///////*** */ */ */
+      const atores_id = req.query.atores;
       console.log(atores_id);
       console.log(nome, complexidade, descricao);
     

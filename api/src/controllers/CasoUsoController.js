@@ -175,11 +175,11 @@ export const CasoUsoController = {
   
         const {nome, complexidade, descricao} = req.body;
         
-        const caso_id = req.query; // Arrumar isso aqui /////*****///////////****///////*** */ */ */
-        console.log(caso_id);
+        const cas_id = req.query.caso;
+        console.log(cas_id);
         console.log(nome, complexidade, descricao);
       
-        console.log("[INFO] Iniciando atualização do caso de uso no banco de dados")
+        console.log("[INFO] Iniciando atualização de caso de uso no banco de dados")
   
         if(!validateCasoUsoFields(nome, complexidade, descricao, res)) {
   
@@ -187,7 +187,7 @@ export const CasoUsoController = {
   
           await trx("CASOS_DE_USO").where(
             "CAS_ID",
-            caso_id
+            cas_id
           ).update({
             CAS_NOME: nome,
             CAS_COMPLEXIDADE: complexidade,

@@ -38,7 +38,7 @@ export class CenarioService {
 
   delete(idCenario: number): Observable<any> {
     return this.httpClient.delete<Cenarios>(
-      `${this.servicesRootUrl}/cenario/delete?cenario=${idCenario}`,
+      `${this.servicesRootUrl}/cenarios/delete?cenario=${idCenario}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),

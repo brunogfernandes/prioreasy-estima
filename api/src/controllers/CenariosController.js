@@ -111,8 +111,8 @@ export const CenariosController = {
       console.log("");
       console.log("[INFO] Iniciando busca de cenarios por id");
 
-      const cen_id = req.query.cenarios;
-        console.log(caso_id);
+      const cen_id = req.query.caso;
+        console.log(cen_id);
 
       const cen = await connection("CENARIOS")
         .select("*")
@@ -135,7 +135,7 @@ export const CenariosController = {
   async create(req, res) {
     try {
         console.log("");
-        console.log("[INFO] Iniciando cadastro de CENARIOS")
+        console.log("[INFO] Iniciando cadastro de cenario")
   
         const {nome, descricao, tipo  } = req.body;
         
@@ -154,7 +154,8 @@ export const CenariosController = {
             CEN_TIPO: tipo, 
             FK_CASOS_DE_USO_CAS_ID: 1, // Arrumar isso aqui  /////*//////***///////****///////// */ */
            });
-  
+
+
           await trx.commit();
   
           console.log("[INFO] Cenarios cadastrado com sucesso")
@@ -175,7 +176,7 @@ export const CenariosController = {
   
         const {nome, tipo, descricao} = req.body;
         
-        const cen_id = req.query.cenarios; // Arrumar isso aqui /////*****///////////****///////*** */ */ */
+        const cen_id = req.query.cenario; // Arrumar isso aqui /////*****///////////****///////*** */ */ */
         console.log(cen_id);
         console.log(nome, tipo, descricao);
       
@@ -212,7 +213,7 @@ export const CenariosController = {
         console.log("");
         console.log("[INFO] Iniciando exclusão de cenario")
   
-        const cen_id = req.query.cenarios;
+        const cen_id = req.query.cenario;
         console.log(cen_id);
       
         console.log("[INFO] Iniciando exclusão de cenario no banco de dados")
