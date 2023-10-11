@@ -252,3 +252,47 @@ ALTER TABLE CALCULO_EFACTOR ADD CONSTRAINT FK_CALCULO_EFACTOR_3
     FOREIGN KEY (FK_FATORES_AMBIENTAIS_PROJETOS_AMP_ID)
     REFERENCES FATORES_AMBIENTAIS_PROJETOS (AMP_ID)
     ON DELETE SET NULL;
+    
+    
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('1','Familiaridade com o processo unificado', '1.5');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('2','Experiência aplicação', '0.5');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('3','Experiência com orientação a objetos', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('4','Capacidade de análise do líder de projeto', '0.5');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('5','Motivação', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('6','Estabilidade dos requisitos', '2.0');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('7','Consultores em tempo parcial', '-1.0');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais` (`AMB_ID`,`AMB_DESCRICAO`, `AMB_PESO`) VALUES ('8','Dificuldade de programação na Linguagem', '-1.0');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '1');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '2');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '3');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '4');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '5');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '6');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '7');
+INSERT INTO `prioreasy_estima`.`fatores_ambientais_projetos` (`AMP_VALOR`, `FK_FATORES_AMBIENTAIS_AMB_ID`) VALUES ('0', '8');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('1','Sistema distribuído', '2.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('2','Desempenho da Aplicação', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('3','Eficiência do Usuário', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('4','Complexidade de Processamento', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('5','Reusabilidade de Código', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('6','Facilidade de instalação', '0.5');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('7','Facilidade de uso', '0.5');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('8','Portabilidade', '2.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('9','Facilidade de mudança', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('10','Concorrência', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('11','Características de segurança', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('12','Acesso a Dispositivos de Terceiros', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos` (`TEC_ID`,`TEC_DESCRICAO`, `TEC_PESO`) VALUES ('13','Requer Treinamento aos Usuários', '1.0');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '1');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '2');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '3');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '4');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '5');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '6');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '7');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '8');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '9');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '10');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '11');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '12');
+INSERT INTO `prioreasy_estima`.`fatores_tecnicos_projetos` (`TEP_VALOR`, `FK_FATORES_TECNICOS_TEC_ID`) VALUES ('0', '13');
