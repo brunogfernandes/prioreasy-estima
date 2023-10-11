@@ -63,7 +63,7 @@ export class InserirCenariosComponent {
 
       this.cenarioService.create(this.cenario).subscribe({
         next: (id) => {
-          this.router.navigate([`/dashboard/cenarios/:id}`]);
+          this.router.navigate([`/dashboard/cenarios/:id}`]); /// arrumar aqui
         },
 
         error: (err) => {

@@ -1,313 +1,52 @@
 <div class="m-5">
-  <h1 class="text-3xl font-medium mb-5">Lista de Fatores Técnicos</h1>
+  <h1 class="text-3xl font-medium mb-5">Lista de Fatores Ambientais </h1>
 
   <div class="table-container mt-5 overflow-x-auto shadow-md">
-    <table class="w-full rounded bg-white  text-center table-auto">
+
+    <table id="tabelaFatores" class="w-full rounded bg-white table-fixed text-center">
       <thead>
         <tr class="text-white">
-          <th class="bg-violet-700 py-2">Fator</th>
-          <th class="bg-violet-700 py-2">Peso</th>
-          <th class="bg-violet-700 py-2">Valor</th>
+          <th class="bg-violet-700 py-2" *ngFor="let column of colunasTabela">{{ column }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of fatTec" class="border-b" >
+          <td class="p-3">{{item.id}}</td>
+          <td class="p-3">{{item.descricao}}</td>
+          <td class="p-3">{{item.peso}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-container mt-5 overflow-x-auto shadow-md">
+
+    <table id="tabelaFatoresAmb" class="w-full rounded bg-white table-fixed text-center">
+      <thead>
+        <tr class="text-white">
+          <th class="bg-violet-700 py-2" *ngFor="let column of colunasTabela1">{{ column }}</th>
           <th class="bg-violet-700 py-2">Ações</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="py-2 px-3">Sistema distribuído</td>
-          <td class="py-2 px-3">2</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
+        <tr *ngFor="let itemA of fatTecPro" class="border-b" >
+          <td class="p-3">{{itemA.fator}}</td>
+          <td class="p-3">{{itemA.valor}}</td>
+          <td>
             <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+              (click)="editarItem(itemA)"
+              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium items-center shadow-md mr-2"
             >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
+            <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
               class="w-5 h-5"
             >
               <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
+               d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
               />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Desempenho da Aplicação</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Eficiência do Usuário</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Complexidade de Processamento</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Reusabilidade de Código</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Facilidade de instalação</td>
-          <td class="py-2 px-3">0.5</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Facilidade de uso</td>
-          <td class="py-2 px-3">0.5</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Portabilidade</td>
-          <td class="py-2 px-3">2</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Facilidade de mudança</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Concorrência</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Características de segurança</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Acesso a Dispositivos de Terceiros</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">Requer Treinamento aos Usuários</td>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">0</td>
-          <td class="py-2 px-3 flex items-center justify-center">
-            <button
-              class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
-            >
-            <a href="dashboard/editar-fator-tecnico">
-              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
-              />
-            </svg></a>
-
+            </svg>
             </button>
           </td>
         </tr>

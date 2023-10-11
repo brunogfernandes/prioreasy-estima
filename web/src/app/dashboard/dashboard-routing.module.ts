@@ -40,9 +40,9 @@ const routes: Routes = [
       { path: 'inserir-cenarios', component: InserirCenariosComponent},
       { path: 'editar-cenarios/:id', component: EditarCenariosComponent},
       { path: 'fatores-tecnicos', component: FatoresTecnicosComponent},
-      { path: 'editar-fator-tecnico', component: EditarFatorTecnicoComponent},
+      { path: 'editar-fator-tecnico/:id', component: EditarFatorTecnicoComponent},
       { path: 'fatores-ambientais', component: FatoresAmbientaisComponent},
-      { path: 'editar-fator-ambiental', component: EditarFatorAmbientalComponent},
+      { path: 'editar-fator-ambiental/:id', component: EditarFatorAmbientalComponent},
       { path: 'estimativa', component: EstimativaComponent},
       { path: 'inserir-estimativa', component: InserirEstimativaComponent},
 

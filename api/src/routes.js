@@ -7,6 +7,8 @@ import { ProjetoController } from './controllers/ProjetoController.js';
 import { AtoresController } from './controllers/AtorController.js';
 import { CasoUsoController } from './controllers/CasoUsoController.js';
 import { CenariosController } from './controllers/CenariosController.js';
+import { FatAmbController } from './controllers/FatAmbController.js';
+import { FatTecController } from './controllers/fatTecController.js';
 
 const routes = express.Router();
 
@@ -76,13 +78,27 @@ routes.post('/caso-de-uso/new', verifyToken, CasoUsoController.create);
 routes.patch('/caso-de-uso/update', verifyToken, CasoUsoController.update);
 routes.delete('/caso-de-uso/delete', verifyToken, CasoUsoController.delete);
 
-//Cenario Routes (OPEN)
+//Cenario Routes (CLOSED)
 routes.get('/cenarios/findByAtor', verifyToken, CenariosController.list);
 routes.get('/cenarios/findByNome', verifyToken, CenariosController.listByName);
 routes.get('/cenarios/findById', verifyToken, CenariosController.getById);
 routes.post('/cenarios/new', verifyToken, CenariosController.create);
 routes.patch('/cenarios/update', verifyToken, CenariosController.update);
 routes.delete('/cenarios/delete', verifyToken, CenariosController.delete);
+
+// Fatores Ambientais Routes (CLOSED)
+
+routes.get('/fatores-ambientais/findByDescricao', verifyToken, FatAmbController.listByDescricao);
+routes.get('/fatores-ambientais/findById', verifyToken, FatAmbController.listById);
+routes.get('/fatores-ambientais/getById', verifyToken, FatAmbController.getById);
+routes.patch('/fatores-ambientais/update', verifyToken, FatAmbController.update);
+
+// Fatores Tecnicos Routes (CLOSED)
+
+routes.get('/fatores-tecnicos/findByDescricao', verifyToken, FatTecController.listByDescricao);
+routes.get('/fatores-tecnicos/findById', verifyToken, FatTecController.listById);
+routes.get('/fatores-tecnicos/getById', verifyToken, FatTecController.getById);
+routes.patch('/fatores-tecnicos/update', verifyToken, FatTecController.update);
 
 
 export const allRoutes = routes;
