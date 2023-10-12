@@ -52,8 +52,8 @@ export class EditarAtoresComponent {
       next: (ator) => {
         this.atorFormGroup.patchValue({
           nome: ator.nome,
-          complexidade: ator.complexidade,
           descricao: ator.descricao,
+          complexidade: ator.complexidade,
           });
       },
 

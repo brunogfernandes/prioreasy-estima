@@ -1,0 +1,15 @@
+Parte Vini:
+    Atores:
+    -Resolver ID para listagem
+    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+
+    Caso de Uso:
+    -Resolver ID para listagem
+    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+
+    Cenarios:
+    -Resolver ID para listagem
+    -Inserção com erro
+
+    Falta a página de estimativa
+    -Fazer o back do calculo dos fatores para auxiliar

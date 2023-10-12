@@ -72,7 +72,7 @@ export class AtorService {
         },
       }
     );
-  }
+  } 
 
   getNumberOfAtores(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(
