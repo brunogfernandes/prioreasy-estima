@@ -56,6 +56,7 @@ export class EditarFatorAmbientalComponent {
     createFator(): fatAmbPro {
       return new fatAmbPro(
         this.valor!.value,
+        this.fatorId
       );
     }
 

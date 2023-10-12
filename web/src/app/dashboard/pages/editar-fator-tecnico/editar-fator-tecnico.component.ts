@@ -56,6 +56,7 @@ export class EditarFatorTecnicoComponent {
     createFator(): fatTecPro {
       return new fatTecPro(
         this.valor!.value,
+        this.fatorId
       );
     }
 

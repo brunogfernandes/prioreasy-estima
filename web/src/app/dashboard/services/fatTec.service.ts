@@ -19,7 +19,7 @@ export class FatTecService {
     pageSize: number
   ): Observable<GetResponseFatores[]> {
     return this.httpClient.get<GetResponseFatores[]>(
-      `${this.servicesRootUrl}/fatores-tecnicos/findByDescricao?fator=${id}&descricao=${descricao}&page=${page}&pageSize=${pageSize}`, //Verificar com o Bruno sobre a rotas dos requisitsos
+      `${this.servicesRootUrl}/fatores-tecnicos/findByDescricao?fator=${id}&descricao=${descricao}&page=${page}&pageSize=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
