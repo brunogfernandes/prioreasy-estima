@@ -1,0 +1,119 @@
+<div class="py-5 px-8">
+  <div *ngIf="projeto" class="flex justify-between items-center pb-3 border-b border-gray-400">
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 rounded-full bg-violet-200 flex items-center text-xl justify-center"
+      >
+        {{projeto.nome[0]}}
+      </div>
+      <h3 class="text-xl ms-3 font-medium">{{projeto.nome}}</h3>
+    </div>
+    <div class="ms-auto">
+      <button
+        (click)="backToProjectHome()"
+        class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 me-2"
+        >
+          <path
+            d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
+          />
+        </svg>
+        Retornar ao Início
+      </button>
+    </div>
+  </div>
+  <h1 class="text-3xl font-medium my-5">Gerenciamento de Colaboradores</h1>
+  <div class="table-actions">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center shadow-md w-1/2 lg:w-1/4">
+        <input
+          #input
+          (keyup)="onSubmitSearch($event)"
+          type="text"
+          id="search"
+          name="search"
+          placeholder="Pesquisar por..."
+          class="focus:border-violet-700 w-full focus:ring-2 rounded-l-md focus:ring-violet-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        />
+        <div
+          class="bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-r-md shadow-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <button
+        class="disabled:bg-violet-400 bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        (click)="openNewColaborador()"
+        [disabled]="!projeto.admin"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="w-5 h-5 mr-1"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z"
+            clip-rule="evenodd"
+          />
+        </svg>
+
+        Inserir Novo
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container mt-5 overflow-x-auto shadow-md">
+    <app-tabela
+      [data]="colaboradores"
+      [columns]="colunasTabela"
+      [entityAttributes]="camposEntidade"
+      [hasEdit]="false"
+      [hasDelete]="projeto.admin"
+      [onDelete]="excluirItem.bind(this)"
+    ></app-tabela>
+  </div>
+
+  <app-dialogo-confirmacao
+    [titulo]="tituloDialogo"
+    [mensagem]="mensagemDialogo"
+    [isActive]="showModal"
+    [onCancel]="cancelarExclusao.bind(this)"
+    [onConfirm]="confirmarExclusao.bind(this)"
+  ></app-dialogo-confirmacao>
+
+  <div class="table-buttons mt-5 flex w-full">
+    <button
+      class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md ml-auto mr-1"
+      [disabled]="paginaAtual === 0"
+      (click)="prevPage()"
+    >
+      Voltar
+    </button>
+    <button
+      class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+      [disabled]="paginaAtual === totalPaginas - 1 || totalPaginas === 0"
+      (click)="nextPage()"
+    >
+      Avançar
+    </button>
+  </div>
+</div>

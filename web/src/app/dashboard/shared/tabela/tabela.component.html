@@ -1,16 +1,17 @@
-<table
-  id="datatablesSimple"
-  class="w-full rounded bg-white table-fixed text-center"
->
+<table id="datatablesSimple" class="w-full rounded bg-white text-center">
   <thead>
     <tr class="text-white">
-      <th class="bg-violet-700 py-2" *ngFor="let column of columns">{{ column }}</th>
+      <th class="bg-violet-700 py-2" *ngFor="let column of columns">
+        {{ column }}
+      </th>
       <th class="bg-violet-700 py-2">Ações</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngIf="data.length === 0">
-      <td class="p-4" [colSpan]="columns.length + 1">Nenhum registro encontrado para o filtro</td>
+      <td class="p-4" [colSpan]="columns.length + 1">
+        Nenhum registro encontrado para o filtro
+      </td>
     </tr>
     <tr *ngFor="let item of data" class="border-b">
       <td class="p-3" *ngFor="let attribute of entityAttributes">
@@ -20,8 +21,32 @@
             : item[attribute]
         }}
       </td>
-      <td class="flex p-3 justify-center">
-          <button
+      <td class="flex p-3 justify-center h-full">
+        <button *ngIf="hasView"
+          (click)="onView(item)"
+          class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
+        <button *ngIf="hasEdit && (item.admin === undefined || item.admin === 1)"
           (click)="onEdit(item)"
           class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
         >
@@ -36,28 +61,29 @@
             />
           </svg>
         </button>
-        <button
+        <button *ngIf="hasDelete && (item.admin === undefined || item.admin === 1)"
           (click)="onDelete(item)"
           data-bs-toggle="modal"
           data-bs-target="#modalConfirmacao"
-        class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="w-5 h-5"
+          class="bg-violet-700 text-white p-2 rounded-full hover:bg-violet-800 font-medium flex items-center shadow-md"
         >
-          <path
-            fill-rule="evenodd"
-            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <span *ngIf="!hasDelete && !hasView && !hasEdit">
+          N/A
+        </span>
       </td>
     </tr>
   </tbody>
 </table>
-
-

@@ -169,6 +169,8 @@
       [entityAttributes]="camposEntidade"
       [onEdit]="editarItem.bind(this)"
       [onDelete]="excluirItem.bind(this)"
+      [onView]="visualizarItem.bind(this)"
+      [hasView]="true"
     ></app-tabela>
   </div>
 
@@ -190,7 +192,7 @@
     </button>
     <button
       class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
-      [disabled]="paginaAtual === totalPaginas - 1"
+      [disabled]="paginaAtual === totalPaginas - 1 || totalPaginas === 0"
       (click)="nextPage()"
     >
       Avançar

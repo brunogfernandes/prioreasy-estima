@@ -8,7 +8,8 @@ import { AtoresController } from './controllers/AtorController.js';
 import { CasoUsoController } from './controllers/CasoUsoController.js';
 import { CenariosController } from './controllers/CenariosController.js';
 import { FatAmbController } from './controllers/FatAmbController.js';
-import { FatTecController } from './controllers/fatTecController.js';
+import { FatTecController } from './controllers/FatTecController.js';
+import { ColaboradorController } from './controllers/ColaboradorController.js';
 
 const routes = express.Router();
 
@@ -53,6 +54,21 @@ routes.get('/projetos/metrics/finished', verifyToken, ProjetoController.getNumbe
 routes.post('/projetos/new', verifyToken, ProjetoController.create);
 routes.patch('/projetos/update', verifyToken, ProjetoController.update);
 routes.delete('/projetos/delete', verifyToken, ProjetoController.delete);
+routes.get('/projetos/colaboradores', verifyToken, ProjetoController.listCollaborators);
+routes.get('/projetos/colaboradores/findByNome', verifyToken, ProjetoController.listCollaboratorsByName);
+routes.post('/projetos/addColaborador', verifyToken, ProjetoController.addCollaborator);
+routes.delete('/projetos/removeColaborador', verifyToken, ProjetoController.removeCollaborator);
+
+// Collaborator Routes (CLOSED)
+routes.get('/colaboradores', verifyToken, ColaboradorController.listByName);
+
+// Requirements Routes (CLOSED)
+routes.get('/requisitos', verifyToken, ProjetoController.list);
+routes.get('/requisitos/findByNome', verifyToken, ProjetoController.listByName);
+routes.get('/requisitos/findById', verifyToken, ProjetoController.getById);
+routes.post('/requisitos/new', verifyToken, ProjetoController.create);
+routes.patch('/requisitos/update', verifyToken, ProjetoController.update);
+routes.delete('/requisitos/delete', verifyToken, ProjetoController.delete);
 
 // Actor Routes (CLOSED)
 routes.get('/atores/findByAtor', verifyToken, AtoresController.list);

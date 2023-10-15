@@ -1,0 +1,88 @@
+<section class="px-8 py-5">
+  <div *ngIf="projeto" class="flex justify-between items-center pb-3 border-b border-gray-400">
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 rounded-full bg-violet-200 flex items-center text-xl justify-center"
+      >
+        {{projeto.nome[0]}}
+      </div>
+      <h3 class="text-xl ms-3 font-medium">{{projeto.nome}}</h3>
+    </div>
+    <div class="ms-auto">
+      <button
+        (click)="backToProjectHome()"
+        class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 me-2"
+        >
+          <path
+            d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"
+          />
+        </svg>
+        Retornar ao Início
+      </button>
+    </div>
+  </div>
+  <div class="container px-5 py-24 mx-auto">
+    <div
+      class="border-l-4 bg-white border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
+    >
+      <div class="rounded-full bg-violet-700 p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-10 h-10 text-white font-black"
+        >
+          <path
+            d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z"
+          />
+        </svg>
+      </div>
+      <h2 class="my-4 text-xl text-center">
+        Adicionar
+        <span class="font-medium text-violet-700">Colaborador</span> ao Projeto
+      </h2>
+      <input
+        #input
+        (keyup)="onSubmitSearch($event)"
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Pesquisar por..."
+        class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+      />
+
+      <div *ngIf="colaboradores.length > 0"
+        class="w-full bg-gray-50 rounded border border-gray-300 max-h-96 overflow-auto mt-4"
+      >
+        <div class="flex flex-col">
+          <div *ngFor="let colaborador of colaboradores"
+          (click)="selectColaborador(colaborador)"
+          [ngClass]="colaborador === selectedColaborador ?
+            'flex items-center py-4 px-5 border-b border-gray-300 last:border-0 bg-violet-700 hover:cursor-pointer'
+            : 'flex items-center py-4 px-5 border-b border-gray-300 last:border-0 group hover:bg-violet-200 hover:cursor-pointer'">
+            <div
+              class="rounded-full bg-violet-500 text-white flex items-center justify-center w-10 h-10 mr-4 group-"
+            >
+              {{ colaborador.nome.charAt(0) }}
+            </div>
+            <div>
+              <div [ngClass]="colaborador === selectedColaborador ? 'text-white font-medium' : 'font-medium'">{{ colaborador.nome }}</div>
+              <div [ngClass]="colaborador === selectedColaborador ? 'text-white' : 'text-gray-500'">{{ colaborador.email }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button (click)="addColaborador()"
+        class="disabled:bg-violet-400 bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md mt-4"
+        [disabled]="!selectedColaborador">
+        {{!selectedColaborador ? 'Selecione um Colaborador' : 'Adicionar ' + selectedColaborador.nome + ' ao Projeto'}}
+      </button>
+    </div>
+  </div>
+</section>

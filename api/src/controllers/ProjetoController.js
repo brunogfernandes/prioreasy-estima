@@ -103,6 +103,7 @@ export const ProjetoController = {
           dataInicio: item.PRO_DATA_INICIO.toLocaleDateString(),
           previsaoFim: item.PRO_PREVISAO_FIM.toLocaleDateString(),
           status: item.PRO_STATUS,
+          admin: item.COP_ADMINISTRADOR
         };
       });
 
@@ -115,6 +116,7 @@ export const ProjetoController = {
           "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
         )
         .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
+        .andWhereLike("PROJETOS.PRO_NOME", `%${pro_nome}%`)
         .count("* as totalCount")
         .first();
 
@@ -145,10 +147,18 @@ export const ProjetoController = {
       console.log("[INFO] Iniciando busca de projeto por id");
 
       const project_id = req.query.projeto;
+      const col_id = req.query.colaborador;
 
       const project = await connection("PROJETOS")
         .select("*")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "PROJETOS.PRO_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
+        )
         .where("PRO_ID", project_id)
+        .andWhere("FK_COLABORADORES_COL_ID", col_id)
         .first();
 
       const serializedItems = {
@@ -159,6 +169,7 @@ export const ProjetoController = {
         dataInicio: project.PRO_DATA_INICIO.toLocaleDateString(),
         previsaoFim: project.PRO_PREVISAO_FIM.toLocaleDateString(),
         status: project.PRO_STATUS,
+        admin: project.COP_ADMINISTRADOR
       };
 
       return res.json(serializedItems);
@@ -282,6 +293,197 @@ export const ProjetoController = {
 
     } catch (err) {
       console.log("[ERROR] [ProjetoController] Erro no método delete: " + err);
+    }
+  },
+
+  async listCollaborators(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando listagem de colaboradores do projeto");
+
+      const project_id = req.query.projeto;
+      const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
+
+      const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
+
+      // PESQUISA COM PAGINAÇÃO
+      const collaborators = await connection("COLABORADORES")
+        .select("*")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "COLABORADORES.COL_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID"
+        )
+        .where("COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID", project_id)
+        .offset(offset) // Aplica o deslocamento
+        .limit(pageSize); // Limita o número de resultados por página
+
+      const serializedItems = collaborators.map((item) => {
+        return {
+          id: item.COL_ID,
+          nome: item.COL_NOME,
+          email: item.COL_EMAIL,
+          empresa: item.COL_EMPRESA,
+          cargo: item.COL_CARGO,
+        };
+      });
+
+      // ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = connection("COLABORADORES")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "COLABORADORES.COL_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID"
+        )
+        .where("COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID", project_id)
+        .count("* as totalCount")
+        .first();
+
+      const { totalCount } = await totalCountQuery;
+
+      // CALCULANDO TOTAL DE PÁGINAS
+      const totalPages = Math.ceil(totalCount / pageSize);
+
+      return res.json({
+        items: serializedItems,
+        page: {
+          size: pageSize,
+          totalElements: totalCount,
+          totalPages,
+          number: page,
+        }
+      });
+    } catch (err) {
+      console.log("[ERROR] [ProjetoController] Erro no método listCollaboratorsPaginated: " + err);
+    }
+  },
+
+  async listCollaboratorsByName(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando listagem de colaboradores do projeto por nome");
+
+      const project_id = req.query.projeto;
+      const col_nome = req.query.nome;
+      const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
+
+      const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
+
+      // PESQUISA COM PAGINAÇÃO
+      const collaborators = await connection("COLABORADORES")
+        .select("*")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "COLABORADORES.COL_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID"
+        )
+        .where("COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID", project_id)
+        .andWhereLike("COLABORADORES.COL_NOME", `%${col_nome}%`)
+        .offset(offset) // Aplica o deslocamento
+        .limit(pageSize); // Limita o número de resultados por página
+
+      const serializedItems = collaborators.map((item) => {
+        return {
+          id: item.COL_ID,
+          nome: item.COL_NOME,
+          email: item.COL_EMAIL,
+          empresa: item.COL_EMPRESA,
+          cargo: item.COL_CARGO,
+        };
+      });
+
+      // ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = connection("COLABORADORES")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "COLABORADORES.COL_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID"
+        )
+        .where("COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID", project_id)
+        .andWhereLike("COLABORADORES.COL_NOME", `%${col_nome}%`)
+        .count("* as totalCount")
+        .first();
+
+      const { totalCount } = await totalCountQuery;
+
+      // CALCULANDO TOTAL DE PÁGINAS
+      const totalPages = Math.ceil(totalCount / pageSize);
+
+      return res.json({
+        items: serializedItems,
+        page: {
+          size: pageSize,
+          totalElements: totalCount,
+          totalPages,
+          number: page,
+        }
+      });
+    } catch (err) {
+      console.log("[ERROR] [ProjetoController] Erro no método listCollaboratorsByName: " + err);
+    }
+  },
+
+  async addCollaborator(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando adição de colaborador ao projeto")
+
+      const col_id = req.query.colaborador;
+      const pro_id = req.query.projeto;
+    
+      console.log("[INFO] Iniciando adição do colaborador ao projeto no banco de dados")
+
+      const trx = await connection.transaction();
+
+      await trx("COLABORADORES_PROJETOS").insert({
+        FK_COLABORADORES_COL_ID: col_id,
+        FK_PROJETOS_PRO_ID: pro_id,
+        COP_ADMINISTRADOR: false,
+        COP_ATIVO: true,
+      });
+
+      await trx.commit();
+
+      console.log("[INFO] Colaborador adicionado ao projeto com sucesso")
+
+      return res.status(200).send();
+
+    } catch (err) {
+      console.log("[ERROR] [ProjetoController] Erro no método addCollaborator: " + err);
+    }
+  },
+
+  async removeCollaborator(req, res){
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando remoção de colaborador do projeto")
+
+      const col_id = req.query.colaborador;
+      const pro_id = req.query.projeto;
+    
+      console.log("[INFO] Iniciando remoção do colaborador do projeto no banco de dados")
+
+      const trx = await connection.transaction();
+
+      await trx("COLABORADORES_PROJETOS").where({
+        FK_COLABORADORES_COL_ID: col_id,
+        FK_PROJETOS_PRO_ID: pro_id,
+      }).delete();
+
+      await trx.commit();
+
+      console.log("[INFO] Colaborador removido do projeto com sucesso")
+
+      return res.status(200).send();
+
+    } catch (err) {
+      console.log("[ERROR] [ProjetoController] Erro no método removeCollaborator: " + err);
     }
   },
 

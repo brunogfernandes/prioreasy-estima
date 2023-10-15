@@ -27,9 +27,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
 import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
 import { DialogoConfirmacaoComponent } from './shared/dialogo-confirmacao/dialogo-confirmacao.component';
+import { ProjetoComponent } from './pages/projeto/projeto.component';
+import { ColaboradoresProjetoComponent } from './pages/colaboradores-projeto/colaboradores-projeto.component';
+import { InserirColaboradorProjetoComponent } from './pages/inserir-colaborador-projeto/inserir-colaborador-projeto.component';
 
 @NgModule({
-  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, EditarFatorTecnicoComponent, FatoresAmbientaisComponent, EditarFatorAmbientalComponent, EstimativaComponent, InserirEstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent],
+  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, EditarFatorTecnicoComponent, FatoresAmbientaisComponent, EditarFatorAmbientalComponent, EstimativaComponent, InserirEstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent, ProjetoComponent, ColaboradoresProjetoComponent, InserirColaboradorProjetoComponent],
   imports: [CommonModule, DashboardRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class DashboardModule {}

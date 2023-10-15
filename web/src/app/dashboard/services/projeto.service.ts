@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Projeto } from '../models/projeto';
+import { Colaborador } from '../models/colaborador';
 
 @Injectable({
   providedIn: 'root',
@@ -47,9 +48,9 @@ export class ProjetoService {
     );
   }
 
-  findById(idProjeto: number): Observable<any> {
+  findById(idProjeto: number, idColaborador: number): Observable<any> {
     return this.httpClient.get<Projeto>(
-      `${this.servicesRootUrl}/projetos/findById?projeto=${idProjeto}`,
+      `${this.servicesRootUrl}/projetos/findById?projeto=${idProjeto}&colaborador=${idColaborador}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -77,6 +78,66 @@ export class ProjetoService {
   ): Observable<GetResponseProjetos[]> {
     return this.httpClient.get<GetResponseProjetos[]>(
       `${this.servicesRootUrl}/projetos/findByNome?user=${id}&nome=${nome}&page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  getColaboradoresByProjeto(
+    id: number,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseColaboradores[]> {
+    return this.httpClient.get<GetResponseColaboradores[]>(
+      `${this.servicesRootUrl}/projetos/colaboradores?projeto=${id}&page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  getColaboradoresByProjetoAndNome(
+    id: number,
+    nome: string,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseColaboradores[]> {
+    return this.httpClient.get<GetResponseColaboradores[]>(
+      `${this.servicesRootUrl}/projetos/colaboradores/findByNome?projeto=${id}&nome=${nome}&page=${page}&pageSize=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  addColaborador(
+    idProjeto: number,
+    idColaborador: number
+  ): Observable<any> {
+    return this.httpClient.post<any>(
+      `${this.servicesRootUrl}/projetos/addColaborador?projeto=${idProjeto}&colaborador=${idColaborador}`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  removeColaborador(
+    idProjeto: number,
+    idColaborador: number
+  ): Observable<any> {
+    return this.httpClient.delete<any>(
+      `${this.servicesRootUrl}/projetos/removeColaborador?projeto=${idProjeto}&colaborador=${idColaborador}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -142,4 +203,14 @@ interface GetResponseProjetos {
 
 interface EntityCount {
   totalCount: number;
+}
+
+interface GetResponseColaboradores {
+  items: Colaborador[];
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
 }

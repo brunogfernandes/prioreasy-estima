@@ -19,6 +19,9 @@ import { EstimativaComponent } from './pages/estimativa/estimativa.component';
 import { InserirEstimativaComponent } from './pages/inserir-estimativa/inserir-estimativa.component';
 import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
 import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
+import { ProjetoComponent } from './pages/projeto/projeto.component';
+import { ColaboradoresProjetoComponent } from './pages/colaboradores-projeto/colaboradores-projeto.component';
+import { InserirColaboradorProjetoComponent } from './pages/inserir-colaborador-projeto/inserir-colaborador-projeto.component';
 
 const routes: Routes = [
   {
@@ -46,10 +49,12 @@ const routes: Routes = [
       { path: 'estimativa', component: EstimativaComponent},
       { path: 'inserir-estimativa', component: InserirEstimativaComponent},
 
-      // Comum
+      // Projeto
       { path: 'inserir-projeto/:id', component: InserirProjetoComponent },
       { path: 'editar-projeto/:id', component: EditarProjetoComponent },
-
+      { path: 'projeto/:id', component: ProjetoComponent },
+      { path: 'projeto/:id/colaboradores', component: ColaboradoresProjetoComponent },
+      { path: 'projeto/:id/inserir-colaborador', component: InserirColaboradorProjetoComponent}
     ],
   },
 ];

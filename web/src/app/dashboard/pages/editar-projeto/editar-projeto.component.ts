@@ -13,6 +13,7 @@ export class EditarProjetoComponent {
   projetoFormGroup!: FormGroup;
   projeto!: Projeto;
   projetoId!: number;
+  userId!: number;
 
   constructor(
     private projetoService: ProjetoService,
@@ -21,6 +22,7 @@ export class EditarProjetoComponent {
     private formBuilder: FormBuilder
   ) {
     this.projetoId = +this.route.snapshot.paramMap.get('id')!;
+    this.userId = Number(localStorage.getItem('usu_id'));
   }
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class EditarProjetoComponent {
   }
 
   inicializarFormulario(): void {
-    this.projetoService.findById(this.projetoId).subscribe({
+    this.projetoService.findById(this.projetoId, this.userId).subscribe({
       next: (projeto) => {
         this.projetoFormGroup.patchValue({
           nome: projeto.nome,
@@ -93,6 +95,7 @@ export class EditarProjetoComponent {
       this.status!.value,
       this.dataInicio!.value,
       this.previsaoFim!.value,
+      true,
       this.projetoId
     );
   }

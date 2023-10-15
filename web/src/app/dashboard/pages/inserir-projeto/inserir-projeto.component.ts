@@ -69,6 +69,7 @@ export class InserirProjetoComponent {
       this.status!.value,
       this.dataInicio!.value,
       this.previsaoFim!.value,
+      true,
     );
   }
 

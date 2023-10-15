@@ -126,6 +126,9 @@ export class ProjetosComponent {
     };
   }
 
+  visualizarItem(item: any) {
+    this.router.navigate(['/dashboard/projeto/', item.id]);
+  }
 
   editarItem(item: any) {
     this.router.navigate(['/dashboard/editar-projeto/', item.id]);
