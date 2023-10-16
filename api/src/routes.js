@@ -10,6 +10,8 @@ import { CenariosController } from './controllers/CenariosController.js';
 import { FatAmbController } from './controllers/FatAmbController.js';
 import { FatTecController } from './controllers/FatTecController.js';
 import { ColaboradorController } from './controllers/ColaboradorController.js';
+import { RequisitoController } from './controllers/RequisitoController.js';
+import { PriorizacaoController } from './controllers/PriorizacaoController.js';
 
 const routes = express.Router();
 
@@ -41,7 +43,6 @@ routes.get('/verify', AuthController.verifyLogin);
 routes.post('/signup', AuthController.signup);
 routes.post('/signin-colaborador', AuthController.signinColaborador);
 routes.post('/signin-stakeholder', AuthController.signinStakeholder);
-routes.post('/create-stakeholder', StakeholderController.create);
 
 // Project Routes (CLOSED)
 routes.get('/projetos/findByColaborador', verifyToken, ProjetoController.list);
@@ -62,13 +63,29 @@ routes.delete('/projetos/removeColaborador', verifyToken, ProjetoController.remo
 // Collaborator Routes (CLOSED)
 routes.get('/colaboradores', verifyToken, ColaboradorController.listByName);
 
+// Stakeholders Routes (CLOSED)
+routes.post('/create-stakeholder', StakeholderController.create);
+routes.get('/stakeholders/findByProjeto', verifyToken, StakeholderController.listByProjeto);
+routes.get('/stakeholders/findByNome', verifyToken, StakeholderController.listByProjetoAndName);
+routes.delete('/stakeholders/delete', verifyToken, StakeholderController.delete);
+routes.patch('/stakeholders/alert', verifyToken, StakeholderController.alertStakeholder);
+routes.get('/stakeholders/verifyParticipation', verifyToken, StakeholderController.verifyAllStakeholdersParticipation);
+
 // Requirements Routes (CLOSED)
-routes.get('/requisitos', verifyToken, ProjetoController.list);
-routes.get('/requisitos/findByNome', verifyToken, ProjetoController.listByName);
-routes.get('/requisitos/findById', verifyToken, ProjetoController.getById);
-routes.post('/requisitos/new', verifyToken, ProjetoController.create);
-routes.patch('/requisitos/update', verifyToken, ProjetoController.update);
-routes.delete('/requisitos/delete', verifyToken, ProjetoController.delete);
+routes.get('/requisitos', verifyToken, RequisitoController.list);
+routes.get('/requisitos/findByNome', verifyToken, RequisitoController.listByNamePaginated);
+routes.get('/requisitos/findById', verifyToken, RequisitoController.getById);
+routes.post('/requisitos/new', verifyToken, RequisitoController.create);
+routes.patch('/requisitos/update', verifyToken, RequisitoController.update);
+routes.delete('/requisitos/delete', verifyToken, RequisitoController.delete);
+routes.get('/requisitos/resultados/list', verifyToken, RequisitoController.listResultados);
+routes.get('/requisitos/resultados/findByNome', verifyToken, RequisitoController.listResultadosByName);
+routes.get('/requisitos/priorizacao-stakeholders/list', verifyToken, RequisitoController.listPriorizacaoStakeholders);
+routes.get('/requisitos/priorizacao-stakeholders/findByNome', verifyToken, RequisitoController.listPriorizacaoStakeholdersByNome);
+
+// Priorization Routes (CLOSED)
+routes.post('/priorizacao-stakeholders/new', verifyToken, PriorizacaoController.insertPriorizacaoStakeholder);
+routes.patch('/priorizacao-stakeholders/result', verifyToken, PriorizacaoController.insertResultadoPriorizacao);
 
 // Actor Routes (CLOSED)
 routes.get('/atores/findByAtor', verifyToken, AtoresController.list);

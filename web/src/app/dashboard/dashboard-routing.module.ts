@@ -22,6 +22,12 @@ import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.co
 import { ProjetoComponent } from './pages/projeto/projeto.component';
 import { ColaboradoresProjetoComponent } from './pages/colaboradores-projeto/colaboradores-projeto.component';
 import { InserirColaboradorProjetoComponent } from './pages/inserir-colaborador-projeto/inserir-colaborador-projeto.component';
+import { RequisitosProjetoComponent } from './pages/requisitos-projeto/requisitos-projeto.component';
+import { InserirRequisitoComponent } from './pages/inserir-requisito/inserir-requisito.component';
+import { EditarRequisitoComponent } from './pages/editar-requisito/editar-requisito.component';
+import { PainelPrioreasyComponent } from './pages/painel-prioreasy/painel-prioreasy.component';
+import { StakeholdersProjetoComponent } from './pages/stakeholders-projeto/stakeholders-projeto.component';
+import { InserirStakeholderComponent } from './pages/inserir-stakeholder/inserir-stakeholder.component';
 
 const routes: Routes = [
   {
@@ -53,8 +59,23 @@ const routes: Routes = [
       { path: 'inserir-projeto/:id', component: InserirProjetoComponent },
       { path: 'editar-projeto/:id', component: EditarProjetoComponent },
       { path: 'projeto/:id', component: ProjetoComponent },
+
+      // Colaboradores Projeto
       { path: 'projeto/:id/colaboradores', component: ColaboradoresProjetoComponent },
-      { path: 'projeto/:id/inserir-colaborador', component: InserirColaboradorProjetoComponent}
+      { path: 'projeto/:id/inserir-colaborador', component: InserirColaboradorProjetoComponent},
+
+      // Requisitos Projeto
+      { path: 'projeto/:id/requisitos', component: RequisitosProjetoComponent },
+      { path: 'projeto/:id/inserir-requisito', component: InserirRequisitoComponent},
+      { path: 'projeto/:id/editar-requisito/:idReq', component: EditarRequisitoComponent},
+
+      // Painel Prioreasy
+      { path: 'projeto/:id/painel-prioreasy', component: PainelPrioreasyComponent },
+
+      // Prioreasy - Stakeholders
+      { path: 'projeto/:id/stakeholders', component: StakeholdersProjetoComponent },
+      { path: 'projeto/:id/inserir-stakeholder', component: InserirStakeholderComponent},
+
     ],
   },
 ];
