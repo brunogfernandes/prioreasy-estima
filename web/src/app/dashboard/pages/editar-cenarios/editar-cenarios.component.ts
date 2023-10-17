@@ -14,6 +14,7 @@ export class EditarCenariosComponent {
     cenarioFormGroup!: FormGroup;
     cenario!: Cenarios;
     cenId!: number;
+    casoId!: number;
 
     constructor(
       private cenarioService: CenarioService,
@@ -22,6 +23,7 @@ export class EditarCenariosComponent {
       private formBuilder: FormBuilder
     ) {
       this.cenId = +this.route.snapshot.paramMap.get('id')!;
+      this.casoId = this.route.snapshot.params['idCaso'];
     }
 
     ngOnInit(): void {
@@ -48,7 +50,7 @@ export class EditarCenariosComponent {
     }
 
     inicializarFormulario(): void {
-      this.cenarioService.findById(this.cenId).subscribe({
+      this.cenarioService.getById(this.cenId).subscribe({
         next: (cenario) => {
           this.cenarioFormGroup.patchValue({
             nome: cenario.nome,
@@ -83,7 +85,7 @@ export class EditarCenariosComponent {
       } else {
         this.cenario = this.createCenario();
 
-        this.cenarioService.update(this.cenario).subscribe({
+        this.cenarioService.update(this.cenario,this.casoId).subscribe({
           next: () => {
             this.router.navigate(['/dashboard/cenarios/:id']); //arrumar aqui
           },

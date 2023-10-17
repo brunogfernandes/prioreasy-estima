@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Cenarios } from '../../shared/models/cenarios';
 import { CenarioService } from '../../services/cenario.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-inserir-cenarios',
@@ -14,12 +14,18 @@ export class InserirCenariosComponent {
   cenarioFormGroup!: FormGroup;
   cenario!: Cenarios;
   userId!: number;
+  projetoId!: number;
+  requisitoId!: number;
+  casoId!: number;
 
   constructor(
     private cenarioService: CenarioService,
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.casoId = this.route.snapshot.params['id'];
+  }
 
   ngOnInit(): void {
     this.cenarioFormGroup = this.formBuilder.group({
@@ -61,7 +67,7 @@ export class InserirCenariosComponent {
     } else {
       this.cenario = this.createCenario();
 
-      this.cenarioService.create(this.cenario).subscribe({
+      this.cenarioService.create(this.cenario, this.casoId).subscribe({
         next: (id) => {
           this.router.navigate([`/dashboard/cenarios/:id}`]); /// arrumar aqui
         },

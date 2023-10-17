@@ -115,7 +115,7 @@ routes.patch('/caso-de-uso/update', verifyToken, CasoUsoController.update);
 routes.delete('/caso-de-uso/delete', verifyToken, CasoUsoController.delete);
 
 //Cenario Routes (CLOSED)
-routes.get('/cenarios/findByAtor', verifyToken, CenariosController.list);
+routes.get('/cenarios', verifyToken, CenariosController.list);
 routes.get('/cenarios/findByNome', verifyToken, CenariosController.listByName);
 routes.get('/cenarios/findById', verifyToken, CenariosController.getById);
 routes.post('/cenarios/new', verifyToken, CenariosController.create);
