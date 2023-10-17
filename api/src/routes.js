@@ -91,7 +91,7 @@ routes.patch('/priorizacao-stakeholders/result', verifyToken, PriorizacaoControl
 routes.patch('/priorizacao-stakeholders/complete', verifyToken, PriorizacaoController.completePriorizacaoStakeholder);
 
 // Actor Routes (CLOSED)
-routes.get('/atores/findByAtor', verifyToken, AtoresController.list);
+routes.get('/atores', verifyToken, AtoresController.list);
 routes.get('/atores/findByNome', verifyToken, AtoresController.listByName);
 routes.get('/atores/findById', verifyToken, AtoresController.getById);
 routes.get('/atores/metrics/total', verifyToken, AtoresController.getNumberOfAtores);
@@ -103,7 +103,7 @@ routes.patch('/atores/update', verifyToken, AtoresController.update);
 routes.delete('/atores/delete', verifyToken, AtoresController.delete);
 
 // Use Case Routes (CLOSED)
-routes.get('/caso-de-uso/findByAtor', verifyToken, CasoUsoController.list);
+routes.get('/caso-de-uso', verifyToken, CasoUsoController.list);
 routes.get('/caso-de-uso/findByNome', verifyToken, CasoUsoController.listByName);
 routes.get('/caso-de-uso/findById', verifyToken, CasoUsoController.getById);
 routes.get('/caso-de-uso/metrics/total', verifyToken, CasoUsoController.getNumberOfCasos);

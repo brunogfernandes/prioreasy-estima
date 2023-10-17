@@ -92,6 +92,7 @@ export class InserirRequisitoComponent {
       return;
     } else {
       this.requisito = this.createRequisito();
+    console.log(this.requisito);
 
       this.requisitoService.create(this.requisito, this.projetoId).subscribe({
         next: () => {

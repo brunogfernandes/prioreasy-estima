@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CasoUsoService } from '../../services/casoUso.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { casoUso } from '../../shared/models/casoUso';
+import { ProjetoService } from '../../services/projeto.service';
+import { Projeto } from '../../models/projeto';
 
 @Component({
   selector: 'app-caso-de-uso',
@@ -9,14 +11,22 @@ import { casoUso } from '../../shared/models/casoUso';
   styleUrls: ['./caso-de-uso.component.css']
 })
 export class CasoDeUsoComponent {
+
+    userId!: number;
+    requisitoId!: number;
+    projetoId!: number;
+    projeto!: Projeto;
+
     constructor(
+      private projetoService: ProjetoService,
       private casoUsoService: CasoUsoService,
-      private router: Router
-    ) {}
-
-    userId: number = +localStorage.getItem("usu_id")!;
-    ucId: number = 1; // ACHAR UM JEITO DE COLOCAR  QUAL PROJETO ESTÁ RELACIONADO AOS ATORES (Arrumar aqui)
-
+      private router: Router,
+      private route: ActivatedRoute
+    ) {
+      this.projetoId = this.route.snapshot.params['idPro'];
+      this.requisitoId = this.route.snapshot.params['id'];
+      this.userId = Number(localStorage.getItem('usu_id'));
+    }
 
     // datasource
     caso: casoUso[] = [];
@@ -58,8 +68,15 @@ export class CasoDeUsoComponent {
     mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do caso de uso em questão serão excluídos do sistema.";
 
     ngOnInit(){
+      this.buscarProjeto(this.projetoId, this.userId);
       this.executarBusca();
       this.buscarMetricas();
+    }
+
+    buscarProjeto(id: number, user: number) {
+      this.projetoService.findById(id, user).subscribe((projeto) => {
+        this.projeto = projeto;
+      });
     }
 
     onSubmitSearch(event: Event): void {
@@ -68,23 +85,26 @@ export class CasoDeUsoComponent {
     }
 
     private executarBusca(): void {
-      this.casoUsoService
-        .findByNome(
-          this.ucId,
-          this.filterValue,
-          this.paginaAtual,
-          this.tamanhoPagina
-        )
-        .subscribe(this.processarResultado());
+      if(!this.filterValue){
+        this.casoUsoService.list(this.requisitoId, this.projetoId ,this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+      } else {
+        this.casoUsoService.listByName(this.requisitoId, this.filterValue, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+      }
+    }
 
-      this.buscarMetricas();
+    backToProjectHome(){
+      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso']);
+    }
+
+    openNewCaso(){
+      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'inserir-caso']);
     }
 
     private buscarMetricas(): void {
 
       this.casoUsoService
       .getNumberOfCasos(
-        this.userId
+        this.requisitoId
       )
       .subscribe((data) => {
         this.totalCasos = data.totalCount;
@@ -92,7 +112,7 @@ export class CasoDeUsoComponent {
 
       this.casoUsoService
       .getNumberOfCasosSimples(
-        this.userId
+        this.requisitoId
       )
       .subscribe((data) => {
         this.casosSimples = data.totalCount;
@@ -100,7 +120,7 @@ export class CasoDeUsoComponent {
 
       this.casoUsoService
       .getNumberOfCasosMedios(
-        this.userId
+        this.requisitoId
       )
       .subscribe((data) => {
         this.casosMedios = data.totalCount;
@@ -108,7 +128,7 @@ export class CasoDeUsoComponent {
 
       this.casoUsoService
       .getNumberOfCasosComplexos(
-        this.userId
+        this.requisitoId
       )
       .subscribe((data) => {
         this.casosComplexos = data.totalCount;
@@ -127,11 +147,11 @@ export class CasoDeUsoComponent {
     }
 
     VisualizarCenarios(item: any) {
-      this.router.navigate(['/dashboard/cenarios', item]);
+      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', item, 'cenarios']);
     }
 
     editarItem(item: any) {
-      this.router.navigate(['/dashboard/editar-caso/', item.id]);
+      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'editar-caso' , item.id]);
     }
 
     excluirItem(item: any) {

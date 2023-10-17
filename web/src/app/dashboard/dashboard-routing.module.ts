@@ -41,12 +41,7 @@ const routes: Routes = [
         path: 'projetos',
         component: ProjetosComponent,
       },
-      { path: 'atores/:id', component: AtoresComponent},
-      { path: 'inserir-atores', component: InserirAtoresComponent},
-      { path: 'editar-atores/:id', component: EditarAtoresComponent},
-      { path: 'caso-de-uso/:id', component: CasoDeUsoComponent},
-      { path: 'inserir-caso', component: InserirCasoComponent},
-      { path: 'editar-caso/:id', component: EditarCasoComponent},
+
       { path: 'cenarios/:id', component: CenariosComponent},
       { path: 'inserir-cenarios', component: InserirCenariosComponent},
       { path: 'editar-cenarios/:id', component: EditarCenariosComponent},
@@ -81,6 +76,24 @@ const routes: Routes = [
       // Stakeholders
       { path: 'painel-stakeholder', component: PainelStakeholderComponent},
       { path: 'priorizacao-stakeholder/:id', component: PriorizarRequisitosComponent},
+
+      // Estima - Atores
+
+      { path: 'projeto/:id/atores', component: AtoresComponent},
+      { path: 'projeto/:id/inserir-atores', component: InserirAtoresComponent},
+      { path: 'projeto/:id/editar-atores/:idAtor', component: EditarAtoresComponent},
+
+      //Estima - Caso de Uso
+
+      { path: 'projeto/:idPro/requisitos/:id/caso-de-uso', component: CasoDeUsoComponent},
+      { path: 'projeto/:idPro/requisitos/:id/inserir-caso', component: InserirCasoComponent},
+      { path: 'projeto/:idPro/requisitos/:id/editar-caso/:idCaso', component: EditarCasoComponent},
+
+      //Estima - Cenários
+
+      { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/cenarios', component: CenariosComponent},
+      { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/inserir-cenarios', component: InserirCenariosComponent},
+      { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/editar-cenarios/:idCen', component: EditarCenariosComponent},
 
     ],
   },

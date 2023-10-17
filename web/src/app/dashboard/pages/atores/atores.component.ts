@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AtorService } from '../../services/ator.service';
 import { Atores } from '../../shared/models/atores';
+import { Projeto } from '../../models/projeto';
+import { ProjetoService } from '../../services/projeto.service';
 
 @Component({
   selector: 'app-atores',
@@ -10,13 +12,19 @@ import { Atores } from '../../shared/models/atores';
 })
 export class AtoresComponent {
 
-  constructor(
-    private atoresService: AtorService,
-    private router: Router
-  ) {}
+  userId!: number;
+  projetoId!: number;
+  projeto!: Projeto;
 
-  userId: number = +localStorage.getItem("usu_id")!;
-  proId: number = 1; // ACHAR UM JEITO DE COLOCAR  QUAL PROJETO ESTÁ RELACIONADO AOS ATORES (Arrumar aqui)
+  constructor(
+    private projetoService: ProjetoService,
+    private atoresService: AtorService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.projetoId = this.route.snapshot.params['id'];
+    this.userId = Number(localStorage.getItem('usu_id'));
+  }
 
 
   // datasource
@@ -57,8 +65,15 @@ export class AtoresComponent {
   mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do ator em questão serão excluídos do sistema.";
 
   ngOnInit(){
+    this.buscarProjeto(this.projetoId, this.userId);
     this.executarBusca();
-    //this.buscarMetricas();
+    this.buscarMetricas();
+  }
+
+  buscarProjeto(id: number, user: number) {
+    this.projetoService.findById(id, user).subscribe((projeto) => {
+      this.projeto = projeto;
+    });
   }
 
   onSubmitSearch(event: Event): void {
@@ -67,54 +82,12 @@ export class AtoresComponent {
   }
 
   private executarBusca(): void {
-    this.atoresService
-      .findByNome(
-        this.proId,
-        this.filterValue,
-        this.paginaAtual,
-        this.tamanhoPagina
-      )
-      .subscribe(this.processarResultado());
-
-    this.buscarMetricas();
+    if(!this.filterValue){
+      this.atoresService.list(this.projetoId, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+    } else {
+      this.atoresService.listByName(this.projetoId, this.filterValue, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+    }
   }
-
-  private buscarMetricas(): void {
-
-    this.atoresService
-    .getNumberOfAtores(
-      this.userId
-    )
-    .subscribe((data) => {
-      this.totalAtores = data.totalCount;
-    });
-
-    this.atoresService
-    .getNumberOfAtoresSimples(
-      this.userId
-    )
-    .subscribe((data) => {
-      this.atoresSimples = data.totalCount;
-    });
-
-    this.atoresService
-    .getNumberOfAtoresMedios(
-      this.userId
-    )
-    .subscribe((data) => {
-      this.atoresMedios = data.totalCount;
-    });
-
-    this.atoresService
-    .getNumberOfAtoresComplexos(
-      this.userId
-    )
-    .subscribe((data) => {
-      this.atoresComplexos = data.totalCount;
-    });
-
-  }
-
 
   private processarResultado() {
     return (data: any) => {
@@ -126,14 +99,21 @@ export class AtoresComponent {
     };
   }
 
+  backToProjectHome(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId]);
+  }
 
-  editarItem(item: any) {
-    this.router.navigate(['/dashboard/editar-atores/', item.id]);
+  openNewAtor(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'inserir-atores']);
   }
 
   excluirItem(item: any) {
     this.itemExclusao = item.id;
     this.showModal = true;
+  }
+
+  editarItem(item: any) {
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'editar-atores', item.id]);
   }
 
   cancelarExclusao() {
@@ -161,4 +141,38 @@ export class AtoresComponent {
     }
   }
 
+  private buscarMetricas(): void {
+
+    this.atoresService
+    .getNumberOfAtores(
+      this.projetoId
+    )
+    .subscribe((data) => {
+      this.totalAtores = data.totalCount;
+    });
+
+    this.atoresService
+    .getNumberOfAtoresSimples(
+      this.projetoId
+    )
+    .subscribe((data) => {
+      this.atoresSimples = data.totalCount;
+    });
+
+    this.atoresService
+    .getNumberOfAtoresMedios(
+      this.projetoId
+    )
+    .subscribe((data) => {
+      this.atoresMedios = data.totalCount;
+    });
+
+    this.atoresService
+    .getNumberOfAtoresComplexos(
+      this.projetoId
+    )
+    .subscribe((data) => {
+      this.atoresComplexos = data.totalCount;
+    });
+  }
 }

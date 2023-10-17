@@ -12,9 +12,9 @@ export class CasoUsoService {
     @Inject('servicesRootUrl') private servicesRootUrl: string
   ) {}
 
-  create(casoUso: casoUso): Observable<any> {
+  create(casoUso: casoUso, requisito: number): Observable<any> {
     return this.httpClient.post<casoUso>(
-      `${this.servicesRootUrl}/caso-de-uso/new?caso=${localStorage.getItem('cas_id')}`,
+      `${this.servicesRootUrl}/caso-de-uso/new?requisito=${requisito}`,
       casoUso,
       {
         headers: {
@@ -24,9 +24,9 @@ export class CasoUsoService {
     );
   }
 
-  update(casoUso: casoUso): Observable<any> {
+  update(casoUso: casoUso, requisito: number): Observable<any> {
     return this.httpClient.patch<casoUso>(
-      `${this.servicesRootUrl}/caso-de-uso/update?caso=${casoUso.id}`,
+      `${this.servicesRootUrl}/caso-de-uso/update?caso=${casoUso.id}&requsito=${requisito}`,
       casoUso,
       {
         headers: {
@@ -38,7 +38,7 @@ export class CasoUsoService {
 
   delete(idCaso: number): Observable<any> {
     return this.httpClient.delete<casoUso>(
-      `${this.servicesRootUrl}/caso-de-uso/delete?casoUso=${idCaso}`,
+      `${this.servicesRootUrl}/caso-de-uso/delete?caso=${idCaso}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -47,9 +47,9 @@ export class CasoUsoService {
     );
   }
 
-  findById(idCaso: number): Observable<any> {
+  getById(idCaso: number): Observable<casoUso> {
     return this.httpClient.get<casoUso>(
-      `${this.servicesRootUrl}/caso-de-uso/findById?caso=${idCaso}`,
+      `${this.servicesRootUrl}/caso-de-uso/findById?id=${idCaso}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -58,14 +58,20 @@ export class CasoUsoService {
     );
   }
 
-  findByNome(
-    id: number,
-    nome: string,
-    page: number,
-    pageSize: number
-  ): Observable<GetResponseCaso[]> {
+  list(idPro: number, idReq: number, page: number, pageSize: number): Observable<GetResponseCaso[]> {
     return this.httpClient.get<GetResponseCaso[]>(
-      `${this.servicesRootUrl}/caso-de-uso/findByNome?requisitos=${id}&nome=${nome}&page=${page}&pageSize=${pageSize}`, //Verificar com o Bruno sovre a rotas dos requisitsos
+      `${this.servicesRootUrl}/caso-de-uso?requisito=${idReq}&projeto${idPro}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  listByName(idReq: number, nome: string, page: number, pageSize: number): Observable<GetResponseCaso[]> {
+    return this.httpClient.get<GetResponseCaso[]>(
+      `${this.servicesRootUrl}/caso-de-uso/findByNome?projeto=${idReq}&nome=${nome}&page=${page}&size=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),

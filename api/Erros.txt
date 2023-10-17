@@ -1,11 +1,9 @@
 Parte Vini:
     Atores:
-    -Resolver ID para listagem
-    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+    OK
 
     Caso de Uso:
-    -Resolver ID para listagem
-    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+    OK
 
     Cenarios:
     -Resolver ID para listagem

@@ -1,36 +1,174 @@
 import connection from "../database/databaseConnection.js";
 
 export const CasoUsoController = {
+  async create(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando cadastro de Caso de uso");
+
+      const { nome, complexidade, descricao } = req.body;
+
+      const req_id = req.query.requisito;
+
+      console.log(
+        "[INFO] Iniciando inserção do Caso de Uso no banco de dados"
+      );
+
+      if (
+        !validateCasoUsoFields(
+          nome,
+          complexidade,
+          descricao,
+          res
+        )
+      ) {
+        await connection("CASOS_DE_USO").insert({
+          CAS_NOME: nome,
+          CAS_COMPLEXIDADE: complexidade,
+          CAS_DESCRICAO: descricao,
+          FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id,
+        });
+
+        console.log("[INFO] Caso de Uso cadastrado com sucesso");
+
+        return res.status(201).send();
+      }
+    } catch (err) {
+      console.log(
+        "[ERROR] [CasoUsoController] Erro no método create: " + err
+      );
+    }
+  },
+
+  async update(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando atualização de Caso de Uso");
+
+      const { nome, complexidade, descricao } = req.body;
+
+      const req_id = req.query.requisito;
+      const cas_id = req.query.caso;
+
+      console.log(
+        "[INFO] Iniciando atualização do Caso de Uso no banco de dados"
+      );
+
+      if (
+        !validateCasoUsoFields(
+          nome,
+          complexidade,
+          descricao,
+          res
+        )
+      ) {
+        await connection("CASOS_DE_USO")
+          .where({ CAS_ID: cas_id })
+          .update({
+            CAS_NOME: nome,
+            CAS_COMPLEXIDADE: complexidade,
+            CAS_DESCRICAO: descricao,
+            FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id,
+          });
+
+        console.log("[INFO] Caso de Uso atualizado com sucesso");
+
+        return res.status(200).send();
+      }
+    } catch (err) {
+      console.log(
+        "[ERROR] [CasoUsoController] Erro no método update: " + err
+      );
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando exclusão de Caso de Uso");
+
+      const cas_id = req.query.caso;
+
+      console.log(
+        "[INFO] Iniciando exclusão do Caso de Uso no banco de dados"
+      );
+
+      await connection("CASOS_DE_USO").where({ CAS_ID: cas_id }).del();
+
+      console.log("[INFO] Caso de Uso excluído com sucesso");
+
+      return res.status(200).send();
+    } catch (err) {
+      console.log(
+        "[ERROR] [CasoUsoController] Erro no método delete: " + err
+      );
+    }
+  },
+
+  async getById(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando busca de Caso de Uso por ID");
+
+      const cas_id = req.query.id;
+      console.log(cas_id);
+
+      console.log(
+        "[INFO] Iniciando busca do Caso de Uso no banco de dados"
+      );
+
+      const Caso = await connection("CASOS_DE_USO")
+        .select("*")
+        .where("CAS_ID", cas_id)
+        .first();
+
+      console.log("[INFO] Caso de Uso encontrado com sucesso");
+
+      return res.json({
+        id: Caso.CAS_ID,
+        nome: Caso.CAS_NOME,
+        complexidade: Caso.CAS_COMPLEXIDADE,
+        descricao: Caso.CAS_DESCRICAO,
+      });
+    } catch (err) {
+      console.log(
+        "[ERROR] [CasoUsoController] Erro no método getById: " + err
+      );
+    }
+  },
+
   async list(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando listagem de casos de uso");
+      console.log(
+        "[INFO] Iniciando listagem de Caso de Uso do Projeto"
+      );
+      const req_id = req.query.requisito;
+      console.log(req_id);
 
-      const uc_id = req.query.user;
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
-      const pageSize = parseInt(req.query.pagesize, 10) || 5; // Tamanho da página, padrão é 10
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
 
       const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
 
-      // PESQUISA COM PAGINAÇÃO
-      const CasoUso = await connection("CASO_DE_USO")
+      const Caso = await connection("CASOS_DE_USO")
         .select("*")
-        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
+        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", req_id)
         .offset(offset) // Aplica o deslocamento
         .limit(pageSize); // Limita o número de resultados por página
 
-      const serializedItems = CasoUso.map((item) => {
+      const serializedItems = Caso.map((Caso) => {
         return {
-          id: item.CAS_ID,
-          nome: item.CAS_NOME,
-          descricao: item.CAS_DESCRICAO,
-          complexidade: item.CAS_COMPLEXIDADE,
+          id: Caso.CAS_ID,
+          nome: Caso.CAS_NOME,
+          complexidade: Caso.CAS_COMPLEXIDADE,
+          descricao: Caso.CAS_DESCRICAO,
         };
       });
 
-      // ADQUIRINDO TOTAL DE REGISTROS
-      const totalCountQuery = connection("CASO_DE_USO")
-        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
+      //ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = await connection("CASOS_DE_USO")
+        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", req_id)
         .count("* as totalCount")
         .first();
 
@@ -48,46 +186,51 @@ export const CasoUsoController = {
           number: page,
         },
       });
-    } catch (err) {
-      console.log("[ERROR] [CasoUsoController] Erro no método list: " + err);
+    } catch (error) {
+      console.log(
+        "[ERROR] [CasoUsoController] Erro no método list: " + error
+      );
     }
   },
 
   async listByName(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando listagem de casos de uso por nome");
+      console.log("[INFO] Iniciando listagem de Caso de Uso");
+      const req_id = req.query.requisito;
+      const nome = req.query.nome;
 
-      const uc_id = req.query.requisitos; // Arrumar aqui ////////////////////////// Verificar rota
-      console.log(uc_id);
-      const uc_nome = req.query.nome;
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
-      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10.
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
 
       const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
 
-      // PESQUISA COM PAGINAÇÃO
-      const CasoUso = await connection("CASOS_DE_USO")
-        .select("*") 
-        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
-        .andWhereLike("CAS_NOME", `%${uc_nome}%`)
-        .offset(offset)
-        .limit(pageSize);
+      const Caso = await connection("CASOS_DE_USO")
+        .select("*")
+        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", req_id)
+        .andWhereLike("CAS_NOME", `%${nome}%`)
+        .offset(offset) // Aplica o deslocamento
+        .limit(pageSize); // Limita o número de resultados por página
 
-      const serializedItems = CasoUso.map((item) => ({
-        id: item.CAS_ID,
-        nome: item.CAS_NOME,
-        complexidade: item.CAS_COMPLEXIDADE,
-        descricao: item.CAS_DESCRICAO,
-      }));
+      const serializedItems = Caso.map((Caso) => {
+        return {
+          id: Caso.CAS_ID,
+          nome: Caso.CAS_NOME,
+          complexidade: Caso.CAS_COMPLEXIDADE,
+          descricao: Caso.CAS_DESCRICAO,
+        };
+      });
 
-      const totalCountQuery = connection("CASOS_DE_USO")
-        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", uc_id)
-        .andWhereLike("CAS_NOME", `%${uc_nome}%`)
+      //ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = await connection("CASOS_DE_USO")
+        .where("FK_REQUISITOS_FUNCIONAIS_REQ_ID", req_id)
+        .andWhereLike("CAS_NOME", `%${nome}%`)
         .count("* as totalCount")
         .first();
 
       const { totalCount } = await totalCountQuery;
+
+      // CALCULANDO TOTAL DE PÁGINAS
       const totalPages = Math.ceil(totalCount / pageSize);
 
       return res.json({
@@ -99,141 +242,14 @@ export const CasoUsoController = {
           number: page,
         },
       });
-    } catch (err) {
+    } catch (error) {
       console.log(
-        "[ERROR] [CasoUsoController] Erro no método listByName: " + err
+        "[ERROR] [CasoUsoController] Erro no método listByNamePaginated: " +
+          error
       );
     }
   },
 
-  async getById(req, res) {
-    try {
-      console.log("");
-      console.log("[INFO] Iniciando busca de casos de uso por id");
-
-      const caso_id = req.query.caso;
-        console.log(caso_id);
-
-      const caso = await connection("CASOS_DE_USO")
-        .select("*")
-        .where("CAS_ID", caso_id)
-        .first();
-
-      const serializedItems = {
-        id: caso.CAS_ID,
-        nome: caso.CAS_NOME,
-        complexidade: caso.CAS_COMPLEXIDADE,
-        descricao: caso.CAS_DESCRICAO,
-      };
-
-      return res.json(serializedItems);
-    } catch (err) {
-      console.log("[ERROR] [CasoUsoController] Erro no método getById: " + err);
-    }
-  },
-
-  async create(req, res) {
-    try {
-        console.log("");
-        console.log("[INFO] Iniciando cadastro de caso de uso")
-  
-        const {nome, descricao, complexidade  } = req.body;
-        
-        const uc_id = req.query; // caso null //****///****////****//////////// */ */ */
-        console.log(uc_id);
-      
-        console.log("[INFO] Iniciando inserção do caso de uso no banco de dados")
-  
-        if(!validateCasoUsoFields(nome, descricao, complexidade, res)) {
-  
-          const trx = await connection.transaction();
-  
-          const insertedIds = await trx("CASOS_DE_USO").insert({
-            CAS_NOME: nome,
-            CAS_DESCRICAO: descricao,
-            CAS_COMPLEXIDADE: complexidade, 
-            FK_REQUISITOS_FUNCIONAIS_REQ_ID: 1, // Arrumar isso aqui  /////*//////***///////****///////// */ */
-           });
-  
-          await trx.commit();
-  
-          console.log("[INFO] caso de uso cadastrado com sucesso")
-  
-          return res.status(201).send();
-  
-        }
-  
-      } catch (err) {
-        console.log("[ERROR] [CasoUsoController] Erro no método create: " + err);
-      }
-  },
-
-  async update(req, res) {
-    try {
-        console.log("");
-        console.log("[INFO] Iniciando atualização de caso de uso")
-  
-        const {nome, complexidade, descricao} = req.body;
-        
-        const cas_id = req.query.caso;
-        console.log(cas_id);
-        console.log(nome, complexidade, descricao);
-      
-        console.log("[INFO] Iniciando atualização de caso de uso no banco de dados")
-  
-        if(!validateCasoUsoFields(nome, complexidade, descricao, res)) {
-  
-          const trx = await connection.transaction();
-  
-          await trx("CASOS_DE_USO").where(
-            "CAS_ID",
-            cas_id
-          ).update({
-            CAS_NOME: nome,
-            CAS_COMPLEXIDADE: complexidade,
-            CAS_DESCRICAO: descricao,
-          });
-  
-          await trx.commit();
-  
-          console.log("[INFO] Caso de uso atualizado com sucesso")
-  
-          return res.status(200).send();
-  
-        }
-  
-      } catch (err) {
-        console.log("[ERROR] [CasoUsoController] Erro no método update: " + err);
-      }
-  },
-
-  async delete(req, res) {
-    try {
-        console.log("");
-        console.log("[INFO] Iniciando exclusão de caso de uso")
-  
-        const caso_id = req.query.casoUso;
-        console.log(caso_id);
-      
-        console.log("[INFO] Iniciando exclusão de ccaso de uso no banco de dados")
-  
-        const trx = await connection.transaction();
-  
-        await trx("CASOS_DE_USO").where(
-          "CAS_ID",
-          caso_id
-        ).delete();
-  
-        await trx.commit();
-  
-        console.log("[INFO] Caso de uso excluído com sucesso")
-  
-        return res.status(200).send();
-  
-      } catch (err) {
-        console.log("[ERROR] [CasoUsoController] Erro no método delete: " + err);
-      }
-  },
   async getNumberOfCasos(req, res) {
     try {
       console.log("");
