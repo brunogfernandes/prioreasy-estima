@@ -38,10 +38,36 @@ export const PriorizacaoController = {
     }
   },
 
-  async insertResultadoPriorizacao(req, res){
+  async completePriorizacaoStakeholder(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando inserção de classificação final do requisito");
+      console.log("[INFO] Iniciando inserção de participação de stakeholder");
+
+      const id = req.query.stakeholder;
+
+      await connection("STATUS_PRIORIZACAO")
+        .where("FK_STAKEHOLDERS_STA_ID", id)
+        .update({
+          SPA_PARTICIPACAO_REALIZADA: 1,
+        });
+
+      res.status(200).send({
+        message: "Participação de stakeholder inserida com sucesso!",
+      });
+    } catch (err) {
+      console.log(
+        "[ERROR] [StakeholderController] Erro no método completeStakeholderParticipation: " +
+          err
+      );
+    }
+  },
+
+  async insertResultadoPriorizacao(req, res) {
+    try {
+      console.log("");
+      console.log(
+        "[INFO] Iniciando inserção de classificação final do requisito"
+      );
       const req_id = req.query.requisito;
       const resultadoFinal = req.query.resultadoFinal;
 
@@ -50,10 +76,12 @@ export const PriorizacaoController = {
       );
 
       await connection("RESULTADOS_REQUISITOS")
-        .where({FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id})
-        .update({RPR_RESULTADO_FINAL: resultadoFinal});
+        .where({ FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id })
+        .update({ RPR_RESULTADO_FINAL: resultadoFinal });
 
-      console.log("[INFO] Classificação final do requisito inserida com sucesso");
+      console.log(
+        "[INFO] Classificação final do requisito inserida com sucesso"
+      );
 
       return res.status(201).send();
     } catch (err) {
@@ -62,5 +90,5 @@ export const PriorizacaoController = {
           err
       );
     }
-  }
+  },
 };

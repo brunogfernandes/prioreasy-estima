@@ -17,4 +17,5 @@ export class TabelaComponent {
   @Input() onEdit!: (item: any) => void;
   @Input() onDelete!: (item: any) => void;
   @Input() onView!: (item: any) => void;
+  @Input() customEmptyMessage!: string;
 }

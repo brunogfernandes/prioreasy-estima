@@ -28,6 +28,8 @@ import { EditarRequisitoComponent } from './pages/editar-requisito/editar-requis
 import { PainelPrioreasyComponent } from './pages/painel-prioreasy/painel-prioreasy.component';
 import { StakeholdersProjetoComponent } from './pages/stakeholders-projeto/stakeholders-projeto.component';
 import { InserirStakeholderComponent } from './pages/inserir-stakeholder/inserir-stakeholder.component';
+import { PainelStakeholderComponent } from './pages/painel-stakeholder/painel-stakeholder.component';
+import { PriorizarRequisitosComponent } from './pages/priorizar-requisitos/priorizar-requisitos.component';
 
 const routes: Routes = [
   {
@@ -75,6 +77,10 @@ const routes: Routes = [
       // Prioreasy - Stakeholders
       { path: 'projeto/:id/stakeholders', component: StakeholdersProjetoComponent },
       { path: 'projeto/:id/inserir-stakeholder', component: InserirStakeholderComponent},
+
+      // Stakeholders
+      { path: 'painel-stakeholder', component: PainelStakeholderComponent},
+      { path: 'priorizacao-stakeholder/:id', component: PriorizarRequisitosComponent},
 
     ],
   },

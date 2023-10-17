@@ -48,6 +48,7 @@ routes.post('/signin-stakeholder', AuthController.signinStakeholder);
 routes.get('/projetos/findByColaborador', verifyToken, ProjetoController.list);
 routes.get('/projetos/findByNome', verifyToken, ProjetoController.listByName);
 routes.get('/projetos/findById', verifyToken, ProjetoController.getById);
+routes.get('/projetos/findByIdStakeholder', verifyToken, ProjetoController.getByStakeholderId);
 routes.get('/projetos/metrics/total', verifyToken, ProjetoController.getNumberOfProjects);
 routes.get('/projetos/metrics/new', verifyToken, ProjetoController.getNumberOfNewProjects);
 routes.get('/projetos/metrics/ongoing', verifyToken, ProjetoController.getNumberOfOngoingProjects);
@@ -80,12 +81,14 @@ routes.patch('/requisitos/update', verifyToken, RequisitoController.update);
 routes.delete('/requisitos/delete', verifyToken, RequisitoController.delete);
 routes.get('/requisitos/resultados/list', verifyToken, RequisitoController.listResultados);
 routes.get('/requisitos/resultados/findByNome', verifyToken, RequisitoController.listResultadosByName);
+routes.get('/requisitos/priorizacao-stakeholders', verifyToken, RequisitoController.listPriorizacaoStakeholdersWithoutPagination);
 routes.get('/requisitos/priorizacao-stakeholders/list', verifyToken, RequisitoController.listPriorizacaoStakeholders);
 routes.get('/requisitos/priorizacao-stakeholders/findByNome', verifyToken, RequisitoController.listPriorizacaoStakeholdersByNome);
 
 // Priorization Routes (CLOSED)
 routes.post('/priorizacao-stakeholders/new', verifyToken, PriorizacaoController.insertPriorizacaoStakeholder);
 routes.patch('/priorizacao-stakeholders/result', verifyToken, PriorizacaoController.insertResultadoPriorizacao);
+routes.patch('/priorizacao-stakeholders/complete', verifyToken, PriorizacaoController.completePriorizacaoStakeholder);
 
 // Actor Routes (CLOSED)
 routes.get('/atores/findByAtor', verifyToken, AtoresController.list);

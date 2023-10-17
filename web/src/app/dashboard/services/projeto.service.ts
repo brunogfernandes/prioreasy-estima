@@ -59,6 +59,17 @@ export class ProjetoService {
     );
   }
 
+  findByIdStakeholder(idStakeholder: number): Observable<any> {
+    return this.httpClient.get<Projeto>(
+      `${this.servicesRootUrl}/projetos/findByIdStakeholder?stakeholder=${idStakeholder}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
   findByColaborador(): Observable<GetResponseProjetos[]> {
     return this.httpClient.get<GetResponseProjetos[]>(
       `${this.servicesRootUrl}/projetos/findByColaborador?user=${localStorage.getItem('usu_id')}`,

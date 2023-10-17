@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Requisito } from '../models/requisito';
 import { ResultadoRequisito } from '../models/resultadoRequisito';
+import { PriorizacaoRequisito } from '../models/priorizacaoRequisito';
 
 @Injectable({
   providedIn: 'root',
@@ -59,8 +60,12 @@ export class RequisitoService {
     );
   }
 
-  list(idProjeto: number, page: number, pageSize: number): Observable<GetResponseRequisitos[]> {
-    return this.httpClient.get<GetResponseRequisitos[]>(
+  list(
+    idProjeto: number,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseRequisitos> {
+    return this.httpClient.get<GetResponseRequisitos>(
       `${this.servicesRootUrl}/requisitos?projeto=${idProjeto}&page=${page}&size=${pageSize}`,
       {
         headers: {
@@ -70,8 +75,13 @@ export class RequisitoService {
     );
   }
 
-  listByName(idProjeto: number, nome: string, page: number, pageSize: number): Observable<GetResponseRequisitos[]> {
-    return this.httpClient.get<GetResponseRequisitos[]>(
+  listByName(
+    idProjeto: number,
+    nome: string,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseRequisitos> {
+    return this.httpClient.get<GetResponseRequisitos>(
       `${this.servicesRootUrl}/requisitos/findByNome?projeto=${idProjeto}&nome=${nome}&page=${page}&size=${pageSize}`,
       {
         headers: {
@@ -81,8 +91,12 @@ export class RequisitoService {
     );
   }
 
-  listResultado(idProjeto: number, page: number, pageSize: number): Observable<GetResponseResultados[]> {
-    return this.httpClient.get<GetResponseResultados[]>(
+  listResultado(
+    idProjeto: number,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseResultados> {
+    return this.httpClient.get<GetResponseResultados>(
       `${this.servicesRootUrl}/requisitos/resultados/list?projeto=${idProjeto}&page=${page}&size=${pageSize}`,
       {
         headers: {
@@ -92,9 +106,60 @@ export class RequisitoService {
     );
   }
 
-  listResultadoByName(idProjeto: number, nome: string, page: number, pageSize: number): Observable<GetResponseRequisitos[]> {
-    return this.httpClient.get<GetResponseRequisitos[]>(
+  listResultadoByName(
+    idProjeto: number,
+    nome: string,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponseResultados> {
+    return this.httpClient.get<GetResponseResultados>(
       `${this.servicesRootUrl}/requisitos/resultados/findByNome?projeto=${idProjeto}&nome=${nome}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  listPriorizacaoStakeholder(
+    idProjeto: number,
+    idStakeholder: number,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponsePriorizacoes> {
+    return this.httpClient.get<GetResponsePriorizacoes>(
+      `${this.servicesRootUrl}/requisitos/priorizacao-stakeholders/list?projeto=${idProjeto}&stakeholder=${idStakeholder}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  listPriorizacaoStakeholderByName(
+    idProjeto: number,
+    idStakeholder: number,
+    nome: string,
+    page: number,
+    pageSize: number
+  ): Observable<GetResponsePriorizacoes> {
+    return this.httpClient.get<GetResponsePriorizacoes>(
+      `${this.servicesRootUrl}/requisitos/priorizacao-stakeholders/findByNome?projeto=${idProjeto}&stakeholder=${idStakeholder}&nome=${nome}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  listRequisitosPriorizacaoStakeholder(
+    idProjeto: number,
+  ): Observable<GetResponsePriorizacoes> {
+    return this.httpClient.get<GetResponsePriorizacoes>(
+      `${this.servicesRootUrl}/requisitos/priorizacao-stakeholders?projeto=${idProjeto}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -124,3 +189,12 @@ interface GetResponseResultados {
   };
 }
 
+interface GetResponsePriorizacoes {
+  items: PriorizacaoRequisito[];
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
+}

@@ -374,11 +374,44 @@ export const RequisitoController = {
     }
   },
 
+  async listPriorizacaoStakeholdersWithoutPagination(req, res){
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando listagem de Requisitos Funcionais do Stakeholder");
+      const pro_id = req.query.projeto;
+
+      const requisitos = await connection("REQUISITOS_FUNCIONAIS")
+        .select("*")
+        .where("FK_PROJETOS_PRO_ID", pro_id)
+
+      const serializedItems = requisitos.map((requisito) => {
+        return {
+          id: requisito.REQ_ID,
+          nome: requisito.REQ_NOME,
+          especificacao: requisito.REQ_ESPECIFICACAO,
+          numeroIdentificador: requisito.REQ_NUMERO_IDENTIFICADOR,
+          respostaPositiva: null,
+          respostaNegativa: null,
+          classificacaoRequisito: null,
+        };
+      });
+
+      return res.json({
+        items: serializedItems,
+      });
+    } catch (error) {
+      console.log(
+        "[ERROR] [RequisitoController] Erro no método listPriorizacaoStakeholders: " + error
+      );
+    }
+  },
+
   async listPriorizacaoStakeholders(req, res) {
     try {
       console.log("");
       console.log("[INFO] Iniciando listagem de Requisitos Funcionais do Stakeholder");
       const pro_id = req.query.projeto;
+      const sta_id = req.query.stakeholder;
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
       const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
@@ -394,6 +427,7 @@ export const RequisitoController = {
           "PRIORIZACAO_STAKEHOLDERS.FK_REQUISITOS_FUNCIONAIS_REQ_ID"
         )
         .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhere("FK_STAKEHOLDERS_STA_ID", sta_id)
         .offset(offset) // Aplica o deslocamento
         .limit(pageSize); // Limita o número de resultados por página
 
@@ -411,7 +445,14 @@ export const RequisitoController = {
 
       const totalCountQuery = await connection("REQUISITOS_FUNCIONAIS")
         .count("* as totalCount")
+        .leftJoin(
+          "PRIORIZACAO_STAKEHOLDERS",
+          "REQUISITOS_FUNCIONAIS.REQ_ID",
+          "=",
+          "PRIORIZACAO_STAKEHOLDERS.FK_REQUISITOS_FUNCIONAIS_REQ_ID"
+        )
         .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhere("FK_STAKEHOLDERS_STA_ID", sta_id)
         .first();
 
       const { totalCount } = await totalCountQuery;
@@ -440,6 +481,7 @@ export const RequisitoController = {
       console.log("");
       console.log("[INFO] Iniciando listagem de Requisitos Funcionais do Stakeholder por nome");
       const pro_id = req.query.projeto;
+      const sta_id = req.query.stakeholder;
       const nome = req.query.nome;
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
@@ -456,6 +498,7 @@ export const RequisitoController = {
           "PRIORIZACAO_STAKEHOLDERS.FK_REQUISITOS_FUNCIONAIS_REQ_ID"
         )
         .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhere("FK_STAKEHOLDERS_STA_ID", sta_id)
         .andWhereLike("REQ_NOME", `%${nome}%`)
         .offset(offset) // Aplica o deslocamento
         .limit(pageSize); // Limita o número de resultados por página
@@ -474,7 +517,14 @@ export const RequisitoController = {
 
       const totalCountQuery = await connection("REQUISITOS_FUNCIONAIS")
         .count("* as totalCount")
+        .leftJoin(
+          "PRIORIZACAO_STAKEHOLDERS",
+          "REQUISITOS_FUNCIONAIS.REQ_ID",
+          "=",
+          "PRIORIZACAO_STAKEHOLDERS.FK_REQUISITOS_FUNCIONAIS_REQ_ID"
+        )
         .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhere("PRIORIZACAO_STAKEHOLDERS.FK_STAKEHOLDERS_STA_ID", sta_id)
         .andWhereLike("REQ_NOME", `%${nome}%`)
         .first();
 

@@ -178,6 +178,41 @@ export const ProjetoController = {
     }
   },
 
+
+  async getByStakeholderId(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando busca de projetos por id do stakeholder");
+
+      const sta_id = req.query.stakeholder;
+
+      const projects = await connection("STAKEHOLDERS")
+        .select("*")
+        .join(
+          "PROJETOS",
+          "STAKEHOLDERS.FK_PROJETOS_PRO_ID",
+          "=",
+          "PROJETOS.PRO_ID"
+        )
+        .where("STA_ID", sta_id)
+        .first();
+
+      const serializedItems = {
+        id: projects.PRO_ID,
+        nome: projects.PRO_NOME,
+        descricao: projects.PRO_DESCRICAO,
+        empresa: projects.PRO_EMPRESA,
+        dataInicio: projects.PRO_DATA_INICIO.toLocaleDateString(),
+        previsaoFim: projects.PRO_PREVISAO_FIM.toLocaleDateString(),
+        status: projects.PRO_STATUS,
+      };
+
+      return res.json(serializedItems);
+    } catch (error) {
+      console.log("[ERROR] [ProjetoController] Erro no método getByStakeholderId: " + err);
+    }
+  },
+
   async create(req, res) {
     try {
       console.log("");
