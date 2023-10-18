@@ -86,7 +86,7 @@ export class CasoDeUsoComponent {
 
     private executarBusca(): void {
       if(!this.filterValue){
-        this.casoUsoService.list(this.requisitoId, this.projetoId ,this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+        this.casoUsoService.list(this.projetoId ,this.requisitoId,this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
       } else {
         this.casoUsoService.listByName(this.requisitoId, this.filterValue, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
       }

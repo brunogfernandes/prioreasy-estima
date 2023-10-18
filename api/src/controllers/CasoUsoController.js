@@ -197,8 +197,10 @@ export const CasoUsoController = {
     try {
       console.log("");
       console.log("[INFO] Iniciando listagem de Caso de Uso");
-      const req_id = req.query.requisito;
+      const req_id = req.query.projeto;
       const nome = req.query.nome;
+
+      console.log(req_id);
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
       const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
