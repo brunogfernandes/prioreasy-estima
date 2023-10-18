@@ -61,8 +61,8 @@ export class CenariosComponent {
   // diálogo de confirmação
   showModal: boolean = false;
   itemExclusao!: number;
-  tituloDialogo: string = "Deseja realmente excluir este ator?";
-  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do ator em questão serão excluídos do sistema.";
+  tituloDialogo: string = "Deseja realmente excluir este cenario?";
+  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do cenario em questão serão excluídos do sistema.";
 
   ngOnInit(){
     this.buscarProjeto(this.projetoId, this.userId);
@@ -103,7 +103,7 @@ export class CenariosComponent {
   }
 
   openNewCenario(){
-    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', this.casoId, 'inserir-cenario']);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', this.casoId, 'inserir-cenarios']);
   }
 
   excluirItem(item: any) {
@@ -112,7 +112,7 @@ export class CenariosComponent {
   }
 
   editarItem(item: any) {
-    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', this.casoId, 'editar-cenario', item.id]);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', this.casoId, 'editar-cenarios', item.id]);
   }
 
   cancelarExclusao() {

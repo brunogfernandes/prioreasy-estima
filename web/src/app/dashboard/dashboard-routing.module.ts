@@ -42,9 +42,6 @@ const routes: Routes = [
         component: ProjetosComponent,
       },
 
-      { path: 'cenarios/:id', component: CenariosComponent},
-      { path: 'inserir-cenarios', component: InserirCenariosComponent},
-      { path: 'editar-cenarios/:id', component: EditarCenariosComponent},
       { path: 'fatores-tecnicos', component: FatoresTecnicosComponent},
       { path: 'editar-fator-tecnico/:id', component: EditarFatorTecnicoComponent},
       { path: 'fatores-ambientais', component: FatoresAmbientaisComponent},

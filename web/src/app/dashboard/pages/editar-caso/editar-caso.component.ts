@@ -100,7 +100,7 @@ export class EditarCasoComponent {
     } else {
       this.casoUso = this.createCaso();
 
-      this.casoUsoService.update(this.casoUso, this.projetoId).subscribe({
+      this.casoUsoService.update(this.casoUso, this.RequisitoId).subscribe({
         next: () => {
           this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.RequisitoId, 'caso-de-uso']);
         },

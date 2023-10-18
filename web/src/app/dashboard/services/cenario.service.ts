@@ -60,7 +60,7 @@ export class CenarioService {
 
   list(idPro: number, idReq: number, idCaso: number, page: number, pageSize: number): Observable<GetResponseCenario[]> {
     return this.httpClient.get<GetResponseCenario[]>(
-      `${this.servicesRootUrl}/caso-de-uso?requisito=${idReq}&projeto${idPro}&caso${idCaso}&page=${page}&size=${pageSize}`,
+      `${this.servicesRootUrl}/cenarios?projeto=${idPro}&requisito=${idReq}&caso=${idCaso}&page=${page}&size=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -71,7 +71,7 @@ export class CenarioService {
 
   listByName(idCen: number, nome: string, page: number, pageSize: number): Observable<GetResponseCenario[]> {
     return this.httpClient.get<GetResponseCenario[]>(
-      `${this.servicesRootUrl}/caso-de-uso/findByNome?caso=${idCen}&nome=${nome}&page=${page}&size=${pageSize}`,
+      `${this.servicesRootUrl}/cenarios/findByNome?caso=${idCen}&nome=${nome}&page=${page}&size=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),

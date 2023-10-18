@@ -9,6 +9,7 @@ export const CenariosController = {
       const { nome, tipo, descricao } = req.body;
 
       const cas_id = req.query.caso;
+      console.log(cas_id);
 
       console.log(
         "[INFO] Iniciando inserção do Cenario no banco de dados"
@@ -143,6 +144,7 @@ export const CenariosController = {
         "[INFO] Iniciando listagem de Cenario do Projeto"
       );
       const cas_id = req.query.caso;
+      console.log(cas_id);
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
       const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
@@ -159,7 +161,7 @@ export const CenariosController = {
         return {
           id: Cenario.CEN_ID,
           nome: Cenario.CEN_NOME,
-          tipo: Cenario.CEN_tipo,
+          tipo: Cenario.CEN_TIPO,
           descricao: Cenario.CEN_DESCRICAO,
         };
       });
