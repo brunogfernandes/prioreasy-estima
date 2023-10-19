@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FatTecService } from '../../services/fatTec.service';
 import { FatTecProService } from '../../services/fatTecPro.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fatTec } from '../../shared/models/fatTec';
 import { fatTecPro } from '../../shared/models/fatTecPro';
+import { ProjetoService } from '../../services/projeto.service';
+import { Projeto } from '../../models/projeto'
 
 @Component({
   selector: 'app-fatores-tecnicos',
@@ -12,42 +14,35 @@ import { fatTecPro } from '../../shared/models/fatTecPro';
 })
 export class FatoresTecnicosComponent {
 
-  constructor(
-    private FatTecService: FatTecService,
-    private FatTecProService: FatTecProService,
-    private router: Router
-  ) {}
+  userId!: number;
+  projetoId!: number;
+  projeto!: Projeto;
 
-  userId: number = +localStorage.getItem("usu_id")!;
-  //proId: number = 1; // ACHAR UM JEITO DE COLOCAR  QUAL PROJETO ESTÁ RELACIONADO AOS ATORES (Arrumar aqui)
+  constructor(
+    private projetoService: ProjetoService,
+    private fatTecService: FatTecProService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.projetoId = this.route.snapshot.params['id'];
+    this.userId = Number(localStorage.getItem('usu_id'));
+  }
 
 
   // datasource
-  fatTec: fatTec[] = [];
-  fatTecPro: fatTecPro[] = [];
+  fat: fatTecPro  [] = [];
 
   // tabela
   colunasTabela: string[] = [
-    'ID',
-    'Descrição',
-    'Peso'
-  ];
-
-  camposEntidade: string[] = [
-    'id',
-    'descricao',
-    'peso',
-  ];
-
-  colunasTabela1: string[] = [
-    'ID Fator Tecnico',
+    'Descricao',
+    'Peso',
     'Valor'
   ];
 
-  camposEntidade1: string[] = [
-    'fator',
+  camposEntidade: string[] = [
+    'descricao',
+    'peso',
     'valor'
-
   ];
 
   // formulario de busca
@@ -55,70 +50,71 @@ export class FatoresTecnicosComponent {
 
   // paginação
   paginaAtual: number = 0;
-  tamanhoPagina: number = 13;
+  tamanhoPagina: number = 8;
   quantidadeElementos: number = 0;
   totalPaginas: number = 0;
 
   // diálogo de confirmação
-  /*
   showModal: boolean = false;
   itemExclusao!: number;
-  tituloDialogo: string = "Deseja realmente excluir este cenario?";
-  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do cenario em questão serão excluídos do sistema.";
-*/
+  tituloDialogo: string = "Deseja realmente excluir este Fator Tecnico?";
+  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do Fator Tecnico em questão serão excluídos do sistema.";
+
   ngOnInit(){
+    this.buscarProjeto(this.projetoId, this.userId);
     this.executarBusca();
-    this.executarBusca1();
   }
 
-  onSubmitSearch(event: Event): void {
-    this.filterValue = (event.target as HTMLInputElement).value;
-    this.executarBusca();
-    this.executarBusca1();
+  buscarProjeto(id: number, user: number) {
+    this.projetoService.findById(id, user).subscribe((projeto) => {
+      this.projeto = projeto;
+    });
   }
+
 
   private executarBusca(): void {
-    this.FatTecService
-      .findByDescricao(
-        this.userId,
-        this.filterValue,
-        this.paginaAtual,
-        this.tamanhoPagina
-      )
-      .subscribe(this.processarResultado());
-  }
-  private executarBusca1(): void {
-    this.FatTecProService
-    .findById(
-      this.userId,
-      this.paginaAtual,
-      this.tamanhoPagina
-    )
-    .subscribe(this.processarResultado1());
+
+    this.fatTecService.list(this.projetoId, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+
   }
 
   private processarResultado() {
     return (data: any) => {
-      this.fatTec = data.items;
+      this.fat = data.items;
       this.paginaAtual = data.page.number;
-      this.tamanhoPagina = data.page.size;
-      this.quantidadeElementos = data.page.totalElements;
-      this.totalPaginas = data.page.totalPages;
-    };
-  }
-  private processarResultado1() {
-    return (data: any) => {
-      this.fatTecPro = data.items;
-      this.paginaAtual = data.page.number;
-      this.tamanhoPagina = data.page.size;
+      this.tamanhoPagina = 8;
       this.quantidadeElementos = data.page.totalElements;
       this.totalPaginas = data.page.totalPages;
     };
   }
 
+  backToProjectHome(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId]);
+  }
+
+  openNewFator(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'inserir-fator-tecnico']);
+  }
+
+  excluirItem(item: any) {
+    this.itemExclusao = item.id;
+    this.showModal = true;
+  }
 
   editarItem(item: any) {
-    this.router.navigate(['/dashboard/editar-fator-tecnico/', item.id]);
+    console.log(item);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'editar-fator-tecnico', item.id]);
+  }
+
+  cancelarExclusao() {
+    this.showModal = false;
+  }
+
+  confirmarExclusao() {
+    this.fatTecService.delete(this.itemExclusao).subscribe(() => {
+      this.showModal = false;
+      this.executarBusca();
+    });
   }
 
   prevPage() {

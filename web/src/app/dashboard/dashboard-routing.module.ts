@@ -30,6 +30,8 @@ import { StakeholdersProjetoComponent } from './pages/stakeholders-projeto/stake
 import { InserirStakeholderComponent } from './pages/inserir-stakeholder/inserir-stakeholder.component';
 import { PainelStakeholderComponent } from './pages/painel-stakeholder/painel-stakeholder.component';
 import { PriorizarRequisitosComponent } from './pages/priorizar-requisitos/priorizar-requisitos.component';
+import { InserirFatorAmbientalComponent } from './pages/inserir-fator-ambiental/inserir-fator-ambiental.component';
+import { InserirFatorTecnicoComponent } from './pages/inserir-fator-tecnico/inserir-fator-tecnico.component';
 
 const routes: Routes = [
   {
@@ -42,10 +44,6 @@ const routes: Routes = [
         component: ProjetosComponent,
       },
 
-      { path: 'fatores-tecnicos', component: FatoresTecnicosComponent},
-      { path: 'editar-fator-tecnico/:id', component: EditarFatorTecnicoComponent},
-      { path: 'fatores-ambientais', component: FatoresAmbientaisComponent},
-      { path: 'editar-fator-ambiental/:id', component: EditarFatorAmbientalComponent},
       { path: 'estimativa', component: EstimativaComponent},
       { path: 'inserir-estimativa', component: InserirEstimativaComponent},
 
@@ -91,6 +89,18 @@ const routes: Routes = [
       { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/cenarios', component: CenariosComponent},
       { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/inserir-cenarios', component: InserirCenariosComponent},
       { path: 'projeto/:idPro/requisitos/:idReq/caso-de-uso/:id/editar-cenarios/:idCen', component: EditarCenariosComponent},
+
+      //Estima - Fatores Ambientais
+
+      { path: 'projeto/:id/fatores-ambientais', component: FatoresAmbientaisComponent},
+      { path: 'projeto/:id/inserir-fator-ambiental', component: InserirFatorAmbientalComponent},
+      { path: 'projeto/:id/editar-fator-ambiental/:idfat', component: EditarFatorAmbientalComponent},
+
+      //Estima - Fatores Técnicos
+
+      { path: 'projeto/:id/fatores-tecnicos', component: FatoresTecnicosComponent},
+      { path: 'projeto/:id/inserir-fator-tecnico', component: InserirFatorTecnicoComponent},
+      { path: 'projeto/:id/editar-fator-tecnico/:idfat', component: EditarFatorTecnicoComponent},
 
     ],
   },

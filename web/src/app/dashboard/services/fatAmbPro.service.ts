@@ -12,13 +12,31 @@ export class FatAmbProService {
     @Inject('servicesRootUrl') private servicesRootUrl: string
   ) {}
 
-  findById(
-    id: number,
-    page: number,
-    pageSize: number
-  ): Observable<GetResponseFatores[]> {
+  list(idPro: number, page: number, pageSize: number): Observable<GetResponseFatores[]> {
     return this.httpClient.get<GetResponseFatores[]>(
-      `${this.servicesRootUrl}/fatores-ambientais/findById?fator=${id}&page=${page}&pageSize=${pageSize}`, //Verificar com o Bruno sobre a rotas dos requisitsos
+      `${this.servicesRootUrl}/fatores-ambientais?projeto=${idPro}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+  create(fatAmb: fatAmbPro, projeto: number): Observable<any> {
+    return this.httpClient.post<fatAmbPro>(
+      `${this.servicesRootUrl}/fatores-ambientais/new?projeto=${projeto}`,
+      fatAmb,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  delete(idFat: number): Observable<any> {
+    return this.httpClient.delete<fatAmbPro>(
+      `${this.servicesRootUrl}/fatores-ambientais/delete?idFat=${idFat}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -40,7 +58,7 @@ export class FatAmbProService {
 
   update(fatores: fatAmbPro): Observable<any> {
     return this.httpClient.patch<fatAmbPro>(
-      `${this.servicesRootUrl}/fatores-ambientais/update?fator=${fatores.id}`,
+      `${this.servicesRootUrl}/fatores-ambientais/update?fatores=${fatores.id}`,
       fatores,
       {
         headers: {

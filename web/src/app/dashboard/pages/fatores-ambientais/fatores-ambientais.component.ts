@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { FatAmbService } from '../../services/fatAmb.service';
 import { FatAmbProService } from '../../services/fatAmbPro.service';
-import { Router } from '@angular/router';
-import { fatAmb } from '../../shared/models/fatAmb';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fatAmbPro } from '../../shared/models/fatAmbPro';
+import { ProjetoService } from '../../services/projeto.service';
+import { Projeto } from '../../models/projeto';
 
 @Component({
   selector: 'app-fatores-ambientais',
@@ -12,42 +12,35 @@ import { fatAmbPro } from '../../shared/models/fatAmbPro';
 })
 export class FatoresAmbientaisComponent {
 
-  constructor(
-    private FatAmbService: FatAmbService,
-    private FatAmbProService: FatAmbProService,
-    private router: Router
-  ) {}
+  userId!: number;
+  projetoId!: number;
+  projeto!: Projeto;
 
-  userId: number = +localStorage.getItem("usu_id")!;
-  //proId: number = 1; // ACHAR UM JEITO DE COLOCAR  QUAL PROJETO ESTÁ RELACIONADO AOS ATORES (Arrumar aqui)
+  constructor(
+    private projetoService: ProjetoService,
+    private fatAmbService: FatAmbProService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.projetoId = this.route.snapshot.params['id'];
+    this.userId = Number(localStorage.getItem('usu_id'));
+  }
 
 
   // datasource
-  fatAmb: fatAmb[] = [];
-  fatAmbPro: fatAmbPro[] = [];
+  fat: fatAmbPro  [] = [];
 
   // tabela
   colunasTabela: string[] = [
-    'ID',
-    'Descrição',
-    'Peso'
-  ];
-
-  camposEntidade: string[] = [
-    'id',
-    'descricao',
-    'peso',
-  ];
-
-  colunasTabela1: string[] = [
-    'ID Fator Ambiental',
+    'Descricao',
+    'Peso',
     'Valor'
   ];
 
-  camposEntidade1: string[] = [
-    'fator',
+  camposEntidade: string[] = [
+    'descricao',
+    'peso',
     'valor'
-
   ];
 
   // formulario de busca
@@ -60,55 +53,32 @@ export class FatoresAmbientaisComponent {
   totalPaginas: number = 0;
 
   // diálogo de confirmação
-  /*
   showModal: boolean = false;
   itemExclusao!: number;
-  tituloDialogo: string = "Deseja realmente excluir este cenario?";
-  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do cenario em questão serão excluídos do sistema.";
-*/
+  tituloDialogo: string = "Deseja realmente excluir este Fator Ambiente?";
+  mensagemDialogo: string = "Essa ação é irreversível. Todos os dados do Fator Ambiente em questão serão excluídos do sistema.";
+
   ngOnInit(){
+    this.buscarProjeto(this.projetoId, this.userId);
     this.executarBusca();
-    this.executarBusca1();
   }
 
-  onSubmitSearch(event: Event): void {
-    this.filterValue = (event.target as HTMLInputElement).value;
-    this.executarBusca();
-    this.executarBusca1();
+  buscarProjeto(id: number, user: number) {
+    this.projetoService.findById(id, user).subscribe((projeto) => {
+      this.projeto = projeto;
+    });
   }
+
 
   private executarBusca(): void {
-    this.FatAmbService
-      .findByDescricao(
-        this.userId,
-        this.filterValue,
-        this.paginaAtual,
-        this.tamanhoPagina
-      )
-      .subscribe(this.processarResultado());
-  }
-  private executarBusca1(): void {
-    this.FatAmbProService
-    .findById(
-      this.userId,
-      this.paginaAtual,
-      this.tamanhoPagina
-    )
-    .subscribe(this.processarResultado1());
+
+    this.fatAmbService.list(this.projetoId, this.paginaAtual, this.tamanhoPagina).subscribe(this.processarResultado());
+
   }
 
   private processarResultado() {
     return (data: any) => {
-      this.fatAmb = data.items;
-      this.paginaAtual = data.page.number;
-      this.tamanhoPagina = data.page.size;
-      this.quantidadeElementos = data.page.totalElements;
-      this.totalPaginas = data.page.totalPages;
-    };
-  }
-  private processarResultado1() {
-    return (data: any) => {
-      this.fatAmbPro = data.items;
+      this.fat = data.items;
       this.paginaAtual = data.page.number;
       this.tamanhoPagina = data.page.size;
       this.quantidadeElementos = data.page.totalElements;
@@ -116,9 +86,32 @@ export class FatoresAmbientaisComponent {
     };
   }
 
+  backToProjectHome(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId]);
+  }
+
+  openNewFator(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'inserir-fator-ambiental']);
+  }
+
+  excluirItem(item: any) {
+    this.itemExclusao = item.id;
+    this.showModal = true;
+  }
 
   editarItem(item: any) {
-    this.router.navigate(['/dashboard/editar-fator-ambiental/', item.id]);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'editar-fator-ambiental', item.id]);
+  }
+
+  cancelarExclusao() {
+    this.showModal = false;
+  }
+
+  confirmarExclusao() {
+    this.fatAmbService.delete(this.itemExclusao).subscribe(() => {
+      this.showModal = false;
+      this.executarBusca();
+    });
   }
 
   prevPage() {

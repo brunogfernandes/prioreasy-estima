@@ -124,17 +124,19 @@ routes.delete('/cenarios/delete', verifyToken, CenariosController.delete);
 
 // Fatores Ambientais Routes (CLOSED)
 
-routes.get('/fatores-ambientais/findByDescricao', verifyToken, FatAmbController.listByDescricao);
-routes.get('/fatores-ambientais/findById', verifyToken, FatAmbController.listById);
+routes.get('/fatores-ambientais', verifyToken, FatAmbController.list);
 routes.get('/fatores-ambientais/getById', verifyToken, FatAmbController.getById);
+routes.post('/fatores-ambientais/new', verifyToken, FatAmbController.create);
 routes.patch('/fatores-ambientais/update', verifyToken, FatAmbController.update);
+routes.delete('/fatores-ambientais/delete', verifyToken, FatAmbController.delete);
 
 // Fatores Tecnicos Routes (CLOSED)
 
-routes.get('/fatores-tecnicos/findByDescricao', verifyToken, FatTecController.listByDescricao);
-routes.get('/fatores-tecnicos/findById', verifyToken, FatTecController.listById);
+routes.get('/fatores-tecnicos', verifyToken, FatTecController.list);
 routes.get('/fatores-tecnicos/getById', verifyToken, FatTecController.getById);
+routes.post('/fatores-tecnicos/new', verifyToken, FatTecController.create);
 routes.patch('/fatores-tecnicos/update', verifyToken, FatTecController.update);
+routes.delete('/fatores-tecnicos/delete', verifyToken, FatTecController.delete);
 
 
 export const allRoutes = routes;

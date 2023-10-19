@@ -11,9 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditarFatorAmbientalComponent {
 
-  FatorFormGroup!: FormGroup;
+    FatorFormGroup!: FormGroup;
     FatorAmbPro!: fatAmbPro;
     fatorId!: number;
+    projetoId!: number;
 
     constructor(
       private fatorAmbProService: FatAmbProService,
@@ -21,7 +22,8 @@ export class EditarFatorAmbientalComponent {
       private route: ActivatedRoute,
       private formBuilder: FormBuilder
     ) {
-      this.fatorId = +this.route.snapshot.paramMap.get('id')!;
+      this.fatorId = +this.route.snapshot.paramMap.get('idfat')!;
+      this.projetoId = +this.route.snapshot.paramMap.get('id')!;
     }
 
     ngOnInit(): void {
@@ -56,7 +58,8 @@ export class EditarFatorAmbientalComponent {
     createFator(): fatAmbPro {
       return new fatAmbPro(
         this.valor!.value,
-        this.fatorId
+        this.fatorId,
+        this.projetoId
       );
     }
 
@@ -69,7 +72,7 @@ export class EditarFatorAmbientalComponent {
 
         this.fatorAmbProService.update(this.FatorAmbPro).subscribe({
           next: () => {
-            this.router.navigate(['/dashboard/fatores-ambientais']);
+            this.router.navigate(['/dashboard/projeto/', this.projetoId, 'fatores-ambientais']);
           },
 
           error: (err) => {

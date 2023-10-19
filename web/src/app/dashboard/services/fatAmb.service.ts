@@ -27,6 +27,16 @@ export class FatAmbService {
       }
     );
   }
+  list(idPro: number, page: number, pageSize: number): Observable<GetResponseFatores[]> {
+    return this.httpClient.get<GetResponseFatores[]>(
+      `${this.servicesRootUrl}/fatores-ambientais?projeto=${idPro}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 }
 
 interface GetResponseFatores {
