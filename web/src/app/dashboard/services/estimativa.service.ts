@@ -58,6 +58,17 @@ export class EstimativaService {
     );
   }
 
+  getDadosTotal(id:number): Observable<EntityCount> {
+    return this.httpClient.get<EntityCount>(
+      `${this.servicesRootUrl}/estimativa/dadosTotais?total=${id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
 
 }
 

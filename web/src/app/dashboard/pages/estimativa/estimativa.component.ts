@@ -37,8 +37,8 @@ export class EstimativaComponent {
     'Peso por Caso de Uso',
     'Peso por Ator',
     'Peso por Pontos por Caso de Uso',
-    'Resultado em Horas',
-    'Resultado dos Pontos por Caso de Uso'
+    'Resultado dos Pontos por Caso de Uso',
+    'Resultado em Horas'
   ];
 
   camposEntidade: string[] = [
@@ -47,8 +47,8 @@ export class EstimativaComponent {
     'pesoCaso',
     'pesoAtor',
     'pesoPontos',
-    'resHoras',
-    'resPontos'
+    'resPontos',
+    'resHoras'
   ];
 
   // formulario de busca

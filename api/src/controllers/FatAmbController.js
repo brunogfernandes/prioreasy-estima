@@ -124,8 +124,8 @@ export const FatAmbController = {
       console.log("[INFO] Fator Ambiente encontrado com sucesso");
 
       return res.json({
-        id: Fator.AMP_ID,
         valor: Fator.AMP_VALOR,
+        id: Fator.AMP_ID,
       });
     } catch (err) {
       console.log(

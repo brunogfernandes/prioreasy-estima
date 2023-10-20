@@ -3,39 +3,43 @@ import connection from "../database/databaseConnection.js";
 export const EstimativaController = {
 
     async create(req, res) {
-      try {
-        console.log("");
-        console.log("[INFO] Iniciando cadastro de Estimativa");
-  
-        const { Efactor, Tfactor, PesoCaso, PesoAtor, PesoPontos, ResHoras, ResPontos} = req.body;
-  
-        const pro_id = req.query.projeto;
-  
-        console.log(
-          "[INFO] Iniciando inserção da estimativa no banco de dados"
-        );
+        try {
+          console.log("");
+          console.log("[INFO] Iniciando cadastro de Estimativa");
+      
+          const pro_id = req.query.projeto;
+          const {Efactor,Tfactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras} = req.body;
 
+          console.log("[INFO] Iniciando inserção da estimativa no banco de dados");
+          const est = await connection("ESTIMATIVAS_ESFORCOS")
+            .select("*")
+            .where("FK_PROJETOS_PRO_ID", pro_id)
+            .offset(offset) // Aplica o deslocamento
+            .limit(pageSize); // Limita o número de resultados por página
+
+            
+      
           await connection("ESTIMATIVAS_ESFORCOS").insert({
             EST_EFACTOR: Efactor,
             EST_TFACTOR: Tfactor,
             EST_PESO_CASOS_USO: PesoCaso,
             EST_PESO_ATORES: PesoAtor,
             EST_PESO_PONTOS_CASOS_USO: PesoPontos,
-            EST_RESULTADO_HORAS: ResHoras,
             EST_RESULTADO_PONTOS_CASOS_USO: ResPontos,
+            EST_RESULTADO_HORAS: ResHoras,
             FK_PROJETOS_PRO_ID: pro_id,
           });
-  
+
           console.log("[INFO] Estimativa cadastrada com sucesso");
-  
+      
           return res.status(201).send();
-        
-      } catch (err) {
-        console.log(
-          "[ERROR] [EstimativaController] Erro no método create: " + err
-        );
-      }
-    },
+      
+        } catch (err) {
+          console.log("[ERROR] [EstimativaController] Erro no método create: " + err);
+          res.status(500).send("Erro ao criar a estimativa.");
+        }
+      },
+      
 
     async list(req, res) {
         try {
@@ -143,7 +147,7 @@ export const EstimativaController = {
           const totalComplexos = await getTotalCasosComplexos(pro_id);
     
           const somaPonderada =
-            totalSimples * 1 + totalMedios * 2 + totalComplexos * 3;
+            totalSimples * 5 + totalMedios * 10 + totalComplexos * 15;
     
             await connection("ESTIMATIVAS_ESFORCOS").update({
               EST_PESO_CASOS_USO: somaPonderada }).where("PRO_ID", pro_id);
@@ -161,6 +165,51 @@ export const EstimativaController = {
           return res.status(500).json({ error: "Internal Server Error" });
         }
       },
+
+      async getDadosTotais(req, res) {
+        try {
+            console.log("");
+            console.log("[INFO] Iniciando Dados Totais");
+      
+            const pro_id = req.query.id;
+            const Efactor = 0;
+            const Tfactor = 0;
+      
+          // Serializar as estimativas
+          const serializedItems = await Promise.all(est.map(async (est) => {
+            const factorDescription = await connection("PROJETOS")
+              .select("PRO_RESTFACTOR", "PRO_RESEFACTOR")
+              .where("PRO_ID", est.FK_PROJETOS_PRO_ID)
+              .first();
+      
+            return {
+              Efactor: factorDescription ? factorDescription.PRO_RESTFACTOR : "Efactor não encontrada",
+              Tfactor: factorDescription ? factorDescription.PRO_RESEFACTOR : "Tfactor não encontrada",
+            };
+          }));
+          const PesoAtor = this.getTotalAtoresPonderados(pro_id);
+          const PesoCaso = this.getTotalCasosPonderados(pro_id);
+          const PesoPontos = PesoAtor + PesoCaso;
+          const ResPontos = Efactor * Tfactor * PesoPontos;
+          const ResHoras = ResPontos * 20;
+
+          return res.json= {
+            Efactor,
+            Tfactor,
+            PesoCaso,
+            PesoAtor,
+            PesoPontos,
+            ResHoras,
+            ResPontos,
+          };
+
+          } catch (err) {
+            console.log(
+              "[ERROR] [EstimativaController] Erro no método getDadosTotais: " + err
+            );
+            return res.status(500).json({ error: "Internal Server Error" });
+          }
+    },
 
 }
 
