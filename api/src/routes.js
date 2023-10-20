@@ -12,6 +12,7 @@ import { FatTecController } from './controllers/FatTecController.js';
 import { ColaboradorController } from './controllers/ColaboradorController.js';
 import { RequisitoController } from './controllers/RequisitoController.js';
 import { PriorizacaoController } from './controllers/PriorizacaoController.js';
+import { EstimativaController } from './controllers/EstimativaController.js';
 
 const routes = express.Router();
 
@@ -137,6 +138,15 @@ routes.get('/fatores-tecnicos/getById', verifyToken, FatTecController.getById);
 routes.post('/fatores-tecnicos/new', verifyToken, FatTecController.create);
 routes.patch('/fatores-tecnicos/update', verifyToken, FatTecController.update);
 routes.delete('/fatores-tecnicos/delete', verifyToken, FatTecController.delete);
+
+// Estimativa Routes (CLOSED)
+
+routes.get('/estimativa', verifyToken, EstimativaController.list);
+routes.get('/estimativa/totalAtores', verifyToken, EstimativaController.getTotalAtoresPonderados);
+routes.get('/estimativa/totalCasos', verifyToken, EstimativaController.getTotalCasosPonderados);
+routes.post('/estimativa/new', verifyToken, EstimativaController.create);
+
+
 
 
 export const allRoutes = routes;

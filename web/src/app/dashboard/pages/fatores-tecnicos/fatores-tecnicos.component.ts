@@ -82,7 +82,7 @@ export class FatoresTecnicosComponent {
     return (data: any) => {
       this.fat = data.items;
       this.paginaAtual = data.page.number;
-      this.tamanhoPagina = 8;
+      this.tamanhoPagina = data.page.size;
       this.quantidadeElementos = data.page.totalElements;
       this.totalPaginas = data.page.totalPages;
     };

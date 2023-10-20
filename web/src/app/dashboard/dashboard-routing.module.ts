@@ -44,9 +44,6 @@ const routes: Routes = [
         component: ProjetosComponent,
       },
 
-      { path: 'estimativa', component: EstimativaComponent},
-      { path: 'inserir-estimativa', component: InserirEstimativaComponent},
-
       // Projeto
       { path: 'inserir-projeto/:id', component: InserirProjetoComponent },
       { path: 'editar-projeto/:id', component: EditarProjetoComponent },
@@ -101,6 +98,11 @@ const routes: Routes = [
       { path: 'projeto/:id/fatores-tecnicos', component: FatoresTecnicosComponent},
       { path: 'projeto/:id/inserir-fator-tecnico', component: InserirFatorTecnicoComponent},
       { path: 'projeto/:id/editar-fator-tecnico/:idfat', component: EditarFatorTecnicoComponent},
+
+      //Estima - Estimativa
+
+      { path: 'projeto/:id/estimativa', component: EstimativaComponent},
+      { path: 'projeto/:id/inserir-estimativa', component: InserirEstimativaComponent},
 
     ],
   },

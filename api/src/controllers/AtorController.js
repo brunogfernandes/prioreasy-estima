@@ -288,6 +288,8 @@ export const AtoresController = {
         .first();
   
       const { totalCount } = totalCountQuery;
+
+
   
       return res.json({
         totalCount: totalCount,
@@ -345,8 +347,6 @@ export const AtoresController = {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   },
-  
-   
 };
 
 function validateAtorFields(nome, descricao, complexidade, res) {
