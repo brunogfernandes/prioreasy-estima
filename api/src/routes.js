@@ -142,9 +142,6 @@ routes.delete('/fatores-tecnicos/delete', verifyToken, FatTecController.delete);
 // Estimativa Routes (CLOSED)
 
 routes.get('/estimativa', verifyToken, EstimativaController.list);
-routes.get('/estimativa/totalAtores', verifyToken, EstimativaController.getTotalAtoresPonderados);
-routes.get('/estimativa/totalCasos', verifyToken, EstimativaController.getTotalCasosPonderados);
-routes.get('/estimativa/dadosTotais', verifyToken, EstimativaController.getDadosTotais);
 routes.post('/estimativa/new', verifyToken, EstimativaController.create);
 
 

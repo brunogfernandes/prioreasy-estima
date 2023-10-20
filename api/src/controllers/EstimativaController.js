@@ -8,17 +8,41 @@ export const EstimativaController = {
           console.log("[INFO] Iniciando cadastro de Estimativa");
       
           const pro_id = req.query.projeto;
-          const {Efactor,Tfactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras} = req.body;
+          console.log(pro_id);
+          const Tfactor = await getTfactor(pro_id);
+          const Efactor = await getEfactor(pro_id);
+
+          console.log(Tfactor,Efactor)  
+      
+          const totalSimples = await getTotalCasosSimples(pro_id);
+          const totalMedios = await getTotalCasosMedios(pro_id);
+          const totalComplexos = await getTotalCasosComplexos(pro_id);
+      
+          const soma =
+            totalSimples * 5 + totalMedios * 10 + totalComplexos * 15;
+      
+          const totalSimplesA = await getTotalAtoresSimples(pro_id);
+          const totalMediosA = await getTotalAtoresMedios(pro_id);
+          const totalComplexosA = await getTotalAtoresComplexos(pro_id);
+      
+          const somaA =
+            totalSimplesA * 1 + totalMediosA * 2 + totalComplexosA * 3;
+
+          const PesoCaso = soma;
+          const PesoAtor = somaA;
+
+          const PesoPontos = soma + somaA;
+          const ResPontos = (soma + somaA) * Tfactor * Efactor;
+          const ResHoras = (soma + somaA) * Tfactor * Efactor * 20;
+
+          console.log(Tfactor,Efactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras)
 
           console.log("[INFO] Iniciando inserção da estimativa no banco de dados");
           const est = await connection("ESTIMATIVAS_ESFORCOS")
             .select("*")
             .where("FK_PROJETOS_PRO_ID", pro_id)
-            .offset(offset) // Aplica o deslocamento
-            .limit(pageSize); // Limita o número de resultados por página
+            .first();
 
-            
-      
           await connection("ESTIMATIVAS_ESFORCOS").insert({
             EST_EFACTOR: Efactor,
             EST_TFACTOR: Tfactor,
@@ -63,13 +87,13 @@ export const EstimativaController = {
     
           const serializedItems = est.map((est) => {
             return {
-                efactor: est.EST_EFACTOR,
-                tfactor: est.EST_TFACTOR,
-                pesoCaso: est.EST_PESO_CASOS_USO,
-                pesoAtor: est.EST_PESO_ATORES,
-                pesoPontos: est.EST_PESO_PONTOS_CASOS_USO,
-                resHoras: est.EST_RESULTADO_HORAS,
-                resPontos: est.EST_RESULTADO_PONTOS_CASOS_USO,
+                Efactor: est.EST_EFACTOR,
+                Tfactor: est.EST_TFACTOR,
+                PesoCaso: est.EST_PESO_CASOS_USO,
+                PesoAtor: est.EST_PESO_ATORES,
+                PesoPontos: est.EST_PESO_PONTOS_CASOS_USO,
+                ResHoras: est.EST_RESULTADO_HORAS,
+                ResPontos: est.EST_RESULTADO_PONTOS_CASOS_USO,
                 id: est.EST_ID
             };
           });
@@ -101,117 +125,24 @@ export const EstimativaController = {
         }
       },
 
-      async getTotalAtoresPonderados(req, res) {
-        try {
-          console.log("");
-          console.log("[INFO] Iniciando cálculo da soma ponderada de atores");
-    
-          const pro_id = req.query.projeto;
-    
-          const totalSimples = await getTotalAtoresSimples(pro_id);
-          const totalMedios = await getTotalAtoresMedios(pro_id);
-          const totalComplexos = await getTotalAtoresComplexos(pro_id);
-    
-          const somaPonderada =
-            totalSimples * 1 + totalMedios * 2 + totalComplexos * 3;
-    
-            console.log(somaPonderada);
-    
-            await connection("ESTIMATIVAS_ESFORCOS").update({
-              EST_PESO_ATORES: somaPonderada }).where("PRO_ID", pro_id);
-    
-          return res.json({
-            totalSimples,
-            totalMedios,
-            totalComplexos,
-            somaPonderada,
-          });
-          
-        } catch (err) {
-          console.log(
-            "[ERROR] [EstimativaController] Erro no método getTotalAtoresPonderados: " + err
-          );
-          return res.status(500).json({ error: "Internal Server Error" });
-        }
-      },
+    }
 
-      async getTotalCasosPonderados(req, res) {
-        try {
-          console.log("");
-          console.log("[INFO] Iniciando cálculo da soma ponderada dos casos");
-    
-          const pro_id = req.query.projeto;
-    
-          const totalSimples = await getTotalCasosSimples(pro_id);
-          const totalMedios = await getTotalCasosMedios(pro_id);
-          const totalComplexos = await getTotalCasosComplexos(pro_id);
-    
-          const somaPonderada =
-            totalSimples * 5 + totalMedios * 10 + totalComplexos * 15;
-    
-            await connection("ESTIMATIVAS_ESFORCOS").update({
-              EST_PESO_CASOS_USO: somaPonderada }).where("PRO_ID", pro_id);
-    
-          return res.json({
-            totalSimples,
-            totalMedios,
-            totalComplexos,
-            somaPonderada,
-          });
-        } catch (err) {
-          console.log(
-            "[ERROR] [EstimativaController] Erro no método getTotalAtoresPonderados: " + err
-          );
-          return res.status(500).json({ error: "Internal Server Error" });
-        }
-      },
-
-      async getDadosTotais(req, res) {
-        try {
-            console.log("");
-            console.log("[INFO] Iniciando Dados Totais");
-      
-            const pro_id = req.query.id;
-            const Efactor = 0;
-            const Tfactor = 0;
-      
-          // Serializar as estimativas
-          const serializedItems = await Promise.all(est.map(async (est) => {
-            const factorDescription = await connection("PROJETOS")
-              .select("PRO_RESTFACTOR", "PRO_RESEFACTOR")
-              .where("PRO_ID", est.FK_PROJETOS_PRO_ID)
-              .first();
-      
-            return {
-              Efactor: factorDescription ? factorDescription.PRO_RESTFACTOR : "Efactor não encontrada",
-              Tfactor: factorDescription ? factorDescription.PRO_RESEFACTOR : "Tfactor não encontrada",
-            };
-          }));
-          const PesoAtor = this.getTotalAtoresPonderados(pro_id);
-          const PesoCaso = this.getTotalCasosPonderados(pro_id);
-          const PesoPontos = PesoAtor + PesoCaso;
-          const ResPontos = Efactor * Tfactor * PesoPontos;
-          const ResHoras = ResPontos * 20;
-
-          return res.json= {
-            Efactor,
-            Tfactor,
-            PesoCaso,
-            PesoAtor,
-            PesoPontos,
-            ResHoras,
-            ResPontos,
-          };
-
-          } catch (err) {
-            console.log(
-              "[ERROR] [EstimativaController] Erro no método getDadosTotais: " + err
-            );
-            return res.status(500).json({ error: "Internal Server Error" });
-          }
-    },
-
+async function getTfactor(pro_id) {
+    const totalCountQuery = await connection("PROJETOS")
+      .where("PRO_ID", pro_id)
+      .select("PRO_RESTFACTOR")
+      .first();
+      return totalCountQuery.PRO_RESTFACTOR;
 }
+
+async function getEfactor(pro_id) {
+  const totalCountQuery = await connection("PROJETOS")
+    .where("PRO_ID", pro_id)
+    .select("PRO_RESEFACTOR")
+    .first();
+    return totalCountQuery.PRO_RESEFACTOR;
+}
+
 
 async function getTotalAtoresSimples(pro_id) {
     const totalCountQuery = await connection("ATORES")
@@ -245,6 +176,8 @@ async function getTotalAtoresSimples(pro_id) {
 
   async function getTotalCasosSimples(pro_id) {
     const totalCountQuery = await connection("CASOS_DE_USO")
+      .join("REQUISITOS_FUNCIONAIS", "REQ_ID", "=", "CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID")
+      .join("PROJETOS", "PROJETOS.PRO_ID", "=", "REQUISITOS_FUNCIONAIS.FK_PROJETOS_PRO_ID")
       .where("FK_PROJETOS_PRO_ID", pro_id)
       .andWhere("CAS_COMPLEXIDADE", "=", "SIMPLES")
       .count("* as totalCount")
@@ -255,6 +188,8 @@ async function getTotalAtoresSimples(pro_id) {
   
   async function getTotalCasosMedios(pro_id) {
     const totalCountQuery = await connection("CASOS_DE_USO")
+      .join("REQUISITOS_FUNCIONAIS", "REQ_ID", "=", "CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID")
+      .join("PROJETOS", "PROJETOS.PRO_ID", "=", "REQUISITOS_FUNCIONAIS.FK_PROJETOS_PRO_ID")
       .where("FK_PROJETOS_PRO_ID", pro_id)
       .andWhere("CAS_COMPLEXIDADE", "=", "MEDIO")
       .count("* as totalCount")
@@ -265,6 +200,8 @@ async function getTotalAtoresSimples(pro_id) {
   
   async function getTotalCasosComplexos(pro_id) {
     const totalCountQuery = await connection("CASOS_DE_USO")
+      .join("REQUISITOS_FUNCIONAIS", "REQ_ID", "=", "CASOS_DE_USO.FK_REQUISITOS_FUNCIONAIS_REQ_ID")
+      .join("PROJETOS", "PROJETOS.PRO_ID", "=", "REQUISITOS_FUNCIONAIS.FK_PROJETOS_PRO_ID")
       .where("FK_PROJETOS_PRO_ID", pro_id)
       .andWhere("CAS_COMPLEXIDADE", "=", "COMPLEXO")
       .count("* as totalCount")

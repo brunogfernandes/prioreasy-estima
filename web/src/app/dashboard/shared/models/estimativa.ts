@@ -2,13 +2,13 @@ export class Estimativa {
 
   constructor(
 
-    public efactor: number,
-    public tfactor: number,
-    public pesoCaso: number,
-    public pesoAtor: number,
-    public pesoPontos: number,
-    public resHoras: number,
-    public resPontos: number,
+    public Efactor: number,
+    public Tfactor: number,
+    public PesoCaso: number,
+    public PesoAtor: number,
+    public PesoPontos: number,
+    public ResHoras: number,
+    public ResPontos: number,
     public id?: number
 
     ) {}

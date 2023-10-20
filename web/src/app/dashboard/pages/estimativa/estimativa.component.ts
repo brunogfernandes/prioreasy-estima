@@ -42,13 +42,13 @@ export class EstimativaComponent {
   ];
 
   camposEntidade: string[] = [
-    'efactor',
-    'tfactor',
-    'pesoCaso',
-    'pesoAtor',
-    'pesoPontos',
-    'resPontos',
-    'resHoras'
+    'Efactor',
+    'Tfactor',
+    'PesoCaso',
+    'PesoAtor',
+    'PesoPontos',
+    'ResPontos',
+    'ResHoras'
   ];
 
   // formulario de busca
@@ -93,7 +93,8 @@ export class EstimativaComponent {
   }
 
   openNewEstimativa(){
-    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'inserir-estimativa']);
+    this.estimativaService.create(this.estimativa[0], this.projetoId).subscribe(this.processarResultado());
+    window.location.reload();
   }
 
   prevPage() {

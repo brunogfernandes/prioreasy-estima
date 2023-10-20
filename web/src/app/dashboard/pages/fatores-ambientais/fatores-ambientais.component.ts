@@ -32,7 +32,7 @@ export class FatoresAmbientaisComponent {
 
   // tabela
   colunasTabela: string[] = [
-    'Descricao',
+    'Descrição',
     'Peso',
     'Valor'
   ];

@@ -46,12 +46,15 @@ export const FatAmbController = {
       // CALCULANDO TOTAL DE PÁGINAS
       const totalPages = Math.ceil(totalCount / pageSize);
 
-      const totalValue = (serializedItems.reduce((total, item) => {
+      const totalValue = ((1.4 + (serializedItems.reduce((total, item) => {
         if (typeof item.peso === 'number') {
           total += (item.valor * item.peso);
         }
         return total;
-      }, 0) * -0.3) + 1.4;
+      }, 0) * (-0.3)))*-1);
+
+      console.log(totalValue);
+
 
       await connection("PROJETOS").update({
         PRO_RESEFACTOR: totalValue }).where("PRO_ID", pro_id);

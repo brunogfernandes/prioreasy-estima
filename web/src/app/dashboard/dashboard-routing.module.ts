@@ -32,6 +32,7 @@ import { PainelStakeholderComponent } from './pages/painel-stakeholder/painel-st
 import { PriorizarRequisitosComponent } from './pages/priorizar-requisitos/priorizar-requisitos.component';
 import { InserirFatorAmbientalComponent } from './pages/inserir-fator-ambiental/inserir-fator-ambiental.component';
 import { InserirFatorTecnicoComponent } from './pages/inserir-fator-tecnico/inserir-fator-tecnico.component';
+import { PainelEstimaComponent } from './pages/painel-estima/painel-estima.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,10 @@ const routes: Routes = [
 
       { path: 'projeto/:id/estimativa', component: EstimativaComponent},
       { path: 'projeto/:id/inserir-estimativa', component: InserirEstimativaComponent},
+
+      //Estima - Painel Estimativa
+
+        { path: 'projeto/:id/painel-estima', component: PainelEstimaComponent},
 
     ],
   },

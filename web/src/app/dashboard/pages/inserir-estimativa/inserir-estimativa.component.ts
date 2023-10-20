@@ -64,7 +64,6 @@ export class InserirEstimativaComponent {
   backToEstimativaHome(){
     this.router.navigate(['/dashboard/projeto/', this.projetoId, 'estimativa']);
   }
-
   buscarProjeto(id: number, user: number) {
     this.projetoService.findById(id, user).subscribe((projeto) => {
       this.projeto = projeto;
@@ -123,5 +122,19 @@ export class InserirEstimativaComponent {
         },
       });
     }
+  }
+
+  AtualizarDados() {
+    this.estimativaService.getTotal(this.projetoId).subscribe((total) => {
+      return new Estimativa(
+        this.Efactor?.value,
+        this.Tfactor?.value,
+        this.PesoCaso?.value,
+        this.PesoAtor?.value,
+        this.PesoPontos?.value,
+        this.ResPontos?.value,
+        this.ResHoras?.value,
+      );
+    });
   }
 }

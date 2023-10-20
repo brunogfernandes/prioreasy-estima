@@ -34,7 +34,7 @@ export class FatoresTecnicosComponent {
 
   // tabela
   colunasTabela: string[] = [
-    'Descricao',
+    'Descrição',
     'Peso',
     'Valor'
   ];
