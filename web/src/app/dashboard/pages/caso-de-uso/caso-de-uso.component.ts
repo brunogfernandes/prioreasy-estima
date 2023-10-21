@@ -93,7 +93,7 @@ export class CasoDeUsoComponent {
     }
 
     backToProjectHome(){
-      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso']);
+      this.router.navigate(['dashboard/projeto/', this.projetoId, 'requisitos']);
     }
 
     openNewCaso(){
