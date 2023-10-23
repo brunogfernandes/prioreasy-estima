@@ -2,8 +2,9 @@ export class fatTecPro {
 
   constructor(
     public valor: number,
-    public id: number,
-    public fator?: number,
+    public fatorTec: number,
+    public fatorPro: number,
+    public id?: number,
 
     ) {}
 

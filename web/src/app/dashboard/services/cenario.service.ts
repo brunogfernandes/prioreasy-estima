@@ -12,9 +12,9 @@ export class CenarioService {
     @Inject('servicesRootUrl') private servicesRootUrl: string
   ) {}
 
-  create(cenario: Cenarios): Observable<any> {
+  create(cenario: Cenarios, caso: number): Observable<any> {
     return this.httpClient.post<Cenarios>(
-      `${this.servicesRootUrl}/cenarios/new?cenarios=${localStorage.getItem('cen_id')}`,
+      `${this.servicesRootUrl}/cenarios/new?caso=${caso}`,
       cenario,
       {
         headers: {
@@ -24,9 +24,9 @@ export class CenarioService {
     );
   }
 
-  update(cenario: Cenarios): Observable<any> {
+  update(cenario: Cenarios, caso: number): Observable<any> {
     return this.httpClient.patch<Cenarios>(
-      `${this.servicesRootUrl}/cenarios/update?cenario=${cenario.id}`,
+      `${this.servicesRootUrl}/cenarios/update?cenario=${cenario.id}&caso=${caso}`,
       cenario,
       {
         headers: {
@@ -47,9 +47,9 @@ export class CenarioService {
     );
   }
 
-  findById(idCenario: number): Observable<any> {
+  getById(idCen: number): Observable<Cenarios> {
     return this.httpClient.get<Cenarios>(
-      `${this.servicesRootUrl}/cenarios/findById?caso=${idCenario}`,
+      `${this.servicesRootUrl}/cenarios/findById?id=${idCen}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -58,14 +58,20 @@ export class CenarioService {
     );
   }
 
-  findByNome(
-    id: number,
-    nome: string,
-    page: number,
-    pageSize: number
-  ): Observable<GetResponseCenario[]> {
+  list(idPro: number, idReq: number, idCaso: number, page: number, pageSize: number): Observable<GetResponseCenario[]> {
     return this.httpClient.get<GetResponseCenario[]>(
-      `${this.servicesRootUrl}/cenarios/findByNome?cenarios=${id}&nome=${nome}&page=${page}&pageSize=${pageSize}`, //Verificar com o Bruno sobre a rotas dos requisitsos
+      `${this.servicesRootUrl}/cenarios?projeto=${idPro}&requisito=${idReq}&caso=${idCaso}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  listByName(idCen: number, nome: string, page: number, pageSize: number): Observable<GetResponseCenario[]> {
+    return this.httpClient.get<GetResponseCenario[]>(
+      `${this.servicesRootUrl}/cenarios/findByNome?caso=${idCen}&nome=${nome}&page=${page}&size=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),

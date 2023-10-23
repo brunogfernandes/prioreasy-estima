@@ -13,13 +13,31 @@ export class FatTecProService {
     @Inject('servicesRootUrl') private servicesRootUrl: string
   ) {}
 
-  findById(
-    id: number,
-    page: number,
-    pageSize: number
-  ): Observable<GetResponseFatores[]> {
+  list(idPro: number, page: number, pageSize: number): Observable<GetResponseFatores[]> {
     return this.httpClient.get<GetResponseFatores[]>(
-      `${this.servicesRootUrl}/fatores-tecnicos/findById?fator=${id}&page=${page}&pageSize=${pageSize}`, //Verificar com o Bruno sobre a rotas dos requisitsos
+      `${this.servicesRootUrl}/fatores-tecnicos?projeto=${idPro}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+  create(fatTec: fatTecPro, projeto: number): Observable<any> {
+    return this.httpClient.post<fatTecPro>(
+      `${this.servicesRootUrl}/fatores-tecnicos/new?projeto=${projeto}`,
+      fatTec,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  delete(idFat: number): Observable<any> {
+    return this.httpClient.delete<fatTecPro>(
+      `${this.servicesRootUrl}/fatores-tecnicos/delete?idFat=${idFat}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -41,7 +59,7 @@ export class FatTecProService {
 
   update(fatores: fatTecPro): Observable<any> {
     return this.httpClient.patch<fatTecPro>(
-      `${this.servicesRootUrl}/fatores-tecnicos/update?fator=${fatores.id}`,
+      `${this.servicesRootUrl}/fatores-tecnicos/update?fatores=${fatores.id}`,
       fatores,
       {
         headers: {

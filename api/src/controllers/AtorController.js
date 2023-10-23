@@ -1,230 +1,255 @@
 import connection from "../database/databaseConnection.js";
 
 export const AtoresController = {
-  async list(req, res) {
-    try {
-      console.log("");
-      console.log("[INFO] Iniciando listagem de atores do projeto");
-
-      const pro_id = req.quer;
-      const page = parseInt(req.query.page, 10) || 0;
-      const pageSize = parseInt(req.query.pagesize, 10) || 5;
-      const offset = page * pageSize;
-
-      const Atores = await connection("ATORES")
-        .select("*")
-        .where("FK_PROJETOS_PRO_ID", pro_id)
-        .offset(offset)
-        .limit(pageSize);
-
-      const serializedItems = Atores.map((item) => ({
-        id: item.ATO_ID,
-        nome: item.ATO_NOME,
-        complexidade: item.ATO_COMPLEXIDADE,
-        descricao: item.ATO_DESCRICAO,
-      }));
-
-      const totalCountQuery = connection("ATORES")
-        .where("FK_PROJETOS_PRO_ID", pro_id)
-        .count("* as totalCount")
-        .first();
-
-      const { totalCount } = await totalCountQuery;
-      const totalPages = Math.ceil(totalCount / pageSize);
-
-      return res.json({
-        items: serializedItems,
-        page: {
-          size: pageSize,
-          totalElements: totalCount,
-          totalPages: totalPages,
-          number: page,
-        },
-      });
-    } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método list: " + err);
-      res.status(500).json({ error: "Erro interno do servidor" });
-    }
-  },
-
-  async listByName(req, res) {
-    try {
-      console.log("");
-      console.log("[INFO] Iniciando listagem de atores do projeto por nome");
-
-      const pro_id = req.query.projetos; //Verificar se esta certo //*************//******///*****// */ */ */
-      const pro_nome = req.query.nome;
-      const page = parseInt(req.query.page, 10) || 0;
-      const pageSize = parseInt(req.query.pageSize, 10) || 5;
-      const offset = page * pageSize;
-
-      const Atores = await connection("ATORES")
-        .select("*") 
-        .where("FK_PROJETOS_PRO_ID", pro_id)
-        .andWhereLike("ATO_NOME", `%${pro_nome}%`)
-        .offset(offset)
-        .limit(pageSize);
-
-      const serializedItems = Atores.map((item) => ({
-        id: item.ATO_ID,
-        nome: item.ATO_NOME,
-        complexidade: item.ATO_COMPLEXIDADE,
-        descricao: item.ATO_DESCRICAO,
-      }));
-
-      const totalCountQuery = connection("ATORES")
-        .where("FK_PROJETOS_PRO_ID", pro_id)
-        .andWhereLike("ATO_NOME", `%${pro_nome}%`)
-        .count("* as totalCount")
-        .first();
-
-      const { totalCount } = await totalCountQuery;
-      const totalPages = Math.ceil(totalCount / pageSize);
-
-      return res.json({
-        items: serializedItems,
-        page: {
-          size: pageSize,
-          totalElements: totalCount,
-          totalPages: totalPages,
-          number: page,
-        },
-      });
-    } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método listByName: " + err);
-      res.status(500).json({ error: "Erro interno do servidor" });
-    }
-  },
-
-  async getById(req, res) {
-    try {
-      console.log("");
-      console.log("[INFO] Iniciando busca de atores por id");
- 
-      const atores_id = req.query.atores;
-      console.log(atores_id);
-
-      const atores = await connection("ATORES")
-        .select("*")
-        .where("ATO_ID", atores_id)
-        .first();
-
-      const serializedItems = {
-        id: atores.ATO_ID,
-        nome: atores.ATO_NOME,
-        complexidade: atores.ATO_COMPLEXIDADE,
-        descricao: atores.ATO_DESCRICAO,
-      };
-
-      return res.json(serializedItems);
-    } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método getById: " + err);
-    }
-  },
-
   async create(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando cadastro de atores")
+      console.log("[INFO] Iniciando cadastro de Atores");
 
-      const {nome, descricao, complexidade  } = req.body;
-      
-      const pro_id = req.query; // ator null //****///****////****//////////// */ */ */
-      console.log(pro_id);
-    
-      console.log("[INFO] Iniciando inserção do atores no banco de dados")
+      const { nome, complexidade, descricao } = req.body;
 
-      if(!validateAtorFields(nome, descricao, complexidade, res)) {
+      const pro_id = req.query.projeto;
 
-        const trx = await connection.transaction();
+      console.log(
+        "[INFO] Iniciando inserção do Ator no banco de dados"
+      );
 
-        const insertedIds = await trx("ATORES").insert({
+      if (
+        !validateAtorFields(
+          nome,
+          complexidade,
+          descricao,
+          res
+        )
+      ) {
+        await connection("ATORES").insert({
           ATO_NOME: nome,
+          ATO_COMPLEXIDADE: complexidade,
           ATO_DESCRICAO: descricao,
-          ATO_COMPLEXIDADE: complexidade, 
-          FK_PROJETOS_PRO_ID: 1, // Arrumar isso aqui  /////*//////***///////****///////// */ */
-         });
+          FK_PROJETOS_PRO_ID: pro_id,
+        });
 
-        await trx.commit();
-
-        console.log("[INFO] atores cadastrado com sucesso")
+        console.log("[INFO] Ator cadastrado com sucesso");
 
         return res.status(201).send();
-
       }
-
     } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método create: " + err);
+      console.log(
+        "[ERROR] [AtoresController] Erro no método create: " + err
+      );
     }
   },
 
   async update(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando atualização de atores")
+      console.log("[INFO] Iniciando atualização de Atores");
 
-      const {nome, complexidade, descricao} = req.body;
-      
-      const atores_id = req.query.atores;
-      console.log(atores_id);
-      console.log(nome, complexidade, descricao);
-    
-      console.log("[INFO] Iniciando atualização do atores no banco de dados")
+      const { nome, complexidade, descricao } = req.body;
 
-      if(!validateAtorFields(nome, complexidade, descricao, res)) {
+      const pro_id = req.query.projeto;
+      const ato_id = req.query.atores;
 
-        const trx = await connection.transaction();
+      console.log(
+        "[INFO] Iniciando atualização do Ator no banco de dados"
+      );
 
-        await trx("ATORES").where(
-          "ATO_ID",
-          atores_id
-        ).update({
-          ATO_NOME: nome,
-          ATO_COMPLEXIDADE: complexidade,
-          ATO_DESCRICAO: descricao,
-        });
+      if (
+        !validateAtorFields(
+          nome,
+          complexidade,
+          descricao,
+          res
+        )
+      ) {
+        await connection("ATORES")
+          .where({ ATO_ID: ato_id })
+          .update({
+            ATO_NOME: nome,
+            ATO_COMPLEXIDADE: complexidade,
+            ATO_DESCRICAO: descricao,
+            FK_PROJETOS_PRO_ID: pro_id,
+          });
 
-        await trx.commit();
-
-        console.log("[INFO] Atores atualizado com sucesso")
+        console.log("[INFO] Ator atualizado com sucesso");
 
         return res.status(200).send();
-
       }
-
     } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método update: " + err);
+      console.log(
+        "[ERROR] [AtoresController] Erro no método update: " + err
+      );
     }
   },
 
   async delete(req, res) {
     try {
       console.log("");
-      console.log("[INFO] Iniciando exclusão de atores")
+      console.log("[INFO] Iniciando exclusão de Ator");
 
-      const atores_id = req.query.atores;
-      console.log(atores_id);
-    
-      console.log("[INFO] Iniciando exclusão do atores no banco de dados")
+      const ato_id = req.query.atores;
 
-      const trx = await connection.transaction();
+      console.log(
+        "[INFO] Iniciando exclusão do Ator no banco de dados"
+      );
 
-      await trx("ATORES").where(
-        "ATO_ID",
-        atores_id
-      ).delete();
+      await connection("ATORES").where({ ATO_ID: ato_id }).del();
 
-      await trx.commit();
-
-      console.log("[INFO] Ator excluído com sucesso")
+      console.log("[INFO] Ator excluído com sucesso");
 
       return res.status(200).send();
-
     } catch (err) {
-      console.log("[ERROR] [AtoresController] Erro no método delete: " + err);
+      console.log(
+        "[ERROR] [AtoresController] Erro no método delete: " + err
+      );
     }
   },
 
+  async getById(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando busca de Atores por ID");
+
+      const ato_id = req.query.id;
+      console.log(ato_id);
+
+      console.log(
+        "[INFO] Iniciando busca do Atores no banco de dados"
+      );
+
+      const Atores = await connection("ATORES")
+        .select("*")
+        .where("ATO_ID", ato_id)
+        .first();
+
+      console.log("[INFO] Ator encontrado com sucesso");
+
+      return res.json({
+        id: Atores.ATO_ID,
+        nome: Atores.ATO_NOME,
+        complexidade: Atores.ATO_COMPLEXIDADE,
+        descricao: Atores.ATO_DESCRICAO,
+      });
+    } catch (err) {
+      console.log(
+        "[ERROR] [AtoresController] Erro no método getById: " + err
+      );
+    }
+  },
+
+  async list(req, res) {
+    try {
+      console.log("");
+      console.log(
+        "[INFO] Iniciando listagem de Atores do Projeto"
+      );
+      const pro_id = req.query.projeto;
+      console.log(pro_id);
+
+      const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
+
+      const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
+
+      const Atores = await connection("ATORES")
+        .select("*")
+        .where("FK_PROJETOS_PRO_ID", pro_id)
+        .offset(offset) // Aplica o deslocamento
+        .limit(pageSize); // Limita o número de resultados por página
+
+      const serializedItems = Atores.map((Atores) => {
+        return {
+          id: Atores.ATO_ID,
+          nome: Atores.ATO_NOME,
+          complexidade: Atores.ATO_COMPLEXIDADE,
+          descricao: Atores.ATO_DESCRICAO,
+        };
+      });
+
+      //ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = await connection("ATORES")
+        .where("FK_PROJETOS_PRO_ID", pro_id)
+        .count("* as totalCount")
+        .first();
+
+      const { totalCount } = await totalCountQuery;
+
+      // CALCULANDO TOTAL DE PÁGINAS
+      const totalPages = Math.ceil(totalCount / pageSize);
+
+      return res.json({
+        items: serializedItems,
+        page: {
+          size: pageSize,
+          totalElements: totalCount,
+          totalPages: totalPages,
+          number: page,
+        },
+      });
+    } catch (error) {
+      console.log(
+        "[ERROR] [AtoresController] Erro no método list: " + error
+      );
+    }
+  },
+
+  async listByName(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando listagem de Atores");
+      const pro_id = req.query.projeto;
+      console.log(pro_id);
+      const nome = req.query.nome;
+
+      const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
+      const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
+
+      const offset = page * pageSize; // Calcula o deslocamento com base na página atual e no tamanho da página
+
+      const Atores = await connection("ATORES")
+        .select("*")
+        .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhereLike("ATO_NOME", `%${nome}%`)
+        .offset(offset) // Aplica o deslocamento
+        .limit(pageSize); // Limita o número de resultados por página
+
+      const serializedItems = Atores.map((Atores) => {
+        return {
+          id: Atores.ATO_ID,
+          nome: Atores.ATO_NOME,
+          complexidade: Atores.ATO_COMPLEXIDADE,
+          descricao: Atores.ATO_DESCRICAO,
+        };
+      });
+
+      //ADQUIRINDO TOTAL DE REGISTROS
+      const totalCountQuery = await connection("ATORES")
+        .where("FK_PROJETOS_PRO_ID", pro_id)
+        .andWhereLike("ATO_NOME", `%${nome}%`)
+        .count("* as totalCount")
+        .first();
+
+      const { totalCount } = await totalCountQuery;
+
+      // CALCULANDO TOTAL DE PÁGINAS
+      const totalPages = Math.ceil(totalCount / pageSize);
+
+      return res.json({
+        items: serializedItems,
+        page: {
+          size: pageSize,
+          totalElements: totalCount,
+          totalPages: totalPages,
+          number: page,
+        },
+      });
+    } catch (error) {
+      console.log(
+        "[ERROR] [AtoresController] Erro no método listByNamePaginated: " +
+          error
+      );
+    }
+  },
   async getNumberOfAtores(req, res) {
     try {
       console.log("");
@@ -263,6 +288,8 @@ export const AtoresController = {
         .first();
   
       const { totalCount } = totalCountQuery;
+
+
   
       return res.json({
         totalCount: totalCount,
@@ -320,12 +347,11 @@ export const AtoresController = {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   },
-  
-  
 };
 
-function validateAtorFields(nome, complexidade, descricao, res) {
-  console.log("[INFO] Verificando campos do atores");
+function validateAtorFields(nome, descricao, complexidade, res) {
+  console.log("[INFO] Verificando campos do Ator");
+
   if (!nome || !complexidade || !descricao) {
     return res.status(400).json({ error: "Campos obrigatórios não informados" });
   }
@@ -340,5 +366,4 @@ function validateAtorFields(nome, complexidade, descricao, res) {
   if (!isValidDescricao) {
     return res.status(400).json({ error: "Descrição inválida" });
   }
-
 }

@@ -12,6 +12,7 @@ import { FatTecController } from './controllers/FatTecController.js';
 import { ColaboradorController } from './controllers/ColaboradorController.js';
 import { RequisitoController } from './controllers/RequisitoController.js';
 import { PriorizacaoController } from './controllers/PriorizacaoController.js';
+import { EstimativaController } from './controllers/EstimativaController.js';
 
 const routes = express.Router();
 
@@ -93,7 +94,7 @@ routes.patch('/priorizacao-stakeholders/complete', verifyToken, PriorizacaoContr
 routes.get('/priorizacao-stakeholders/getRequirementFinalClassification', verifyToken, PriorizacaoController.getMostFrequentClassification);
 
 // Actor Routes (CLOSED)
-routes.get('/atores/findByAtor', verifyToken, AtoresController.list);
+routes.get('/atores', verifyToken, AtoresController.list);
 routes.get('/atores/findByNome', verifyToken, AtoresController.listByName);
 routes.get('/atores/findById', verifyToken, AtoresController.getById);
 routes.get('/atores/metrics/total', verifyToken, AtoresController.getNumberOfAtores);
@@ -105,7 +106,7 @@ routes.patch('/atores/update', verifyToken, AtoresController.update);
 routes.delete('/atores/delete', verifyToken, AtoresController.delete);
 
 // Use Case Routes (CLOSED)
-routes.get('/caso-de-uso/findByAtor', verifyToken, CasoUsoController.list);
+routes.get('/caso-de-uso', verifyToken, CasoUsoController.list);
 routes.get('/caso-de-uso/findByNome', verifyToken, CasoUsoController.listByName);
 routes.get('/caso-de-uso/findById', verifyToken, CasoUsoController.getById);
 routes.get('/caso-de-uso/metrics/total', verifyToken, CasoUsoController.getNumberOfCasos);
@@ -117,7 +118,7 @@ routes.patch('/caso-de-uso/update', verifyToken, CasoUsoController.update);
 routes.delete('/caso-de-uso/delete', verifyToken, CasoUsoController.delete);
 
 //Cenario Routes (CLOSED)
-routes.get('/cenarios/findByAtor', verifyToken, CenariosController.list);
+routes.get('/cenarios', verifyToken, CenariosController.list);
 routes.get('/cenarios/findByNome', verifyToken, CenariosController.listByName);
 routes.get('/cenarios/findById', verifyToken, CenariosController.getById);
 routes.post('/cenarios/new', verifyToken, CenariosController.create);
@@ -126,17 +127,26 @@ routes.delete('/cenarios/delete', verifyToken, CenariosController.delete);
 
 // Fatores Ambientais Routes (CLOSED)
 
-routes.get('/fatores-ambientais/findByDescricao', verifyToken, FatAmbController.listByDescricao);
-routes.get('/fatores-ambientais/findById', verifyToken, FatAmbController.listById);
+routes.get('/fatores-ambientais', verifyToken, FatAmbController.list);
 routes.get('/fatores-ambientais/getById', verifyToken, FatAmbController.getById);
+routes.post('/fatores-ambientais/new', verifyToken, FatAmbController.create);
 routes.patch('/fatores-ambientais/update', verifyToken, FatAmbController.update);
+routes.delete('/fatores-ambientais/delete', verifyToken, FatAmbController.delete);
 
 // Fatores Tecnicos Routes (CLOSED)
 
-routes.get('/fatores-tecnicos/findByDescricao', verifyToken, FatTecController.listByDescricao);
-routes.get('/fatores-tecnicos/findById', verifyToken, FatTecController.listById);
+routes.get('/fatores-tecnicos', verifyToken, FatTecController.list);
 routes.get('/fatores-tecnicos/getById', verifyToken, FatTecController.getById);
+routes.post('/fatores-tecnicos/new', verifyToken, FatTecController.create);
 routes.patch('/fatores-tecnicos/update', verifyToken, FatTecController.update);
+routes.delete('/fatores-tecnicos/delete', verifyToken, FatTecController.delete);
+
+// Estimativa Routes (CLOSED)
+
+routes.get('/estimativa', verifyToken, EstimativaController.list);
+routes.post('/estimativa/new', verifyToken, EstimativaController.create);
+
+
 
 
 export const allRoutes = routes;

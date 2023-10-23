@@ -1,8 +1,39 @@
-<section class="m-5">
+
+<section class="px-8 py-5">
+  <div *ngIf="projeto" class="flex justify-between items-center pb-3 border-b border-gray-400">
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 rounded-full bg-violet-200 flex items-center text-xl justify-center"
+      >
+        {{projeto.nome[0]}}
+      </div>
+      <h3 class="text-xl ms-3 font-medium">{{projeto.nome}}</h3>
+    </div>
+    <div class="ms-auto">
+      <button
+        (click)="backToAtorHome()"
+        class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+      >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-5 h-5 me-2"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z"
+          clip-rule="evenodd"
+        />
+        </svg>
+        Retornar ao Início
+      </button>
+    </div>
+  </div>
   <div class="container px-5 py-24 mx-auto">
     <form
       (submit)="onSubmit()"
-      [formGroup]="casoUsoFormGroup"
+      [formGroup]="casoFormGroup"
       class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
     >
       <div class="rounded-full bg-violet-700 p-2">
@@ -35,19 +66,19 @@
         />
         <div
           *ngIf="
-            casoUsoFormGroup.get('nome')?.invalid &&
-            (casoUsoFormGroup.get('nome')?.dirty ||
-              casoUsoFormGroup.get('nome')?.touched)
+            casoFormGroup.get('nome')?.invalid &&
+            (casoFormGroup.get('nome')?.dirty ||
+              casoFormGroup.get('nome')?.touched)
           "
           class="text-red-600 text-xs mt-1"
         >
-          <div *ngIf="casoUsoFormGroup.get('nome')?.errors?.['required']">
+          <div *ngIf="casoFormGroup.get('nome')?.errors?.['required']">
             Campo obrigatório.
           </div>
-          <div *ngIf="casoUsoFormGroup.get('nome')?.errors?.['minlength']">
+          <div *ngIf="casoFormGroup.get('nome')?.errors?.['minlength']">
             Mínimo de 5 caracteres.
           </div>
-          <div *ngIf="casoUsoFormGroup.get('nome')?.errors?.['maxlength']">
+          <div *ngIf="casoFormGroup.get('nome')?.errors?.['maxlength']">
             Máximo de 100 caracteres.
           </div>
         </div>
@@ -68,13 +99,13 @@
         </select>
         <div
           *ngIf="
-              casoUsoFormGroup.get('complexidade')?.invalid &&
-            (casoUsoFormGroup.get('complexidade')?.dirty ||
-              casoUsoFormGroup.get('complexidade')?.touched)
+             casoFormGroup.get('complexidade')?.invalid &&
+            (casoFormGroup.get('complexidade')?.dirty ||
+              casoFormGroup.get('complexidade')?.touched)
           "
           class="text-red-600 text-xs mt-1"
         >
-          <div *ngIf="casoUsoFormGroup.get('complexidade')?.errors?.['required']">
+          <div *ngIf="casoFormGroup.get('complexidade')?.errors?.['required']">
             Campo obrigatório.
           </div>
         </div>
@@ -92,19 +123,19 @@
         />
         <div
           *ngIf="
-              casoUsoFormGroup.get('descricao')?.invalid &&
-            (casoUsoFormGroup.get('descricao')?.dirty ||
-              casoUsoFormGroup.get('descricao')?.touched)
+            casoFormGroup.get('descricao')?.invalid &&
+            (casoFormGroup.get('descricao')?.dirty ||
+              casoFormGroup.get('descricao')?.touched)
           "
           class="text-red-600 text-xs mt-1"
         >
-          <div *ngIf="casoUsoFormGroup.get('descricao')?.errors?.['required']">
+          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['required']">
             Campo obrigatório.
           </div>
-          <div *ngIf="casoUsoFormGroup.get('descricao')?.errors?.['minlength']">
+          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['minlength']">
             Mínimo de 5 caracteres.
           </div>
-          <div *ngIf="casoUsoFormGroup.get('descricao')?.errors?.['maxlength']">
+          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['maxlength']">
             Máximo de 255 caracteres.
           </div>
         </div>

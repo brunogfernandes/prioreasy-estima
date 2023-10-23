@@ -1,15 +1,20 @@
 Parte Vini:
     Atores:
-    -Resolver ID para listagem
-    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+    OK
 
     Caso de Uso:
-    -Resolver ID para listagem
-    -Edição trocando Complexidade por descrição e ajustar ID para a volta da listagem
+    OK
 
     Cenarios:
-    -Resolver ID para listagem
-    -Inserção com erro
+    OK
+
+    Fator Ambiental:
+    
+    -Editar Não funcionando
+
+    Fator Tecnico:
+    
 
     Falta a página de estimativa
     -Fazer o back do calculo dos fatores para auxiliar
+    Falta os botões para os acessos as páginas

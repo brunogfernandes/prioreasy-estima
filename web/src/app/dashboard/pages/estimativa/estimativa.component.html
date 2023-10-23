@@ -1,36 +1,40 @@
-<div class="m-5">
-  <h1 class="text-3xl font-medium mb-5">Estimativa de Esforço</h1>
-
+<div class="py-5 px-8">
+  <div *ngIf="projeto" class="flex justify-between items-center pb-3 border-b border-gray-400">
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 rounded-full bg-violet-200 flex items-center text-xl justify-center"
+      >
+        {{projeto.nome[0]}}
+      </div>
+      <h3 class="text-xl ms-3 font-medium">{{projeto.nome}}</h3>
+    </div>
+    <div class="ms-auto">
+      <button
+        (click)="backToProjectHome()"
+        class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+      >
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 me-2"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z"
+            clip-rule="evenodd"
+          />
+          </svg>
+        Retornar ao Início
+      </button>
+    </div>
+  </div>
+  <h1 class="text-3xl font-medium my-5">Gerenciamento de Estimativa</h1>
   <div class="table-actions">
     <div class="flex items-center justify-between">
-      <div class="flex items-center shadow-md w-1/2 lg:w-1/4">
-        <input
-          type="text"
-          id="role"
-          name="role"
-          placeholder="Pesquisar por..."
-          class="focus:border-violet-700 w-full focus:ring-2 rounded-l-md focus:ring-violet-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        />
-        <button
-          class="bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-r-md shadow-md"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
-
       <button
-        class="bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        class="disabled:bg-violet-400 bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md ml-auto"
+        (click)="openNewEstimativa()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,50 +48,36 @@
             clip-rule="evenodd"
           />
         </svg>
-        <a href="dashboard/inserir-estimativa">Inserir Novo</a>
 
+        Inserir Nova Estimativa
       </button>
     </div>
   </div>
 
   <div class="table-container mt-5 overflow-x-auto shadow-md">
-    <table class="w-full rounded bg-white  text-center table-auto">
-      <thead>
-        <tr class="text-white">
-          <th class="bg-violet-700 py-2">ID</th>
-          <th class="bg-violet-700 py-2">EFactor</th>
-          <th class="bg-violet-700 py-2">TFactor</th>
-          <th class="bg-violet-700 py-2">Peso dos Pontos por Caso de Uso</th>
-          <th class="bg-violet-700 py-2">Peso Casos de Uso</th>
-          <th class="bg-violet-700 py-2">Peso dos Atores</th>
-          <th class="bg-violet-700 py-2">Resultado em Horas</th>
-          <th class="bg-violet-700 py-2">Resultado dos Pontos Por Caso de Uso</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="py-2 px-3">1</td>
-          <td class="py-2 px-3">10</td>
-          <td class="py-2 px-3">5</td>
-          <td class="py-2 px-3">12</td>
-          <td class="py-2 px-3">15</td>
-          <td class="py-2 px-3">12</td>
-          <td class="py-2 px-3">7.250</td>
-          <td class="py-2 px-3">1250</td>
-        </tr>
-        <tr>
-          <td class="py-2 px-3">2</td>
-          <td class="py-2 px-3">12</td>
-          <td class="py-2 px-3">7</td>
-          <td class="py-2 px-3">18</td>
-          <td class="py-2 px-3">22</td>
-          <td class="py-2 px-3">31</td>
-          <td class="py-2 px-3">13.250</td>
-          <td class="py-2 px-3">1450</td>
-        </tr>
-
-      </tbody>
-    </table>
+    <app-tabela
+      [data]="estimativa"
+      [columns]="colunasTabela"
+      [entityAttributes]="camposEntidade"
+      [hasEdit]="false"
+      [hasDelete]="false"
+    ></app-tabela>
   </div>
 
+  <div class="table-buttons mt-5 flex w-full">
+    <button
+      class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md ml-auto mr-1"
+      [disabled]="paginaAtual === 0"
+      (click)="prevPage()"
+    >
+      Voltar
+    </button>
+    <button
+      class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+      [disabled]="paginaAtual === totalPaginas - 1 || totalPaginas === 0"
+      (click)="nextPage()"
+    >
+      Avançar
+    </button>
+  </div>
 </div>

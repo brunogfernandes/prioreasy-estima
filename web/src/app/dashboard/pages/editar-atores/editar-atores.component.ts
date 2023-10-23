@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Atores } from '../../shared/models/atores';
 import { AtorService } from '../../services/ator.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Projeto } from '../../models/projeto';
+import { ProjetoService } from '../../services/projeto.service';
 
 @Component({
   selector: 'app-editar-atores',
@@ -12,16 +14,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditarAtoresComponent {
 
   atorFormGroup!: FormGroup;
-  ator!: Atores;
-  atorId!: number;
+  projeto!: Projeto;
+  projetoId!: number;
+  userId!: number;
+  AtorId!: number;
+
+  Atores!: Atores;
 
   constructor(
+    private projetoService: ProjetoService,
     private atorService: AtorService,
-    private router: Router,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
-    this.atorId = +this.route.snapshot.paramMap.get('id')!;
+    this.projetoId = this.route.snapshot.params['id'];
+    this.AtorId = this.route.snapshot.params['idAtor'];
+    this.userId = Number(localStorage.getItem('usu_id'));
   }
 
   ngOnInit(): void {
@@ -41,51 +50,57 @@ export class EditarAtoresComponent {
       complexidade: new FormControl('', [
         Validators.required,
       ]),
-
     });
 
-    this.inicializarFormulario();
+    this.buscarProjeto(this.projetoId, this.userId);
+    this.inicializarForm();
   }
 
-  inicializarFormulario(): void {
-    this.atorService.findById(this.atorId).subscribe({
-      next: (ator) => {
-        this.atorFormGroup.patchValue({
-          nome: ator.nome,
-          descricao: ator.descricao,
-          complexidade: ator.complexidade,
-          });
-      },
+  inicializarForm(){
+    this.atorService.getById(this.AtorId).subscribe((ator) => {
+      this.atorFormGroup.patchValue(ator);
+    })
+  }
 
-      error: (err) => {
-        console.log('Error', err);
-      },
+  backToAtorHome(){
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'atores']);
+  }
+
+  buscarProjeto(id: number, user: number) {
+    this.projetoService.findById(id, user).subscribe((projeto) => {
+      this.projeto = projeto;
     });
   }
 
-  get nome() {  return this.atorFormGroup.get('nome'); }
-  get descricao() {  return this.atorFormGroup.get('descricao'); }
-  get complexidade() {  return this.atorFormGroup.get('complexidade'); }
+  get nome() {
+    return this.atorFormGroup.get('nome');
+  }
+  get complexidade() {
+    return this.atorFormGroup.get('complexidade');
+  }
+  get descricao() {
+    return this.atorFormGroup.get('descricao');
+  }
 
   createAtor(): Atores {
     return new Atores(
-      this.nome!.value,
-      this.descricao!.value,
-      this.complexidade!.value,
-      this.atorId
+      this.nome?.value,
+      this.complexidade?.value,
+      this.descricao?.value,
+      this.AtorId
     );
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.atorFormGroup.invalid) {
       this.atorFormGroup.markAllAsTouched();
       return;
     } else {
-      this.ator = this.createAtor();
+      this.Atores = this.createAtor();
 
-      this.atorService.update(this.ator).subscribe({
+      this.atorService.update(this.Atores, this.projetoId).subscribe({
         next: () => {
-          this.router.navigate(['/dashboard/atores/:id']); //arrumar aqui
+          this.router.navigate(['/dashboard/projeto/', this.projetoId, 'atores']);
         },
 
         error: (err) => {

@@ -10,7 +10,7 @@
     </div>
     <div class="ms-auto">
       <button
-        (click)="backToCasoHome()"
+        (click)="backToFatorHome()"
         class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
       >
       <svg
@@ -32,7 +32,7 @@
   <div class="container px-5 py-24 mx-auto">
     <form
       (submit)="onSubmit()"
-      [formGroup]="casoFormGroup"
+      [formGroup]="FatorFormGroup"
       class="border-l-4 border-violet-700 rounded-lg md:w-1/2 mx-auto flex flex-col items-center shadow-lg p-10"
     >
       <div class="rounded-full bg-violet-700 p-2">
@@ -51,92 +51,72 @@
       </div>
       <h2 class="my-4 text-xl text-center">
         Inserir
-        <span class="font-medium text-violet-700">Novo Caso de Uso</span>
+        <span class="font-medium text-violet-700">Novo Fator</span>
       </h2>
       <div class="relative mb-4 w-full">
-        <label for="nome" class="leading-7 text-sm text-gray-600"
-          >Nome do Caso de Uso</label
-        >
-        <input
-          formControlName="nome"
-          type="text"
-          id="nome"
-          name="nome"
-          class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-        />
-        <div
-          *ngIf="
-            casoFormGroup.get('nome')?.invalid &&
-            (casoFormGroup.get('nome')?.dirty ||
-              casoFormGroup.get('nome')?.touched)
-          "
-          class="text-red-600 text-xs mt-1"
-        >
-          <div *ngIf="casoFormGroup.get('nome')?.errors?.['required']">
-            Campo obrigatório.
-          </div>
-          <div *ngIf="casoFormGroup.get('nome')?.errors?.['minlength']">
-            Mínimo de 5 caracteres.
-          </div>
-          <div *ngIf="casoFormGroup.get('nome')?.errors?.['maxlength']">
-            Máximo de 100 caracteres.
-          </div>
-        </div>
-      </div>
-      <div class="relative mb-4 w-full">
-        <label for="complexidade" class="leading-7 text-sm text-gray-600"
-          >Complexidade</label
+        <label for="fatTec" class="leading-7 text-sm text-gray-600"
+          >Fator Técnicos</label
         >
         <select
-          formControlName="complexidade"
-          id="complexidade"
-          name="complexidade"
+          formControlName="fatorTec"
+          id="fatTec"
+          name="fatTec"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
-          <option value="SIMPLES">Simples</option>
-          <option value="MEDIO">Médio</option>
-          <option value="COMPLEXO">Complexo</option>
+          <option value="1">Sistema distribuído</option>
+          <option value="2">Desempenho da Aplicação</option>
+          <option value="3">Eficiência do Usuário</option>
+          <option value="4">Complexidade de Processamento</option>
+          <option value="5">Reusabilidade de Código</option>
+          <option value="6">Facilidade de instalação</option>
+          <option value="7">Facilidade de uso</option>
+          <option value="8">Portabilidade</option>
+          <option value="9">Facilidade de mudança</option>
+          <option value="10">Concorrência</option>
+          <option value="11">Características de segurança</option>
+          <option value="12">Acesso a Dispositivos de Terceiros</option>
+          <option value="13">Requer Treinamento aos Usuários</option>
         </select>
         <div
           *ngIf="
-            casoFormGroup.get('complexidade')?.invalid &&
-            (casoFormGroup.get('complexidade')?.dirty ||
-              casoFormGroup.get('complexidade')?.touched)
+              FatorFormGroup.get('fatAmb')?.invalid &&
+            (FatorFormGroup.get('fatAmb')?.dirty ||
+              FatorFormGroup.get('fatAmb')?.touched)
           "
           class="text-red-600 text-xs mt-1"
         >
-          <div *ngIf="casoFormGroup.get('complexidade')?.errors?.['required']">
+          <div *ngIf="FatorFormGroup.get('fatAmb')?.errors?.['required']">
             Campo obrigatório.
           </div>
         </div>
       </div>
       <div class="relative mb-4 w-full">
-        <label for="descricao" class="leading-7 text-sm text-gray-600"
-          >Descrição do Caso de Uso</label
+        <label for="valor" class="leading-7 text-sm text-gray-600"
+          >Valor</label
         >
         <input
-          formControlName="descricao"
+          formControlName="valor"
           type="text"
-          id="descricao"
-          name="descricao"
+          id="valor"
+          name="valor"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
         <div
           *ngIf="
-            casoFormGroup.get('descricao')?.invalid &&
-            (casoFormGroup.get('descricao')?.dirty ||
-              casoFormGroup.get('descricao')?.touched)
+              FatorFormGroup.get('valor')?.invalid &&
+            (FatorFormGroup.get('valor')?.dirty ||
+              FatorFormGroup.get('valor')?.touched)
           "
           class="text-red-600 text-xs mt-1"
         >
-          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['required']">
+          <div *ngIf="FatorFormGroup.get('valor')?.errors?.['required']">
             Campo obrigatório.
           </div>
-          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['minlength']">
-            Mínimo de 5 caracteres.
+          <div *ngIf="FatorFormGroup.get('valor')?.errors?.['min']">
+            Mínimo de 0.
           </div>
-          <div *ngIf="casoFormGroup.get('descricao')?.errors?.['maxlength']">
-            Máximo de 255 caracteres.
+          <div *ngIf="FatorFormGroup.get('valor')?.errors?.['max']">
+            Máximo de 5.
           </div>
         </div>
       </div>

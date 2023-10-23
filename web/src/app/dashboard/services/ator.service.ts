@@ -12,10 +12,10 @@ export class AtorService {
     @Inject('servicesRootUrl') private servicesRootUrl: string
   ) {}
 
-  create(ator: Atores): Observable<any> {
+  create(atores: Atores, projeto: number): Observable<any> {
     return this.httpClient.post<Atores>(
-      `${this.servicesRootUrl}/atores/new?atores=${localStorage.getItem('ato_id')}`,
-      ator,
+      `${this.servicesRootUrl}/atores/new?projeto=${projeto}`,
+      atores,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -24,9 +24,9 @@ export class AtorService {
     );
   }
 
-  update(ator: Atores): Observable<any> {
+  update(ator: Atores, projeto: number): Observable<any> {
     return this.httpClient.patch<Atores>(
-      `${this.servicesRootUrl}/atores/update?atores=${ator.id}`,
+      `${this.servicesRootUrl}/atores/update?atores=${ator.id}&projeto=${projeto}`,
       ator,
       {
         headers: {
@@ -47,9 +47,9 @@ export class AtorService {
     );
   }
 
-  findById(idAtores: number): Observable<any> {
+  getById(idAtores: number): Observable<Atores> {
     return this.httpClient.get<Atores>(
-      `${this.servicesRootUrl}/atores/findById?atores=${idAtores}`,
+      `${this.servicesRootUrl}/atores/findById?id=${idAtores}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -58,21 +58,27 @@ export class AtorService {
     );
   }
 
-  findByNome(
-    id: number,
-    nome: string,
-    page: number,
-    pageSize: number
-  ): Observable<GetResponseAtores[]> {
+  list(idProjeto: number, page: number, pageSize: number): Observable<GetResponseAtores[]> {
     return this.httpClient.get<GetResponseAtores[]>(
-      `${this.servicesRootUrl}/atores/findByNome?projetos=${id}&nome=${nome}&page=${page}&pageSize=${pageSize}`,
+      `${this.servicesRootUrl}/atores?projeto=${idProjeto}&page=${page}&size=${pageSize}`,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       }
     );
-  } 
+  }
+
+  listByName(idProjeto: number, nome: string, page: number, pageSize: number): Observable<GetResponseAtores[]> {
+    return this.httpClient.get<GetResponseAtores[]>(
+      `${this.servicesRootUrl}/atores/findByNome?projeto=${idProjeto}&nome=${nome}&page=${page}&size=${pageSize}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 
   getNumberOfAtores(id: number): Observable<EntityCount> {
     return this.httpClient.get<EntityCount>(

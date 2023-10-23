@@ -1,17 +1,48 @@
-<div class="m-5">
-  <h1 class="text-3xl font-medium mb-5">Lista de Cenarios</h1>
-
+<div class="py-5 px-8">
+  <div *ngIf="projeto" class="flex justify-between items-center pb-3 border-b border-gray-400">
+    <div class="flex items-center">
+      <div
+        class="w-10 h-10 rounded-full bg-violet-200 flex items-center text-xl justify-center"
+      >
+        {{projeto.nome[0]}}
+      </div>
+      <h3 class="text-xl ms-3 font-medium">{{projeto.nome}}</h3>
+    </div>
+    <div class="ms-auto">
+      <button
+        (click)="backToProjectHome()"
+        class="bg-violet-700 text-white p-2 rounded-md hover:bg-violet-800 font-medium flex items-center shadow-md mr-2"
+      >
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 me-2"
+          >
+          <path
+            fill-rule="evenodd"
+            d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z"
+            clip-rule="evenodd"
+            />
+        </svg>
+        Retornar ao Início
+      </button>
+    </div>
+  </div>
+  <h1 class="text-3xl font-medium my-5">Gerenciamento de Cenarios</h1>
   <div class="table-actions">
     <div class="flex items-center justify-between">
       <div class="flex items-center shadow-md w-1/2 lg:w-1/4">
         <input
+          #input
+          (keyup)="onSubmitSearch($event)"
           type="text"
-          id="role"
-          name="role"
+          id="search"
+          name="search"
           placeholder="Pesquisar por..."
           class="focus:border-violet-700 w-full focus:ring-2 rounded-l-md focus:ring-violet-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
-        <button
+        <div
           class="bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-r-md shadow-md"
         >
           <svg
@@ -26,11 +57,12 @@
               clip-rule="evenodd"
             />
           </svg>
-        </button>
+        </div>
       </div>
 
       <button
-        class="bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        class="disabled:bg-violet-400 bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
+        (click)="openNewCenario()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,8 +76,8 @@
             clip-rule="evenodd"
           />
         </svg>
-        <a href="dashboard/inserir-cenarios">Inserir Novo</a>
 
+        Inserir Novo
       </button>
     </div>
   </div>
@@ -78,7 +110,7 @@
     </button>
     <button
       class="disabled:bg-violet-400 bg-violet-700 text-white py-2 px-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
-      [disabled]="paginaAtual === totalPaginas - 1"
+      [disabled]="paginaAtual === totalPaginas - 1 || totalPaginas === 0"
       (click)="nextPage()"
     >
       Avançar
