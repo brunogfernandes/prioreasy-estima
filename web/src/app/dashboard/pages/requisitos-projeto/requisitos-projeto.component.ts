@@ -108,7 +108,7 @@ export class RequisitosProjetoComponent {
   }
 
   visualizarCasoDeUso(item: any){
-    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'caso-de-uso', item.id]);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId,'requisitos', item.id, 'caso-de-uso' ]);
   }
 
   cancelarExclusao() {
