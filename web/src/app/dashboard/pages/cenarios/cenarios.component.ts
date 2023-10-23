@@ -99,7 +99,7 @@ export class CenariosComponent {
   }
 
   backToProjectHome(){
-    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso', this.casoId, 'cenarios']);
+    this.router.navigate(['/dashboard/projeto/', this.projetoId, 'requisitos', this.requisitoId, 'caso-de-uso']);
   }
 
   openNewCenario(){
