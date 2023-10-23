@@ -60,6 +60,7 @@ routes.get('/projetos/colaboradores', verifyToken, ProjetoController.listCollabo
 routes.get('/projetos/colaboradores/findByNome', verifyToken, ProjetoController.listCollaboratorsByName);
 routes.post('/projetos/addColaborador', verifyToken, ProjetoController.addCollaborator);
 routes.delete('/projetos/removeColaborador', verifyToken, ProjetoController.removeCollaborator);
+routes.get('/projetos/recentes', verifyToken, ProjetoController.getProjetosRecentesColaborador);
 
 // Collaborator Routes (CLOSED)
 routes.get('/colaboradores', verifyToken, ColaboradorController.listByName);
@@ -87,8 +88,9 @@ routes.get('/requisitos/priorizacao-stakeholders/findByNome', verifyToken, Requi
 
 // Priorization Routes (CLOSED)
 routes.post('/priorizacao-stakeholders/new', verifyToken, PriorizacaoController.insertPriorizacaoStakeholder);
-routes.patch('/priorizacao-stakeholders/result', verifyToken, PriorizacaoController.insertResultadoPriorizacao);
+routes.post('/priorizacao-stakeholders/result', verifyToken, PriorizacaoController.insertResultadoPriorizacao);
 routes.patch('/priorizacao-stakeholders/complete', verifyToken, PriorizacaoController.completePriorizacaoStakeholder);
+routes.get('/priorizacao-stakeholders/getRequirementFinalClassification', verifyToken, PriorizacaoController.getMostFrequentClassification);
 
 // Actor Routes (CLOSED)
 routes.get('/atores/findByAtor', verifyToken, AtoresController.list);

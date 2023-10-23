@@ -76,8 +76,10 @@ export const PriorizacaoController = {
       );
 
       await connection("RESULTADOS_REQUISITOS")
-        .where({ FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id })
-        .update({ RPR_RESULTADO_FINAL: resultadoFinal });
+        .insert({
+          RPR_RESULTADO_FINAL: resultadoFinal,
+          FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id
+        })
 
       console.log(
         "[INFO] Classificação final do requisito inserida com sucesso"
@@ -91,4 +93,36 @@ export const PriorizacaoController = {
       );
     }
   },
+
+  async getMostFrequentClassification(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando busca de classificação mais frequente");
+
+      const req_id = req.query.requisito;
+
+      console.log(
+        "[INFO] Iniciando busca da classificação mais frequente no banco de dados"
+      );
+
+      const mostFrequentClassification = await connection("PRIORIZACAO_STAKEHOLDERS")
+        .where({ FK_REQUISITOS_FUNCIONAIS_REQ_ID: req_id })
+        .select("PRS_CLASSIFICACAO_REQUISITO")
+        .count("PRS_CLASSIFICACAO_REQUISITO as count")
+        .groupBy("PRS_CLASSIFICACAO_REQUISITO")
+        .orderBy("count", "desc")
+        .limit(1);
+
+      console.log(
+        "[INFO] Classificação mais frequente encontrada com sucesso"
+      );
+
+      return res.status(200).send(mostFrequentClassification);
+    } catch (err) {
+      console.log(
+        "[ERROR] [RequisitoController] Erro no método getMostFrequentClassification: " +
+          err
+      );
+    }
+  }
 };

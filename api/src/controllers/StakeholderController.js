@@ -259,9 +259,15 @@ export const StakeholderController = {
 
       const projetoId = req.query.projetoId;
 
-      const notParticipatedStakeholders = await connection("STATUS_PRIORIZACAO")
+      const notParticipatedStakeholders = await connection("STAKEHOLDERS")
+        .join(
+          "STATUS_PRIORIZACAO",
+          "STAKEHOLDERS.STA_ID",
+          "=",
+          "STATUS_PRIORIZACAO.FK_STAKEHOLDERS_STA_ID"
+        )
         .select("FK_STAKEHOLDERS_STA_ID")
-        .where("FK_PROJETOS_PRO_ID", projetoId)
+        .where("STAKEHOLDERS.FK_PROJETOS_PRO_ID", projetoId)
         .andWhere("SPA_PARTICIPACAO_REALIZADA", 0);
 
       if (notParticipatedStakeholders.length > 0) {

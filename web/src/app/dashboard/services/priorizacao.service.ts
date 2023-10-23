@@ -36,4 +36,27 @@ export class PriorizacaoService {
       }
     );
   }
+
+  getRequirementFinalClassification(id: number): Observable<any> {
+    return this.httpClient.get<any>(
+      `${this.servicesRootUrl}/priorizacao-stakeholders/getRequirementFinalClassification?requisito=${id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  insertResultadoClassificacao(id: number, resultado: string): Observable<any> {
+    return this.httpClient.post<any>(
+      `${this.servicesRootUrl}/priorizacao-stakeholders/result?requisito=${id}&resultadoFinal=${resultado}`,
+      null,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 }

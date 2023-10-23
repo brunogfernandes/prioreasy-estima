@@ -85,8 +85,10 @@
       [data]="requisitos"
       [columns]="colunasTabela"
       [entityAttributes]="camposEntidade"
+      [hasUseCase]="true"
       [onEdit]="editarItem.bind(this)"
       [onDelete]="excluirItem.bind(this)"
+      [onUseCase]="visualizarCasoDeUso.bind(this)"
     ></app-tabela>
   </div>
 

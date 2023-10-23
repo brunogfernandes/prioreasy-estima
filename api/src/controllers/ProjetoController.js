@@ -638,6 +638,44 @@ export const ProjetoController = {
     } catch (err) {
       console.log("[ERROR] [ProjetoController] Erro no método getNumberOfDoneProjects: " + err);
     }
+  },
+
+  async getProjetosRecentesColaborador(req, res){
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando listagem dos três projetos mais recentes do colaborador");
+
+      const col_id = req.query.user;
+
+      const projects = await connection("PROJETOS")
+        .select("*")
+        .join(
+          "COLABORADORES_PROJETOS",
+          "PROJETOS.PRO_ID",
+          "=",
+          "COLABORADORES_PROJETOS.FK_PROJETOS_PRO_ID"
+        )
+        .where("COLABORADORES_PROJETOS.FK_COLABORADORES_COL_ID", col_id)
+        .orderBy("PROJETOS.PRO_DATA_INICIO", "desc")
+        .limit(3);
+
+      const serializedItems = projects.map((item) => {
+        return {
+          id: item.PRO_ID,
+          nome: item.PRO_NOME,
+          descricao: item.PRO_DESCRICAO,
+          empresa: item.PRO_EMPRESA,
+          dataInicio: item.PRO_DATA_INICIO.toLocaleDateString(),
+          previsaoFim: item.PRO_PREVISAO_FIM.toLocaleDateString(),
+          status: item.PRO_STATUS,
+        };
+      });
+
+      return res.json(serializedItems);
+
+    } catch (err) {
+      console.log("[ERROR] [ProjetoController] Erro no método getTresProjetosMaisRecentesColaborador: " + err);
+    }
   }
 };
 

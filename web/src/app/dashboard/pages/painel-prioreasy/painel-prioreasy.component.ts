@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Projeto } from '../../models/projeto';
 import { ProjetoService } from '../../services/projeto.service';
 import { RequisitoService } from '../../services/requisito.service';
+import { StakeholderService } from '../../services/stakeholder.service';
+import { PriorizacaoService } from '../../services/priorizacao.service';
 
 @Component({
   selector: 'app-painel-prioreasy',
@@ -18,6 +20,8 @@ export class PainelPrioreasyComponent {
   constructor(
     private projetoService: ProjetoService,
     private requisitoService: RequisitoService,
+    private stakeholderService: StakeholderService,
+    private priorizacaoService: PriorizacaoService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -49,6 +53,16 @@ export class PainelPrioreasyComponent {
   tamanhoPagina: number = 5;
   quantidadeElementos: number = 0;
   totalPaginas: number = 0;
+
+  // modal confirmação
+  tituloConfirmacao = "Deseja realmente efetuar a geração dos resultados do projeto?";
+  mensagemConfirmacao = "Ao confirmar, os resultados serão gerados e não poderão ser alterados.";
+  showModalConfirmacao: boolean = false;
+
+  // modal mensagem
+  tituloMensagem = "Erro!";
+  mensagemMensagem = "Nem todos os stakeholders participaram da priorização. Aguarde a participação de todos para gerar os resultados.";
+  showModalMensagem: boolean = false;
 
   ngOnInit(){
     this.buscarProjeto(this.projetoId, this.userId);
@@ -90,6 +104,45 @@ export class PainelPrioreasyComponent {
 
   openStakeholders(){
     this.router.navigate(['/dashboard/projeto/', this.projetoId, 'stakeholders']);
+  }
+
+  openPriorizacao() {
+    this.showModalConfirmacao = true;
+  }
+
+  cancelarPriorizacao(){
+    this.showModalConfirmacao = false;
+  }
+
+  fecharMensagem(){
+    this.showModalMensagem = false;
+  }
+
+  confirmarPriorizacao(){
+    this.stakeholderService.verifyParticipation(this.projetoId).subscribe({
+
+      next: () => {
+        this.requisitos.forEach((requisito) => {
+
+          this.priorizacaoService.getRequirementFinalClassification(requisito.id || 0).subscribe((response) => {
+            const classificacaoFinal = response[0].PRS_CLASSIFICACAO_REQUISITO;
+
+            console.log(classificacaoFinal);
+
+            this.priorizacaoService.insertResultadoClassificacao(requisito.id || 0, classificacaoFinal).subscribe(() => {
+              this.executarBusca();
+              this.showModalConfirmacao = false;
+            });
+          });
+        });
+      },
+
+      error: (err) => {
+        this.showModalConfirmacao = false;
+        this.showModalMensagem = true;
+      }
+
+    });
   }
 
   prevPage() {

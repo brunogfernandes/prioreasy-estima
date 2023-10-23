@@ -200,6 +200,17 @@ export class ProjetoService {
       }
     );
   }
+
+  getProjetosRecentes(id: number): Observable<Projeto[]> {
+    return this.httpClient.get<Projeto[]>(
+      `${this.servicesRootUrl}/projetos/recentes?user=${id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 }
 
 interface GetResponseProjetos {

@@ -97,7 +97,9 @@ export const AuthController = {
         res.status(200).send({
           message: "Colaborador logado com sucesso!",
           usu_id: user[0].COL_ID,
+          usu_name: user[0].COL_NOME,
           usu_email: user[0].COL_EMAIL,
+          usu_role: "colaborador",
           accessToken: token,
         });
       }
@@ -143,7 +145,9 @@ export const AuthController = {
         res.status(200).send({
           message: "Colaborador logado com sucesso!",
           usu_id: user[0].STA_ID,
+          usu_name: user[0].STA_NOME,
           usu_email: user[0].STA_EMAIL,
+          usu_role: "stakeholder",
           accessToken: token,
         });
       }

@@ -60,7 +60,9 @@ export class StakeholderSigninComponent {
           console.log(response)
           localStorage.setItem('token', response.accessToken);
           localStorage.setItem('usu_email', response.usu_email);
+          localStorage.setItem('usu_name', response.usu_name);
           localStorage.setItem('usu_id', response.usu_id);
+          localStorage.setItem('usu_role', response.usu_role);
           this.router.navigate(['/dashboard']);
         },
 

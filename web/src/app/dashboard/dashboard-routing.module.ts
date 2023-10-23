@@ -30,6 +30,7 @@ import { StakeholdersProjetoComponent } from './pages/stakeholders-projeto/stake
 import { InserirStakeholderComponent } from './pages/inserir-stakeholder/inserir-stakeholder.component';
 import { PainelStakeholderComponent } from './pages/painel-stakeholder/painel-stakeholder.component';
 import { PriorizarRequisitosComponent } from './pages/priorizar-requisitos/priorizar-requisitos.component';
+import { colaboradorGuard, stakeholderGuard } from './guards/role.guard';
 
 const routes: Routes = [
   {
@@ -40,8 +41,9 @@ const routes: Routes = [
       {
         path: 'projetos',
         component: ProjetosComponent,
+        canActivate: [colaboradorGuard]
       },
-      { path: 'atores/:id', component: AtoresComponent},
+      { path: 'atores/:id', component: AtoresComponent, canActivate: ['colaboradorGuard']},
       { path: 'inserir-atores', component: InserirAtoresComponent},
       { path: 'editar-atores/:id', component: EditarAtoresComponent},
       { path: 'caso-de-uso/:id', component: CasoDeUsoComponent},
@@ -79,7 +81,7 @@ const routes: Routes = [
       { path: 'projeto/:id/inserir-stakeholder', component: InserirStakeholderComponent},
 
       // Stakeholders
-      { path: 'painel-stakeholder', component: PainelStakeholderComponent},
+      { path: 'painel-stakeholder', component: PainelStakeholderComponent, canActivate: [stakeholderGuard]},
       { path: 'priorizacao-stakeholder/:id', component: PriorizarRequisitosComponent},
 
     ],

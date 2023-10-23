@@ -78,6 +78,17 @@ export class StakeholderService {
       }
     );
   }
+
+  verifyParticipation(idProjeto: number): Observable<any> {
+    return this.httpClient.get<Stakeholder>(
+      `${this.servicesRootUrl}/stakeholders/verifyParticipation?projetoId=${idProjeto}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 }
 
 interface GetResponseStakeholders {

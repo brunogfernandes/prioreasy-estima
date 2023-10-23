@@ -1,5 +1,8 @@
 <header class="shadow flex px-5 py-3 border-b bg-white">
-  <button class="rounded-full hover:bg-gray-100 p-2" (click)="onMenuClick(!sidebarExpanded)">
+  <button
+    class="rounded-full hover:bg-gray-100 p-2"
+    (click)="onMenuClick(!sidebarExpanded)"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -15,7 +18,9 @@
       />
     </svg>
   </button>
-  <div class="flex items-center rounded relative bg-gray-100 px-3 ml-5 mr-5 md:w-1/4">
+  <div
+    class="flex items-center rounded relative bg-gray-100 px-3 ml-5 mr-5 md:w-1/4"
+  >
     <input
       type="text"
       class="bg-gray-100 text-base outline-none w-full text-gray-700 py-1 pe-2"
@@ -52,7 +57,7 @@
         />
       </svg>
     </button>
-    <button class="ps-4 flex items-center">
+    <div class="ps-4 flex items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -65,21 +70,25 @@
           clip-rule="evenodd"
         />
       </svg>
-      <span class="font-medium hidden md:block text-gray-700 md:mr-2">
-        Tio Breno
+      <span class="font-medium hidden md:block text-gray-700 md:mr-3">
+        {{username}}
       </span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="w-4 h-4 text-gray-700 hidden md:block"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z"
-          clip-rule="evenodd"
-        />
-      </svg>
-    </button>
+      <button class="rounded-lg bg-violet-700 hover:bg-violet-800 p-2" (click)="logout()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5 text-white"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </header>

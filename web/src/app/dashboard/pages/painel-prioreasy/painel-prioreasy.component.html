@@ -82,7 +82,7 @@
           </svg>
         </div>
       </div>
-      <button
+      <button (click)="openPriorizacao()" [disabled]="!projeto.admin"
         class="disabled:bg-violet-400 bg-violet-700 text-white p-3 hover:bg-violet-800 font-medium rounded-md flex items-center shadow-md"
       >
         <svg
@@ -111,6 +111,21 @@
       [hasDelete]="false"
     ></app-tabela>
   </div>
+
+  <app-dialogo-confirmacao
+    [titulo]="tituloConfirmacao"
+    [mensagem]="mensagemConfirmacao"
+    [isActive]="showModalConfirmacao"
+    [onCancel]="cancelarPriorizacao.bind(this)"
+    [onConfirm]="confirmarPriorizacao.bind(this)"
+  ></app-dialogo-confirmacao>
+
+  <app-dialogo-mensagem
+    [titulo]="tituloMensagem"
+    [mensagem]="mensagemMensagem"
+    [isActive]="showModalMensagem"
+    [onConfirm]="fecharMensagem.bind(this)"
+  ></app-dialogo-mensagem>
 
   <div class="table-buttons mt-5 flex w-full">
     <button
