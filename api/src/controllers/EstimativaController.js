@@ -35,7 +35,23 @@ export const EstimativaController = {
           const ResPontos = (soma + somaA) * Tfactor * Efactor;
           const ResHoras = (soma + somaA) * Tfactor * Efactor * 20;
 
-          console.log(Tfactor,Efactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras)
+          const options = {
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          };
+          
+          const date = new Date();
+          
+          const dataHoraFormatada = date.toLocaleString('pt-BR', options);
+          console.log(dataHoraFormatada);
+          
+
+          console.log(dataHoraFormatada,Tfactor,Efactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras)
 
           console.log("[INFO] Iniciando inserção da estimativa no banco de dados");
           const est = await connection("ESTIMATIVAS_ESFORCOS")
@@ -44,6 +60,7 @@ export const EstimativaController = {
             .first();
 
           await connection("ESTIMATIVAS_ESFORCOS").insert({
+            EST_DATA_ESTIMATIVA: dataHoraFormatada,
             EST_EFACTOR: Efactor,
             EST_TFACTOR: Tfactor,
             EST_PESO_CASOS_USO: PesoCaso,
@@ -87,6 +104,7 @@ export const EstimativaController = {
     
           const serializedItems = est.map((est) => {
             return {
+                DataEstimativa: est.EST_DATA_ESTIMATIVA,
                 Efactor: est.EST_EFACTOR,
                 Tfactor: est.EST_TFACTOR,
                 PesoCaso: est.EST_PESO_CASOS_USO,

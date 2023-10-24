@@ -70,6 +70,10 @@ export class InserirEstimativaComponent {
     });
   }
 
+  get DataEstimativa(){
+    return this.EstimativaFormGroup.get('DataEstimativa');
+  }
+
   get Efactor() {
     return this.EstimativaFormGroup.get('Efactor');
   }
@@ -94,6 +98,7 @@ export class InserirEstimativaComponent {
 
   createEstimativa(): Estimativa {
     return new Estimativa(
+      this.DataEstimativa?.value,
       this.Efactor?.value,
       this.Tfactor?.value,
       this.PesoCaso?.value,
@@ -127,6 +132,7 @@ export class InserirEstimativaComponent {
   AtualizarDados() {
     this.estimativaService.getTotal(this.projetoId).subscribe((total) => {
       return new Estimativa(
+        this.DataEstimativa?.value,
         this.Efactor?.value,
         this.Tfactor?.value,
         this.PesoCaso?.value,

@@ -32,6 +32,7 @@ export class EstimativaComponent {
 
   // tabela
   colunasTabela: string[] = [
+    'Data Estimativa',
     'E-Factor',
     'T-Factor',
     'Peso por Caso de Uso',
@@ -42,6 +43,7 @@ export class EstimativaComponent {
   ];
 
   camposEntidade: string[] = [
+    'DataEstimativa',
     'Efactor',
     'Tfactor',
     'PesoCaso',
