@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Atores } from '../../shared/models/atores';
+import { Atores } from '../../models/atores';
 import { AtorService } from '../../services/ator.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Projeto } from '../../models/projeto';

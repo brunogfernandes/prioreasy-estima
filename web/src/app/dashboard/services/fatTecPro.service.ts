@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { fatTecPro } from '../shared/models/fatTecPro';
+import { fatTecPro } from '../models/fatTecPro';
 
 
 @Injectable({

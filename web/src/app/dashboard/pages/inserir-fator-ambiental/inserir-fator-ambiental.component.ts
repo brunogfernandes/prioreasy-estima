@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Projeto } from '../../models/projeto';
-import { fatAmbPro } from '../../shared/models/fatAmbPro';
+import { fatAmbPro } from '../../models/fatAmbPro';
 import { ProjetoService } from '../../services/projeto.service';
 import { FatAmbProService } from '../../services/fatAmbPro.service';
 import { ActivatedRoute, Router } from '@angular/router';

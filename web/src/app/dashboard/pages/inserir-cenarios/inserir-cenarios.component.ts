@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Cenarios } from '../../shared/models/cenarios';
+import { Cenarios } from '../../models/cenarios';
 import { CenarioService } from '../../services/cenario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Projeto } from '../../models/projeto';

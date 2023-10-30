@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { FatTecService } from '../../services/fatTec.service';
 import { FatTecProService } from '../../services/fatTecPro.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fatTec } from '../../shared/models/fatTec';
-import { fatTecPro } from '../../shared/models/fatTecPro';
+import { fatTecPro } from '../../models/fatTecPro';
 import { ProjetoService } from '../../services/projeto.service';
 import { Projeto } from '../../models/projeto'
 

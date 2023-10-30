@@ -12,11 +12,8 @@ import { CenariosComponent } from './pages/cenarios/cenarios.component';
 import { InserirCenariosComponent } from './pages/inserir-cenarios/inserir-cenarios.component';
 import { EditarCenariosComponent } from './pages/editar-cenarios/editar-cenarios.component';
 import { FatoresTecnicosComponent } from './pages/fatores-tecnicos/fatores-tecnicos.component';
-import { EditarFatorTecnicoComponent } from './pages/editar-fator-tecnico/editar-fator-tecnico.component';
 import { FatoresAmbientaisComponent } from './pages/fatores-ambientais/fatores-ambientais.component';
-import { EditarFatorAmbientalComponent } from './pages/editar-fator-ambiental/editar-fator-ambiental.component';
 import { EstimativaComponent } from './pages/estimativa/estimativa.component';
-import { InserirEstimativaComponent } from './pages/inserir-estimativa/inserir-estimativa.component';
 import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
 import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
 import { ProjetoComponent } from './pages/projeto/projeto.component';
@@ -46,21 +43,6 @@ const routes: Routes = [
         component: ProjetosComponent,
         canActivate: [colaboradorGuard]
       },
-      { path: 'atores/:id', component: AtoresComponent, canActivate: [colaboradorGuard]},
-      { path: 'inserir-atores', component: InserirAtoresComponent, canActivate: [colaboradorGuard]},
-      { path: 'editar-atores/:id', component: EditarAtoresComponent, canActivate: [colaboradorGuard]},
-      { path: 'caso-de-uso/:id', component: CasoDeUsoComponent, canActivate: [colaboradorGuard]},
-      { path: 'inserir-caso', component: InserirCasoComponent, canActivate: [colaboradorGuard]},
-      { path: 'editar-caso/:id', component: EditarCasoComponent, canActivate: [colaboradorGuard]},
-      { path: 'cenarios/:id', component: CenariosComponent, canActivate: [colaboradorGuard]},
-      { path: 'inserir-cenarios', component: InserirCenariosComponent, canActivate: [colaboradorGuard]},
-      { path: 'editar-cenarios/:id', component: EditarCenariosComponent, canActivate: [colaboradorGuard]},
-      { path: 'fatores-tecnicos', component: FatoresTecnicosComponent, canActivate: [colaboradorGuard]},
-      { path: 'editar-fator-tecnico/:id', component: EditarFatorTecnicoComponent, canActivate: [colaboradorGuard]},
-      { path: 'fatores-ambientais', component: FatoresAmbientaisComponent, canActivate: [colaboradorGuard]},
-      { path: 'editar-fator-ambiental/:id', component: EditarFatorAmbientalComponent, canActivate: [colaboradorGuard]},
-      { path: 'estimativa', component: EstimativaComponent, canActivate: [colaboradorGuard]},
-      { path: 'inserir-estimativa', component: InserirEstimativaComponent, canActivate: [colaboradorGuard]},
 
       // Projeto
       { path: 'inserir-projeto/:id', component: InserirProjetoComponent, canActivate: [colaboradorGuard] },
@@ -109,18 +91,15 @@ const routes: Routes = [
 
       { path: 'projeto/:id/fatores-ambientais', component: FatoresAmbientaisComponent, canActivate: [colaboradorGuard]},
       { path: 'projeto/:id/inserir-fator-ambiental', component: InserirFatorAmbientalComponent, canActivate: [colaboradorGuard]},
-      { path: 'projeto/:id/editar-fator-ambiental/:idfat', component: EditarFatorAmbientalComponent, canActivate: [colaboradorGuard]},
 
       //Estima - Fatores Técnicos
 
       { path: 'projeto/:id/fatores-tecnicos', component: FatoresTecnicosComponent, canActivate: [colaboradorGuard]},
       { path: 'projeto/:id/inserir-fator-tecnico', component: InserirFatorTecnicoComponent, canActivate: [colaboradorGuard]},
-      { path: 'projeto/:id/editar-fator-tecnico/:idfat', component: EditarFatorTecnicoComponent, canActivate: [colaboradorGuard]},
 
       //Estima - Estimativa
 
       { path: 'projeto/:id/estimativa', component: EstimativaComponent, canActivate: [colaboradorGuard]},
-      { path: 'projeto/:id/inserir-estimativa', component: InserirEstimativaComponent, canActivate: [colaboradorGuard]},
 
       //Estima - Painel Estimativa
 

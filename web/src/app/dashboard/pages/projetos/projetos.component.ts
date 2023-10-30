@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Projetos } from '../../shared/models/projetos';
 // import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProjetoService } from '../../services/projeto.service';
+import { Projeto } from '../../models/projeto';
 
 @Component({
   selector: 'app-projetos',
@@ -19,7 +19,7 @@ export class ProjetosComponent {
   userId: number = +localStorage.getItem("usu_id")!;
 
   // datasource
-  projetos: Projetos[] = [];
+  projetos: Projeto[] = [];
 
   // tabela
   colunasTabela: string[] = [

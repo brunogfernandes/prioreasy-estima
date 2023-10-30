@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cenarios } from '../shared/models/cenarios';
+import { Cenarios } from '../models/cenarios';
 
 @Injectable({
   providedIn: 'root',

@@ -3,7 +3,7 @@ import { Projeto } from '../../models/projeto';
 import { ProjetoService } from '../../services/projeto.service';
 import { EstimativaService } from '../../services/estimativa.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Estimativa } from '../../shared/models/estimativa';
+import { Estimativa } from '../../models/estimativa';
 
 @Component({
   selector: 'app-estimativa',

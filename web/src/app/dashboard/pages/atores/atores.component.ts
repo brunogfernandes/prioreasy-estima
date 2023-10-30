@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AtorService } from '../../services/ator.service';
-import { Atores } from '../../shared/models/atores';
+import { Atores } from '../../models/atores';
 import { Projeto } from '../../models/projeto';
 import { ProjetoService } from '../../services/projeto.service';
 

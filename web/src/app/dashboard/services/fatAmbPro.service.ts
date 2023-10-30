@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { fatAmbPro } from '../shared/models/fatAmbPro';
+import { fatAmbPro } from '../models/fatAmbPro';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { casoUso } from '../../shared/models/casoUso';
+import { casoUso } from '../../models/casoUso';
 import { CasoUsoService } from '../../services/casoUso.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Projeto } from '../../models/projeto';

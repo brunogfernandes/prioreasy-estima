@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CasoUsoService } from '../../services/casoUso.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { casoUso } from '../../shared/models/casoUso';
+import { casoUso } from '../../models/casoUso';
 import { ProjetoService } from '../../services/projeto.service';
 import { Projeto } from '../../models/projeto';
 

@@ -18,11 +18,8 @@ import { CenariosComponent } from './pages/cenarios/cenarios.component';
 import { InserirCenariosComponent } from './pages/inserir-cenarios/inserir-cenarios.component';
 import { EditarCenariosComponent } from './pages/editar-cenarios/editar-cenarios.component';
 import { FatoresTecnicosComponent } from './pages/fatores-tecnicos/fatores-tecnicos.component';
-import { EditarFatorTecnicoComponent } from './pages/editar-fator-tecnico/editar-fator-tecnico.component';
 import { FatoresAmbientaisComponent } from './pages/fatores-ambientais/fatores-ambientais.component';
-import { EditarFatorAmbientalComponent } from './pages/editar-fator-ambiental/editar-fator-ambiental.component';
 import { EstimativaComponent } from './pages/estimativa/estimativa.component';
-import { InserirEstimativaComponent } from './pages/inserir-estimativa/inserir-estimativa.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InserirProjetoComponent } from './pages/inserir-projeto/inserir-projeto.component';
 import { EditarProjetoComponent } from './pages/editar-projeto/editar-projeto.component';
@@ -44,7 +41,7 @@ import { PainelEstimaComponent } from './pages/painel-estima/painel-estima.compo
 import { InserirFatorAmbientalComponent } from './pages/inserir-fator-ambiental/inserir-fator-ambiental.component';
 
 @NgModule({
-  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, EditarFatorTecnicoComponent, FatoresAmbientaisComponent, EditarFatorAmbientalComponent, EstimativaComponent, InserirEstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent, ProjetoComponent, ColaboradoresProjetoComponent, InserirColaboradorProjetoComponent, RequisitosProjetoComponent, InserirRequisitoComponent, EditarRequisitoComponent, PainelPrioreasyComponent, StakeholdersProjetoComponent, InserirStakeholderComponent, PainelStakeholderComponent, PriorizarRequisitosComponent, InserirFatorAmbientalComponent, InserirFatorTecnicoComponent, PainelEstimaComponent, DialogoMensagemComponent],
+  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, FatoresAmbientaisComponent, EstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent, ProjetoComponent, ColaboradoresProjetoComponent, InserirColaboradorProjetoComponent, RequisitosProjetoComponent, InserirRequisitoComponent, EditarRequisitoComponent, PainelPrioreasyComponent, StakeholdersProjetoComponent, InserirStakeholderComponent, PainelStakeholderComponent, PriorizarRequisitosComponent, InserirFatorAmbientalComponent, InserirFatorTecnicoComponent, PainelEstimaComponent, DialogoMensagemComponent],
   imports: [CommonModule, DashboardRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class DashboardModule {}

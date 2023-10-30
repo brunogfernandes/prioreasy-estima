@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Estimativa } from '../shared/models/estimativa';
+import { Estimativa } from '../models/estimativa';
 
 @Injectable({
   providedIn: 'root',
