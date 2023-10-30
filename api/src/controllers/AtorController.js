@@ -144,7 +144,6 @@ export const AtoresController = {
         "[INFO] Iniciando listagem de Atores do Projeto"
       );
       const pro_id = req.query.projeto;
-      console.log(pro_id);
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
       const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
@@ -197,8 +196,8 @@ export const AtoresController = {
     try {
       console.log("");
       console.log("[INFO] Iniciando listagem de Atores");
+
       const pro_id = req.query.projeto;
-      console.log(pro_id);
       const nome = req.query.nome;
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1

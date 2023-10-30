@@ -9,7 +9,6 @@ export const CenariosController = {
       const { nome, tipo, descricao } = req.body;
 
       const cas_id = req.query.caso;
-      console.log(cas_id);
 
       console.log(
         "[INFO] Iniciando inserção do Cenario no banco de dados"

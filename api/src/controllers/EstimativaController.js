@@ -8,11 +8,9 @@ export const EstimativaController = {
           console.log("[INFO] Iniciando cadastro de Estimativa");
       
           const pro_id = req.query.projeto;
-          console.log(pro_id);
+
           const Tfactor = await getTfactor(pro_id);
           const Efactor = await getEfactor(pro_id);
-
-          console.log(Tfactor,Efactor)  
       
           const totalSimples = await getTotalCasosSimples(pro_id);
           const totalMedios = await getTotalCasosMedios(pro_id);
@@ -48,10 +46,6 @@ export const EstimativaController = {
           const date = new Date();
           
           const dataHoraFormatada = date.toLocaleString('pt-BR', options);
-          console.log(dataHoraFormatada);
-          
-
-          console.log(dataHoraFormatada,Tfactor,Efactor,PesoCaso,PesoAtor,PesoPontos,ResPontos,ResHoras)
 
           console.log("[INFO] Iniciando inserção da estimativa no banco de dados");
           const est = await connection("ESTIMATIVAS_ESFORCOS")
@@ -89,7 +83,6 @@ export const EstimativaController = {
             "[INFO] Iniciando listagem de estimativa do Projeto"
           );
           const pro_id = req.query.projeto;
-          console.log(pro_id);
     
           const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
           const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10

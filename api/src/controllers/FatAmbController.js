@@ -53,8 +53,6 @@ export const FatAmbController = {
         return total;
       }, 0) * (-0.3)))*-1);
 
-      console.log(totalValue);
-
 
       await connection("PROJETOS").update({
         PRO_RESEFACTOR: totalValue }).where("PRO_ID", pro_id);
@@ -82,10 +80,8 @@ export const FatAmbController = {
       console.log("[INFO] Iniciando cadastro de Fator Ambiental");
 
       const { valor, fatorAmb } = req.body;
-      console.log(valor,fatorAmb);
 
       const pro_id = req.query.projeto;
-      console.log(pro_id);
 
       console.log(
         "[INFO] Iniciando inserção do Fator Ambiental no banco de dados"
@@ -145,7 +141,6 @@ export const FatAmbController = {
       const { valor} = req.body;
 
       const fat_id = req.query.fatores;
-      console.log(fat_id);
 
       console.log(
         "[INFO] Iniciando atualização do Fator Ambiental no banco de dados"

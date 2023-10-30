@@ -111,7 +111,6 @@ export const CasoUsoController = {
       console.log("[INFO] Iniciando busca de Caso de Uso por ID");
 
       const cas_id = req.query.id;
-      console.log(cas_id);
 
       console.log(
         "[INFO] Iniciando busca do Caso de Uso no banco de dados"
@@ -144,7 +143,6 @@ export const CasoUsoController = {
         "[INFO] Iniciando listagem de Caso de Uso do Projeto"
       );
       const req_id = req.query.requisito;
-      console.log(req_id);
 
       const page = parseInt(req.query.page, 10) || 0; // Página atual, padrão é 1
       const pageSize = parseInt(req.query.pageSize, 10) || 5; // Tamanho da página, padrão é 10
