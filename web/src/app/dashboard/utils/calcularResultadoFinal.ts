@@ -1,5 +1,7 @@
-export default function calcularResultadoFinal(respPositiva:string | undefined, respNegativa:string | undefined){
+export default function calcularResultadoFinal(respPositiva: string | undefined, respNegativa: string | undefined){
   let resultadoFinal;
+
+  // console.log(respPositiva, respNegativa);
 
   if(respPositiva === 'GOSTARIA'){
 
@@ -20,7 +22,7 @@ export default function calcularResultadoFinal(respPositiva:string | undefined, 
 
   } else if (respPositiva === 'ESPERADO') {
 
-    if(respNegativa = 'GOSTARIA')
+    if(respNegativa === 'GOSTARIA')
       resultadoFinal = 'REVERSO';
 
     else if(respNegativa === 'ESPERADO')
@@ -37,7 +39,7 @@ export default function calcularResultadoFinal(respPositiva:string | undefined, 
 
   } else if(respPositiva === 'NAO IMPORTA' ) {
 
-    if(respNegativa = 'GOSTARIA')
+    if(respNegativa === 'GOSTARIA')
       resultadoFinal = 'REVERSO';
 
     else if(respNegativa === 'ESPERADO')
@@ -54,7 +56,7 @@ export default function calcularResultadoFinal(respPositiva:string | undefined, 
 
   } else if(respPositiva === 'CONVIVO COM ISSO' ) {
 
-    if(respNegativa = 'GOSTARIA')
+    if(respNegativa === 'GOSTARIA')
       resultadoFinal = 'REVERSO';
 
     else if(respNegativa === 'ESPERADO')
@@ -71,7 +73,7 @@ export default function calcularResultadoFinal(respPositiva:string | undefined, 
 
   } else if(respPositiva === 'NAO GOSTARIA' ) {
 
-    if(respNegativa = 'GOSTARIA')
+    if(respNegativa === 'GOSTARIA')
       resultadoFinal = 'REVERSO';
 
     else if(respNegativa === 'ESPERADO')
