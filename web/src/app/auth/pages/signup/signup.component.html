@@ -82,10 +82,11 @@
           name="role"
           class="w-full bg-gray-50 rounded border border-gray-300 focus:border-violet-700 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
         >
-          <option value="CARGO1">Cargo 1</option>
-          <option value="CARGO2">Cargo 2</option>
-          <option value="CARGO3">Cargo 3</option>
-          <option value="CARGO4">Cargo 4</option>
+          <option value="Gerente de Projeto">Gerente de Projeto</option>
+          <option value="Analista de Sistemas">Analista de Sistemas</option>
+          <option value="Desenvolvedor">Desenvolvedor</option>
+          <option value="Product Owner">Product Owner</option>
+          <option value="Scrum Master">Scrum Master</option>
         </select>
         <div *ngIf="signupFormGroup.get('cargo')?.invalid && (signupFormGroup.get('cargo')?.dirty || signupFormGroup.get('cargo')?.touched)" class="text-red-600 text-xs mt-1">
           <div *ngIf="signupFormGroup.get('cargo')?.errors?.['required']">Campo obrigatório.</div>
