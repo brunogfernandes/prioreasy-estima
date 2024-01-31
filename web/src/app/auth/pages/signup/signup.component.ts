@@ -57,6 +57,8 @@ export class SignupComponent {
         Validators.maxLength(100),
       ]),
     });
+
+
   }
 
   get nome() {
