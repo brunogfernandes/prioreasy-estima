@@ -1,6 +1,7 @@
 import connection from "../database/databaseConnection.js";
 
 export const ColaboradorController = {
+  
   async listByName(req, res) {
     try {
       const name = req.query.name;
@@ -30,4 +31,39 @@ export const ColaboradorController = {
       console.log(error);
     }
   },
+
+  async getById(req, res) {
+    try {
+      console.log("");
+      console.log("[INFO] Iniciando busca de Colaborador por ID");
+
+      const col_id = req.query.id;
+      console.log(ato_id);
+
+      console.log(
+        "[INFO] Iniciando busca do Colaborador no banco de dados"
+      );
+
+      const Atores = await connection("COLABORADORES")
+        .select("*")
+        .where("COL_ID", col_id)
+        .first();
+
+      console.log("[INFO] Colaborador encontrado com sucesso");
+
+      return res.json({
+        id: Colaborar.COL_ID,
+        nome: Colaborar.COL_NOME,
+        email: colaborador.COL_EMAIL,
+          empresa: colaborador.COL_EMPRESA,
+          cargo: colaborador.COL_CARGO,
+      });
+    } catch (err) {
+      console.log(
+        "[ERROR] [AtoresController] Erro no método getById: " + err
+      );
+    }
+  },
+
+  
 };

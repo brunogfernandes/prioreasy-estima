@@ -39,9 +39,12 @@ import { DialogoMensagemComponent } from './shared/dialogo-mensagem/dialogo-mens
 import { InserirFatorTecnicoComponent } from './pages/inserir-fator-tecnico/inserir-fator-tecnico.component';
 import { PainelEstimaComponent } from './pages/painel-estima/painel-estima.component';
 import { InserirFatorAmbientalComponent } from './pages/inserir-fator-ambiental/inserir-fator-ambiental.component';
+import { PainelQahubComponent } from './pages/painel-qahub/painel-qahub.component';
+import { InserirTesteComponent } from './pages/inserir-teste/inserir-teste.component';
+import { VisualizarTesteComponent } from './pages/visualizar-teste/visualizar-teste.component';
 
 @NgModule({
-  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, FatoresAmbientaisComponent, EstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent, ProjetoComponent, ColaboradoresProjetoComponent, InserirColaboradorProjetoComponent, RequisitosProjetoComponent, InserirRequisitoComponent, EditarRequisitoComponent, PainelPrioreasyComponent, StakeholdersProjetoComponent, InserirStakeholderComponent, PainelStakeholderComponent, PriorizarRequisitosComponent, InserirFatorAmbientalComponent, InserirFatorTecnicoComponent, PainelEstimaComponent, DialogoMensagemComponent],
+  declarations: [ProjetosComponent, DashboardComponent, SidebarComponent, HeaderComponent, FooterComponent, SidebarItemComponent, TabelaComponent, AtoresComponent, InserirAtoresComponent, EditarAtoresComponent, CasoDeUsoComponent, EditarCasoComponent, InserirCasoComponent, CenariosComponent, InserirCenariosComponent, EditarCenariosComponent, FatoresTecnicosComponent, FatoresAmbientaisComponent, EstimativaComponent, InserirProjetoComponent, EditarProjetoComponent, DialogoConfirmacaoComponent, ProjetoComponent, ColaboradoresProjetoComponent, InserirColaboradorProjetoComponent, RequisitosProjetoComponent, InserirRequisitoComponent, EditarRequisitoComponent, PainelPrioreasyComponent, StakeholdersProjetoComponent, InserirStakeholderComponent, PainelStakeholderComponent, PriorizarRequisitosComponent, InserirFatorAmbientalComponent, InserirFatorTecnicoComponent, PainelEstimaComponent, DialogoMensagemComponent, PainelQahubComponent, InserirTesteComponent, VisualizarTesteComponent],
   imports: [CommonModule, DashboardRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class DashboardModule {}

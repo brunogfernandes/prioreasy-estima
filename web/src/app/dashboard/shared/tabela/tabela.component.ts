@@ -5,6 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './tabela.component.html',
   styleUrls: ['./tabela.component.css']
 })
+
 export class TabelaComponent {
   @Input() data!: any[];
   @Input() entityAttributes!: string[];

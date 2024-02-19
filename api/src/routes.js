@@ -13,6 +13,7 @@ import { ColaboradorController } from './controllers/ColaboradorController.js';
 import { RequisitoController } from './controllers/RequisitoController.js';
 import { PriorizacaoController } from './controllers/PriorizacaoController.js';
 import { EstimativaController } from './controllers/EstimativaController.js';
+import { TestController } from './controllers/TestController.js';
 
 const routes = express.Router();
 
@@ -146,7 +147,16 @@ routes.delete('/fatores-tecnicos/delete', verifyToken, FatTecController.delete);
 routes.get('/estimativa', verifyToken, EstimativaController.list);
 routes.post('/estimativa/new', verifyToken, EstimativaController.create);
 
+//Painel QA-Hub Routes
 
+routes.get('/testes', verifyToken, TestController.list);
+//routes.get('/requisitos/findByNome', verifyToken, RequisitoController.listByNamePaginated);
+routes.get('/testes/findById', verifyToken, TestController.getById);
+routes.post('/testes/new', verifyToken, TestController.create);
+//routes.patch('/requisitos/update', verifyToken, RequisitoController.update);
+//routes.delete('/requisitos/delete', verifyToken, RequisitoController.delete);
+routes.get('/testes/resultados/list', verifyToken, RequisitoController.listResultados);
+routes.get('/testes/resultados/findByNome', verifyToken, RequisitoController.listResultadosByName);
 
 
 export const allRoutes = routes;

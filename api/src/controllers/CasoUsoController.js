@@ -163,6 +163,7 @@ export const CasoUsoController = {
           descricao: Caso.CAS_DESCRICAO,
         };
       });
+      console.log(serializedItems);
 
       //ADQUIRINDO TOTAL DE REGISTROS
       const totalCountQuery = await connection("CASOS_DE_USO")

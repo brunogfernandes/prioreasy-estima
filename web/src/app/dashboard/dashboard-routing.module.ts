@@ -31,6 +31,9 @@ import { colaboradorGuard, stakeholderGuard } from './guards/role.guard';
 import { InserirFatorAmbientalComponent } from './pages/inserir-fator-ambiental/inserir-fator-ambiental.component';
 import { InserirFatorTecnicoComponent } from './pages/inserir-fator-tecnico/inserir-fator-tecnico.component';
 import { PainelEstimaComponent } from './pages/painel-estima/painel-estima.component';
+import { PainelQahubComponent } from './pages/painel-qahub/painel-qahub.component';
+import { InserirTesteComponent } from './pages/inserir-teste/inserir-teste.component';
+import { VisualizarTesteComponent } from './pages/visualizar-teste/visualizar-teste.component';
 
 const routes: Routes = [
   {
@@ -103,8 +106,13 @@ const routes: Routes = [
 
       //Estima - Painel Estimativa
 
-        { path: 'projeto/:id/painel-estima', component: PainelEstimaComponent, canActivate: [colaboradorGuard]},
+      { path: 'projeto/:id/painel-estima', component: PainelEstimaComponent, canActivate: [colaboradorGuard]},
 
+      // QAHub - Painel QAhub
+
+      {path: 'projeto/:id/painel-qahub', component: PainelQahubComponent, canActivate: [colaboradorGuard]},
+      {path: 'projeto/:id/inserir-teste', component: InserirTesteComponent, canActivate: [colaboradorGuard]},
+      {path: 'projeto/:idPro/visualizar-item/:id', component: VisualizarTesteComponent, canActivate: [colaboradorGuard]},
     ],
   },
 ];

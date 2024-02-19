@@ -22,4 +22,26 @@ export class ColaboradorService {
       }
     );
   }
+
+  getColaboradoresPorProjetoECargo(projetoId: number, cargo: string): Observable<Colaborador[]> {
+    return this.httpClient.get<Colaborador[]>(
+      `${this.servicesRootUrl}/colaboradores?projetoId=${projetoId}&cargo=${cargo}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
+
+  getById(idColaborador: number): Observable<Colaborador> {
+    return this.httpClient.get<Colaborador>(
+      `${this.servicesRootUrl}/colaboradores/findById?=${idColaborador}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+      }
+    );
+  }
 }
